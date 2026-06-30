@@ -721,7 +721,15 @@
        Print Styles - Optimization for A4
        ======================================= */
     @media print {
-      body {
+      @page {
+        margin: 0 !important;
+      }
+      html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+        height: auto !important;
+        overflow: visible !important;
         background: #ffffff !important;
         color: #000000 !important;
         font-size: 12pt;
@@ -764,13 +772,16 @@
         overflow: visible !important;
       }
       
-      .main-content {
-        padding: 0 !important;
+      .main-content,
+      #temp-print-wrapper,
+      .print-page-break {
+        padding: 1.6cm !important;
         margin: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
         overflow: visible !important;
         height: auto !important;
+        box-sizing: border-box !important;
       }
       
       /* Formatting overview cards for print (2-col grid) */
@@ -852,25 +863,12 @@
       
       /* Chart printing rendering overrides */
       .chart-container {
-        height: 140px !important;
+        height: 220px !important;
         page-break-inside: avoid;
-      }
-      
-      .chart-svg text {
-        fill: #334155 !important;
       }
       
       .chart-svg line {
         stroke: #cbd5e1 !important;
-      }
-      
-      .chart-svg path[stroke] {
-        stroke: #4f46e5 !important;
-      }
-      
-      .chart-dot {
-        fill: #ffffff !important;
-        stroke: #4f46e5 !important;
       }
       
       /* Table printing overrides */
@@ -922,9 +920,24 @@
         display: block !important;
         width: 100% !important;
       }
+      
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      
+      body.print-mode-combined .app-container {
+        display: none !important;
+      }
+      
+      body.print-mode-combined #combined-print-wrapper {
+        display: block !important;
+      }
     }
     
-    #temp-print-wrapper {
+    #temp-print-wrapper,
+    #combined-print-wrapper,
+    .print-only-header {
       display: none;
     }
     
@@ -1034,7 +1047,7 @@
       
       <div class="search-container">
         <span class="search-icon">🔍</span>
-        <input type="text" id="search-input" class="search-input" placeholder="搜尋母單位...">
+        <input type="text" id="search-input" class="search-input" placeholder="搜尋單位...">
       </div>
       
       <div class="parent-units-list" id="parent-units-list"><button class="parent-btn" data-unit="保大">
@@ -1295,6 +1308,9 @@
     
     <!-- Main Content -->
     <main class="main-content" id="main-content">
+      <!-- Permanent Print Header (Only visible on print) -->
+      <div class="print-only-header" id="print-only-header"></div>
+      
       <!-- Top Toolbar -->
       <div class="top-toolbar">
         <div class="active-unit-header">
@@ -1311,8 +1327,13 @@
           </div>
           
           <!-- Print All Button -->
-          <button class="print-all-btn" onclick="printAll()" title="列印整個畫面的報表">
-            <span>🖨️</span> 列印全分局
+          <button class="print-all-btn" onclick="printAll()" title="列印當前分局報表">
+            <span>🖨️</span> 列印當前分局
+          </button>
+          
+          <!-- Print Combined Button -->
+          <button class="print-all-btn" onclick="printAllCombined()" style="background: var(--gradient-primary); border: none; color: #fff;" title="合併列印所有分局報表 (共50頁)">
+            <span>📚</span> 匯出所有分局合併版
           </button>
           
           <!-- Theme Toggle -->
@@ -1327,7 +1348,7 @@
           <div class="card-label" id="metric-total-label">總辨識數 (1-6月)</div>
           <div class="card-value" id="metric-total-value">35,915</div>
           <div class="card-subtext">
-            <span>母單位總加總</span>
+            <span>單位總加總</span>
             <span id="metric-total-pct">100%</span>
           </div>
         </div>
@@ -1368,7 +1389,7 @@
       
       <!-- Comparison Chart Section -->
       <section class="comparison-section">
-        <h3 class="comp-title" id="comp-title-text">子單位 總辨識數 佔比排行</h3>
+        <h3 class="comp-title" id="comp-title-text">所屬單位佔比排行</h3>
         <div class="comp-bars" id="comparison-bars"><div class="comp-row">
           <div class="comp-label" title="鼎金派出所">鼎金派出所</div>
           <div class="comp-track">
@@ -1416,9 +1437,8 @@
       
       <!-- Sub-units Details Section -->
       <section>
-        <h3 class="subunit-section-title" id="subunit-section-title">所屬派出所與子單位 (7)</h3>
+        <h3 class="subunit-section-title" id="subunit-section-title">所屬單位 (7)</h3>
         <div id="consolidated-chart-container" class="comparison-section" style="margin-top: 16px;">
-          <h4 class="comp-title">各子單位趨勢對比</h4>
           <div class="chart-container" style="height: 260px;">
             <div class="chart-tooltip" id="tooltip-consolidated" style="display: none;"></div>
             <div id="consolidated-chart-svg-wrap" style="width: 100%; height: 100%;"></div>
@@ -1454,11 +1474,28 @@
     
     // App State
     let activeParentUnit = localStorage.getItem('activeParentUnit_print') || Object.keys(DATA)[0];
+    
+    // Check URL Hash for parent unit (useful for automated printing/headless Chrome)
+    const hashValue = decodeURIComponent(window.location.hash.substring(1));
+    if (hashValue && DATA[hashValue]) {
+      activeParentUnit = hashValue;
+    }
+    
     if (!DATA[activeParentUnit]) {
       activeParentUnit = Object.keys(DATA)[0];
     }
     let activeMetric = 'total'; // 'total', 'normal', 'warning'
     let searchQuery = '';
+    
+    // Handle theme switching during printing to ensure perfect light-theme reports
+    let prePrintTheme = 'light';
+    window.addEventListener('beforeprint', () => {
+      prePrintTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', 'light');
+    });
+    window.addEventListener('afterprint', () => {
+      document.documentElement.setAttribute('data-theme', prePrintTheme);
+    });
     
     // Helpers
     function formatNum(num) {
@@ -1588,7 +1625,23 @@
       const subNames = Object.keys(subUnits);
       
       document.getElementById('active-unit-title').innerText = pKey;
-      document.getElementById('subunit-section-title').innerText = `所屬派出所與子單位 (${subNames.length})`;
+      document.title = `${pKey}車牌辨識張數彙總報表`;
+      
+      const printHeaderEl = document.getElementById('print-only-header');
+      if (printHeaderEl) {
+        printHeaderEl.innerHTML = `
+          <div style="font-family: 'Microsoft JhengHei', sans-serif; margin-bottom: 25px; border-bottom: 3px double #475569; padding-bottom: 12px; color: #000000; display: flex; justify-content: space-between; align-items: flex-end; width: 100%;">
+            <div>
+              <h1 style="font-size: 26px; font-weight: 800; margin: 0; color: #000;">${pKey}</h1>
+              <div style="font-size: 14px; color: #475569; font-weight: 700; margin-top: 5px;">車牌辨識張數彙總報表</div>
+            </div>
+            <div style="font-size: 12px; text-align: right; color: #475569; font-weight: 700; line-height: 1.4;">
+              <div>資料時間：115年1-6月</div>
+            </div>
+          </div>
+        `;
+      }
+      document.getElementById('subunit-section-title').innerText = `所屬單位 (${subNames.length})`;
       
       let grandTotal = 0;
       let grandNormal = 0;
@@ -1655,9 +1708,9 @@
       document.getElementById('breakdown-forged').innerText = formatNum(grandForged);
       
       const metricTextMap = { 'total': '總辨識數', 'normal': '正常車數', 'warning': '警示車數' };
-      document.getElementById('comp-title-text').innerText = `子單位 ${metricTextMap[activeMetric]} 佔比排行`;
+      document.getElementById('comp-title-text').innerText = '所屬單位佔比排行';
       
-      document.getElementById('subunit-section-title').innerText = `所屬派出所與子單位 (${subNames.length})`;
+      document.getElementById('subunit-section-title').innerText = `所屬單位 (${subNames.length})`;
       renderComparisonRanking(subUnits, subNames);
       renderSubUnitsTable(subUnits, subNames);
       renderConsolidatedChart(subUnits, subNames);
@@ -1683,18 +1736,12 @@
         row.innerHTML = `
           <div class="comp-label" title="${item.name}">${item.name}</div>
           <div class="comp-track">
-            <div class="comp-fill" style="width: 0%" data-pct="${pct}"></div>
+            <div class="comp-fill" style="width: ${pct}%" data-pct="${pct}"></div>
           </div>
           <div class="comp-value">${formatNum(item.val)}</div>
         `;
         container.appendChild(row);
       });
-      
-      setTimeout(() => {
-        container.querySelectorAll('.comp-fill').forEach(fill => {
-          fill.style.width = fill.getAttribute('data-pct') + '%';
-        });
-      }, 50);
     }
     
     // Render Consolidated Multi-Line SVG Chart
@@ -2087,7 +2134,7 @@
         <div style="font-family: 'Microsoft JhengHei', sans-serif; margin-bottom: 25px; border-bottom: 3px double #475569; padding-bottom: 12px; color: #000000; display: flex; justify-content: space-between; align-items: flex-end;">
           <div>
             <h1 style="font-size: 22px; font-weight: 800; margin: 0;">車牌辨識張數報表</h1>
-            <div style="font-size: 13px; color: #475569; font-weight: 700; margin-top: 5px;">母單位：${activeParentUnit} &nbsp;|&nbsp; 派出所/子單位：${subName}</div>
+            <div style="font-size: 13px; color: #475569; font-weight: 700; margin-top: 5px;">單位：${activeParentUnit} &nbsp;|&nbsp; 派出所/子單位：${subName}</div>
           </div>
           <div style="font-size: 11px; text-align: right; color: #64748b; font-weight: 500; line-height: 1.4;">
             <div>資料時間：115年1-6月</div>
@@ -2122,35 +2169,94 @@
     
     // Print Logic for the Entire active unit dashboard
     window.printAll = function() {
-      // Create temporary print header for entire parent unit report
-      const mainContent = document.getElementById('main-content');
-      const firstChild = mainContent.firstChild;
+      window.print();
+    };
+    
+    // Print Logic to combine ALL parent units into a single multi-page document
+    window.printAllCombined = function() {
+      // Create a temporary element to hold all units' HTML
+      const combinedWrapper = document.createElement('div');
+      combinedWrapper.id = 'combined-print-wrapper';
+      combinedWrapper.style.cssText = 'background:#ffffff !important; color:#000000 !important; width:100% !important; display:block !important;';
       
-      const printHeader = document.createElement('div');
-      printHeader.className = 'print-only-header print-header-target';
+      // Save current state
+      const originalParent = activeParentUnit;
+      const originalMetric = activeMetric;
       
-      const dateStr = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' });
-      const timeStr = new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+      const parentKeys = Object.keys(DATA);
       
-      printHeader.innerHTML = `
-        <div style="font-family: 'Microsoft JhengHei', sans-serif; margin-bottom: 25px; border-bottom: 3px double #475569; padding-bottom: 12px; color: #000000; display: flex; justify-content: space-between; align-items: flex-end;">
-          <div>
-            <h1 style="font-size: 24px; font-weight: 800; margin: 0;">${activeParentUnit}</h1>
-          </div>
-          <div style="font-size: 11px; text-align: right; color: #64748b; font-weight: 500; line-height: 1.4;">
-            <div>資料時間：115年1-6月</div>
-          </div>
-        </div>
-      `;
+      // We will temporarily render each unit, capture its rendered main content, and stack them
+      parentKeys.forEach((pKey, idx) => {
+        activeParentUnit = pKey;
+        
+        // Update all DOM elements for this unit
+        updateDashboard();
+        
+        // Create a page container
+        const pageDiv = document.createElement('div');
+        pageDiv.className = 'print-page-break';
+        pageDiv.style.cssText = 'page-break-after: always !important; page-break-inside: avoid !important; width:100% !important; background:#fff !important; margin:0 !important; padding:20px !important;';
+        if (idx === parentKeys.length - 1) {
+          pageDiv.style.pageBreakAfter = 'avoid !important';
+        }
+        
+        // Copy the rendered HTML of main-content
+        pageDiv.innerHTML = document.getElementById('main-content').innerHTML;
+        
+        // Remove UI controls from the printed copy
+        const controls = pageDiv.querySelectorAll('.top-toolbar, .print-all-btn, .print-card-btn, .print-action-col');
+        controls.forEach(c => c.remove());
+        
+        combinedWrapper.appendChild(pageDiv);
+      });
       
-      mainContent.insertBefore(printHeader, firstChild);
+      // Restore original state and HTML
+      activeParentUnit = originalParent;
+      activeMetric = originalMetric;
+      updateDashboard();
       
+      // Inject combined wrapper to body
+      document.body.appendChild(combinedWrapper);
+      
+      // Measure and insert blank pages for odd-page units to support double-sided printing
+      const a4HeightPx = 1000; // conservative threshold for A4 page height in pixels
+      const pageDivs = Array.from(combinedWrapper.querySelectorAll('.print-page-break'));
+      
+      pageDivs.forEach((pageDiv, idx) => {
+        if (pageDiv.classList.contains('blank-page')) return;
+        
+        const height = pageDiv.offsetHeight;
+        const pagesUsed = Math.ceil(height / a4HeightPx);
+        
+        if (pagesUsed % 2 === 1) {
+          const blankPage = document.createElement('div');
+          blankPage.className = 'print-page-break blank-page';
+          const isAbsoluteLast = (idx === pageDivs.length - 1);
+          blankPage.style.cssText = `page-break-after: ${isAbsoluteLast ? 'avoid' : 'always'} !important; page-break-inside: avoid !important; width:100% !important; background:#ffffff !important; display:flex !important; align-items:center !important; justify-content:center !important; height:100vh !important; margin:0 !important; padding:0 !important;`;
+          blankPage.innerHTML = `
+            <div style="font-family: 'Microsoft JhengHei', sans-serif; color: #cbd5e1; font-size: 16px; font-weight: 700; border: 2px dashed #e2e8f0; padding: 20px 40px; border-radius: 8px;">
+              （本頁刻意留白，以利雙面列印）
+            </div>
+          `;
+          
+          pageDiv.style.pageBreakAfter = 'always !important';
+          pageDiv.parentNode.insertBefore(blankPage, pageDiv.nextSibling);
+        }
+      });
+      
+      // Add combined print class to body
+      document.body.classList.add('print-mode-combined');
+      
+      // Trigger printing
       window.print();
       
+      // Cleanup
       const cleanup = () => {
-        const header = document.querySelector('.print-header-target');
-        if (header) header.remove();
+        document.body.classList.remove('print-mode-combined');
+        const wrapper = document.getElementById('combined-print-wrapper');
+        if (wrapper) wrapper.remove();
       };
+      
       window.onafterprint = cleanup;
       setTimeout(cleanup, 1500); // Fail-safe
     };
@@ -2178,6 +2284,10 @@
     // Initial Run
     renderParentList();
     updateDashboard();
+    
+    if (window.location.hash === '#print-all-combined') {
+      printAllCombined();
+    }
   </script>
 
 
