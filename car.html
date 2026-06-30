@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8">
+<!-- saved from url=(0056)https://ephemeral-blancmange-2655db.netlify.app/car.html -->
+<html lang="zh-Hant" data-theme="light"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>車牌辨識張數月報表 互動列印儀表板</title>
   <style>
@@ -729,12 +729,32 @@
       
       /* Hide navigation sidebar, toolbar, search, etc */
       .sidebar,
+      .mobile-nav-bar,
       .top-toolbar,
       .theme-toggle-btn,
       .print-all-btn,
       .print-card-btn,
-      .search-container {
+      .search-container,
+      .print-action-col {
         display: none !important;
+      }
+      
+      .comp-bars {
+        max-height: none !important;
+        overflow: visible !important;
+      }
+      
+      .subunit-table-wrap {
+        overflow: visible !important;
+      }
+      
+      /* Single Card print overrides */
+      body.print-mode-single .app-container {
+        display: none !important;
+      }
+      
+      body.print-mode-single #temp-print-wrapper {
+        display: block !important;
       }
       
       /* Force full width on print area */
@@ -904,6 +924,10 @@
       }
     }
     
+    #temp-print-wrapper {
+      display: none;
+    }
+    
     /* =======================================
        Mobile RWD Styles (Phones/Tablets)
        ======================================= */
@@ -998,7 +1022,7 @@
 <body>
   <div class="app-container">
     <!-- Mobile Navigation Bar -->
-    <div class="mobile-nav-bar" id="mobile-nav-bar"></div>
+    <div class="mobile-nav-bar" id="mobile-nav-bar"><button class="mobile-nav-btn">保大</button><button class="mobile-nav-btn active">三民第二分局</button><button class="mobile-nav-btn ">新興分局</button><button class="mobile-nav-btn ">左營分局</button><button class="mobile-nav-btn ">岡山分局</button><button class="mobile-nav-btn ">仁武分局</button><button class="mobile-nav-btn ">前鎮分局</button><button class="mobile-nav-btn ">苓雅分局</button><button class="mobile-nav-btn ">楠梓分局</button><button class="mobile-nav-btn ">鹽埕分局</button><button class="mobile-nav-btn ">湖內分局</button><button class="mobile-nav-btn ">林園分局</button><button class="mobile-nav-btn ">小港分局</button><button class="mobile-nav-btn ">交大</button><button class="mobile-nav-btn ">鼓山分局</button><button class="mobile-nav-btn ">三民第一分局</button><button class="mobile-nav-btn ">婦幼隊</button><button class="mobile-nav-btn ">鳳山分局</button><button class="mobile-nav-btn ">旗山分局</button><button class="mobile-nav-btn ">六龜分局</button><button class="mobile-nav-btn ">捷運隊</button><button class="mobile-nav-btn ">刑大</button><button class="mobile-nav-btn ">少年隊</button></div>
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="sidebar-header">
@@ -1013,9 +1037,260 @@
         <input type="text" id="search-input" class="search-input" placeholder="搜尋母單位...">
       </div>
       
-      <div class="parent-units-list" id="parent-units-list">
-        <!-- Rendered via JS -->
-      </div>
+      <div class="parent-units-list" id="parent-units-list"><button class="parent-btn" data-unit="保大">
+          <div class="parent-info">
+            <span class="parent-name">保大</span>
+            <span class="parent-sub-count">5 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">114,444</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,4.907206850645846 12,10.324398229770086 24,7.425826646997445 36,8.824164357931853 48,8.634764149246212 60,2"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn active" data-unit="三民第二分局">
+          <div class="parent-info">
+            <span class="parent-name">三民第二分局</span>
+            <span class="parent-sub-count">7 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">35,915</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,5.326164874551971 12,2 24,9.421061614610002 36,14.989247311827956 48,14.721624850657108 60,12.502816180235534"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="新興分局">
+          <div class="parent-info">
+            <span class="parent-name">新興分局</span>
+            <span class="parent-sub-count">7 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">32,323</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,17.857100327478417 12,17.923257583275447 24,17.380768085739803 36,17.81846449009295 48,17.913201680394298 60,2"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="左營分局">
+          <div class="parent-info">
+            <span class="parent-name">左營分局</span>
+            <span class="parent-sub-count">8 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">32,306</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,17.6903363587827 12,17.803523758675922 24,17.791243993593167 36,17.500266951414844 48,17.966364121729846 60,2"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="岡山分局">
+          <div class="parent-info">
+            <span class="parent-name">岡山分局</span>
+            <span class="parent-sub-count">17 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">25,326</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,2 12,6.317902060476317 24,10.725715814824726 36,12.660957987690661 48,13.483007760235484 60,8.595664971902595"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="仁武分局">
+          <div class="parent-info">
+            <span class="parent-name">仁武分局</span>
+            <span class="parent-sub-count">11 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">21,783</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,17.97925083545314 12,17.57783430595042 24,17.764576786872162 36,17.63768766522021 48,17.656840740186542 60,2"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="前鎮分局">
+          <div class="parent-info">
+            <span class="parent-name">前鎮分局</span>
+            <span class="parent-sub-count">7 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">21,597</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,17.908433051128032 12,17.847136167998865 24,17.99697299342572 36,18 48,17.903892541266615 60,2"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="苓雅分局">
+          <div class="parent-info">
+            <span class="parent-name">苓雅分局</span>
+            <span class="parent-sub-count">9 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">20,654</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,17.3206746078547 12,17.139521169949287 24,17.26878169595471 36,17.25179856115108 48,17.532020285411015 60,2"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="楠梓分局">
+          <div class="parent-info">
+            <span class="parent-name">楠梓分局</span>
+            <span class="parent-sub-count">8 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">17,267</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,16.388565378507145 12,16.49655902593965 24,13.493912122816305 36,2 48,9.758602435150873 60,13.299100052938062"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="鹽埕分局">
+          <div class="parent-info">
+            <span class="parent-name">鹽埕分局</span>
+            <span class="parent-sub-count">5 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">14,755</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,16.01942714819427 12,17.851224574512244 24,16.870900788709008 36,17.90967206309672 48,17.748941469489413 60,2"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="湖內分局">
+          <div class="parent-info">
+            <span class="parent-name">湖內分局</span>
+            <span class="parent-sub-count">15 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">14,272</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,5.069005847953216 12,9.541520467836257 24,5.214035087719298 36,12.035087719298247 48,7.370760233918128 60,2"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="林園分局">
+          <div class="parent-info">
+            <span class="parent-name">林園分局</span>
+            <span class="parent-sub-count">11 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">12,659</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,17.19868763871466 12,16.59808935636399 24,17.576956479783846 36,17.547621345170317 48,17.533725755090224 60,2"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="小港分局">
+          <div class="parent-info">
+            <span class="parent-name">小港分局</span>
+            <span class="parent-sub-count">7 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">10,535</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,17.847441860465118 12,17.387906976744187 24,15.95720930232558 36,17.586976744186046 48,17.62046511627907 60,2"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="交大">
+          <div class="parent-info">
+            <span class="parent-name">交大</span>
+            <span class="parent-sub-count">4 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">9,581</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,17.43844608171467 12,17.138379102478233 24,16.941192230408575 36,17.40629604822505 48,16.540388479571334 60,2"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="鼓山分局">
+          <div class="parent-info">
+            <span class="parent-name">鼓山分局</span>
+            <span class="parent-sub-count">9 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">8,009</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,2 12,13.31278608483369 24,13.952395483674092 36,14.137931034482758 48,15.456209948123284 60,10.036618858712238"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="三民第一分局">
+          <div class="parent-info">
+            <span class="parent-name">三民第一分局</span>
+            <span class="parent-sub-count">6 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">7,244</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,2 12,11.440781440781441 24,10.527472527472527 36,15.128205128205128 48,16.25152625152625 60,17.27228327228327"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="婦幼隊">
+          <div class="parent-info">
+            <span class="parent-name">婦幼隊</span>
+            <span class="parent-sub-count">1 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">6,754</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,2 12,10.854848672019767 24,10.004941321803582 36,2.691785052501544 48,6.150710315009265 60,9.550339715873996"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="鳳山分局">
+          <div class="parent-info">
+            <span class="parent-name">鳳山分局</span>
+            <span class="parent-sub-count">12 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">5,009</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,13.224865207738661 12,15.772280367903583 24,16.533460196638124 36,17.548366634950842 48,17.502695845226768 60,2"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="旗山分局">
+          <div class="parent-info">
+            <span class="parent-name">旗山分局</span>
+            <span class="parent-sub-count">18 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">2,506</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,12.492631578947368 12,11.583157894736843 24,16.63578947368421 36,8.753684210526316 48,14.32842105263158 60,2"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="六龜分局">
+          <div class="parent-info">
+            <span class="parent-name">六龜分局</span>
+            <span class="parent-sub-count">17 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">180</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,18 12,18 24,18 36,18 48,18 60,2"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="捷運隊">
+          <div class="parent-info">
+            <span class="parent-name">捷運隊</span>
+            <span class="parent-sub-count">1 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">171</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,18 12,18 24,18 36,18 48,18 60,2"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="刑大">
+          <div class="parent-info">
+            <span class="parent-name">刑大</span>
+            <span class="parent-sub-count">16 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">0</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,18 12,18 24,18 36,18 48,18 60,18"></polyline>
+      </svg>
+          </div>
+        </button><button class="parent-btn " data-unit="少年隊">
+          <div class="parent-info">
+            <span class="parent-name">少年隊</span>
+            <span class="parent-sub-count">1 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">0</span>
+            <svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,18 12,18 24,18 36,18 48,18 60,18"></polyline>
+      </svg>
+          </div>
+        </button></div>
     </aside>
     
     <!-- Main Content -->
@@ -1023,7 +1298,7 @@
       <!-- Top Toolbar -->
       <div class="top-toolbar">
         <div class="active-unit-header">
-          <h2 id="active-unit-title">--</h2>
+          <h2 id="active-unit-title">三民第二分局</h2>
           <p id="active-unit-subtitle">115年1-6月車牌辨識趨勢彙整</p>
         </div>
         
@@ -1050,7 +1325,7 @@
         <!-- Card 1: Selected Metric Total -->
         <div class="metric-card total">
           <div class="card-label" id="metric-total-label">總辨識數 (1-6月)</div>
-          <div class="card-value" id="metric-total-value">0</div>
+          <div class="card-value" id="metric-total-value">35,915</div>
           <div class="card-subtext">
             <span>母單位總加總</span>
             <span id="metric-total-pct">100%</span>
@@ -1060,20 +1335,20 @@
         <!-- Card 2: Normal Car -->
         <div class="metric-card normal">
           <div class="card-label">正常車總計 (1-6月)</div>
-          <div class="card-value" id="metric-normal-value">0</div>
+          <div class="card-value" id="metric-normal-value">35,307</div>
           <div class="card-subtext">
             <span>佔總辨識比率</span>
-            <span id="metric-normal-pct">0%</span>
+            <span id="metric-normal-pct">98.31%</span>
           </div>
         </div>
         
         <!-- Card 3: Warning Car -->
         <div class="metric-card warning">
           <div class="card-label">警示車總計 (1-6月)</div>
-          <div class="card-value" id="metric-warning-value">0</div>
+          <div class="card-value" id="metric-warning-value">608</div>
           <div class="card-subtext">
             <span>佔總辨識比率</span>
-            <span id="metric-warning-pct">0%</span>
+            <span id="metric-warning-pct">1.69%</span>
           </div>
         </div>
         
@@ -1081,29 +1356,80 @@
         <div class="metric-card details">
           <div class="card-label">細項警示車累計 (1-6月)</div>
           <div class="detail-list">
-            <div class="detail-item"><span>失車</span><span id="breakdown-lost">0</span></div>
-            <div class="detail-item"><span>註銷</span><span id="breakdown-revoked">0</span></div>
-            <div class="detail-item"><span>典當</span><span id="breakdown-pawn">0</span></div>
-            <div class="detail-item"><span>AB車</span><span id="breakdown-ab">0</span></div>
-            <div class="detail-item"><span>權利車</span><span id="breakdown-right">0</span></div>
-            <div class="detail-item"><span>偽造</span><span id="breakdown-forged">0</span></div>
+            <div class="detail-item"><span>失車</span><span id="breakdown-lost">42</span></div>
+            <div class="detail-item"><span>註銷</span><span id="breakdown-revoked">275</span></div>
+            <div class="detail-item"><span>典當</span><span id="breakdown-pawn">248</span></div>
+            <div class="detail-item"><span>AB車</span><span id="breakdown-ab">5</span></div>
+            <div class="detail-item"><span>權利車</span><span id="breakdown-right">36</span></div>
+            <div class="detail-item"><span>偽造</span><span id="breakdown-forged">2</span></div>
           </div>
         </div>
       </section>
       
       <!-- Comparison Chart Section -->
       <section class="comparison-section">
-        <h3 class="comp-title" id="comp-title-text">子單位數據佔比排行</h3>
-        <div class="comp-bars" id="comparison-bars">
-          <!-- Rendered via JS -->
-        </div>
+        <h3 class="comp-title" id="comp-title-text">子單位 總辨識數 佔比排行</h3>
+        <div class="comp-bars" id="comparison-bars"><div class="comp-row">
+          <div class="comp-label" title="鼎金派出所">鼎金派出所</div>
+          <div class="comp-track">
+            <div class="comp-fill" style="width: 100%;" data-pct="100.0"></div>
+          </div>
+          <div class="comp-value">12,596</div>
+        </div><div class="comp-row">
+          <div class="comp-label" title="陽明派出所">陽明派出所</div>
+          <div class="comp-track">
+            <div class="comp-fill" style="width: 71.7%;" data-pct="71.7"></div>
+          </div>
+          <div class="comp-value">9,032</div>
+        </div><div class="comp-row">
+          <div class="comp-label" title="鼎山派出所">鼎山派出所</div>
+          <div class="comp-track">
+            <div class="comp-fill" style="width: 46.8%;" data-pct="46.8"></div>
+          </div>
+          <div class="comp-value">5,896</div>
+        </div><div class="comp-row">
+          <div class="comp-label" title="覺民路派出所">覺民路派出所</div>
+          <div class="comp-track">
+            <div class="comp-fill" style="width: 45.9%;" data-pct="45.9"></div>
+          </div>
+          <div class="comp-value">5,783</div>
+        </div><div class="comp-row">
+          <div class="comp-label" title="民族路派出所">民族路派出所</div>
+          <div class="comp-track">
+            <div class="comp-fill" style="width: 20.7%;" data-pct="20.7"></div>
+          </div>
+          <div class="comp-value">2,608</div>
+        </div><div class="comp-row">
+          <div class="comp-label" title="警備隊">警備隊</div>
+          <div class="comp-track">
+            <div class="comp-fill" style="width: 0%" data-pct="0.0"></div>
+          </div>
+          <div class="comp-value">0</div>
+        </div><div class="comp-row">
+          <div class="comp-label" title="交通分隊">交通分隊</div>
+          <div class="comp-track">
+            <div class="comp-fill" style="width: 0%" data-pct="0.0"></div>
+          </div>
+          <div class="comp-value">0</div>
+        </div></div>
       </section>
       
       <!-- Sub-units Details Section -->
       <section>
-        <h3 class="subunit-section-title" id="subunit-section-title">所屬派出所與子單位</h3>
-        <div class="subunits-grid" id="subunits-grid" style="margin-top: 16px;">
-          <!-- Rendered via JS -->
+        <h3 class="subunit-section-title" id="subunit-section-title">所屬派出所與子單位 (7)</h3>
+        <div id="consolidated-chart-container" class="comparison-section" style="margin-top: 16px;">
+          <h4 class="comp-title">各子單位趨勢對比</h4>
+          <div class="chart-container" style="height: 260px;">
+            <div class="chart-tooltip" id="tooltip-consolidated" style="display: none;"></div>
+            <div id="consolidated-chart-svg-wrap" style="width: 100%; height: 100%;"></div>
+          </div>
+        </div>
+        <div id="subunit-table-container" class="comparison-section" style="margin-top: 24px;">
+          <div class="subunit-table-wrap">
+            <table class="subunit-table" id="subunit-consolidated-table">
+              <!-- Table will be rendered here dynamically -->
+            </table>
+          </div>
         </div>
       </section>
     </main>
@@ -1331,8 +1657,10 @@
       const metricTextMap = { 'total': '總辨識數', 'normal': '正常車數', 'warning': '警示車數' };
       document.getElementById('comp-title-text').innerText = `子單位 ${metricTextMap[activeMetric]} 佔比排行`;
       
+      document.getElementById('subunit-section-title').innerText = `所屬派出所與子單位 (${subNames.length})`;
       renderComparisonRanking(subUnits, subNames);
-      renderSubUnitsCards(subUnits, subNames);
+      renderSubUnitsTable(subUnits, subNames);
+      renderConsolidatedChart(subUnits, subNames);
     }
     
     // Render Ranking comparison bars
@@ -1369,179 +1697,273 @@
       }, 50);
     }
     
-    // Render Sub-units Grid Cards
-    function renderSubUnitsCards(subUnits, subNames) {
-      const grid = document.getElementById('subunits-grid');
-      grid.innerHTML = '';
+    // Render Consolidated Multi-Line SVG Chart
+    function renderConsolidatedChart(subUnits, subNames) {
+      const container = document.getElementById('consolidated-chart-svg-wrap');
+      const tooltip = document.getElementById('tooltip-consolidated');
+      container.innerHTML = '';
       
-      subNames.forEach(subName => {
-        const sub = subUnits[subName];
-        const card = document.createElement('div');
-        card.className = 'subunit-card';
-        
-        const activeData = sub[activeMetric];
-        const activeSum = sumArr(activeData);
-        
-        card.innerHTML = `
-          <div class="subunit-card-header">
-            <span class="subunit-card-title">${subName}</span>
-            <div class="subunit-header-actions">
-              <span class="subunit-badge">1-6月累計 ${formatNum(activeSum)}</span>
-              <button class="print-card-btn" onclick="printCard(event, '${subName}')">
-                <span>🖨️</span>列印
-              </button>
-            </div>
-          </div>
-          
-          <div class="chart-container" id="chart-${subName.replace(/\s+/g, '_')}">
-            <!-- Custom interactive SVG gets injected here -->
-          </div>
-          
-          <div class="subunit-table-wrap">
-            <table class="subunit-table">
-              <thead>
-                <tr>
-                  <th>1月</th>
-                  <th>2月</th>
-                  <th>3月</th>
-                  <th>4月</th>
-                  <th>5月</th>
-                  <th>6月</th>
-                  <th>總計</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>${formatNum(activeData[0])}</td>
-                  <td>${formatNum(activeData[1])}</td>
-                  <td>${formatNum(activeData[2])}</td>
-                  <td>${formatNum(activeData[3])}</td>
-                  <td>${formatNum(activeData[4])}</td>
-                  <td>${formatNum(activeData[5])}</td>
-                  <td class="sub-total-col">${formatNum(activeSum)}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        `;
-        
-        grid.appendChild(card);
-        
-        const chartContainer = card.querySelector('.chart-container');
-        injectInteractiveSVG(chartContainer, activeData, subName, sub);
+      const width = 800;
+      const height = 260;
+      const paddingLeft = 60;
+      const paddingRight = 145;
+      const paddingTop = 20;
+      const paddingBottom = 35;
+      
+      const chartWidth = width - paddingLeft - paddingRight;
+      const chartHeight = height - paddingTop - paddingBottom;
+      
+      const isAllZero = subNames.every(name => sumArr(subUnits[name][activeMetric]) === 0);
+      
+      let maxVal = 0;
+      subNames.forEach(name => {
+        const data = subUnits[name][activeMetric];
+        const subMax = Math.max(...data);
+        if (subMax > maxVal) maxVal = subMax;
       });
-    }
-    
-    // Draw and Inject interactive SVG chart
-    function injectInteractiveSVG(container, data, unitName, fullSubObj) {
-      const width = 450;
-      const height = 150;
-      const paddingX = 35;
-      const paddingY = 20;
+      if (maxVal === 0) maxVal = 1;
       
-      const maxVal = Math.max(...data, 1);
-      const isAllZero = sumArr(data) === 0;
-      
-      const points = data.map((val, idx) => {
-        const x = paddingX + (idx * (width - 2 * paddingX) / 5);
-        const y = height - paddingY - (val / maxVal) * (height - 2 * paddingY);
-        return { x, y, val };
-      });
-      
-      let linePath = `M ${points[0].x} ${points[0].y}`;
-      for (let i = 1; i < points.length; i++) {
-        linePath += ` L ${points[i].x} ${points[i].y}`;
+      // Calculate niceMax and niceInterval for round ticks on Y axis
+      let niceMax = maxVal;
+      let niceInterval = Math.ceil(maxVal / 4);
+      if (maxVal > 0) {
+        const targetGridCount = 4;
+        const rawInterval = maxVal / targetGridCount;
+        const log10 = Math.log10(rawInterval);
+        const power = Math.floor(log10);
+        const magnitude = Math.pow(10, power);
+        const normalized = rawInterval / magnitude;
+        
+        let step = 10;
+        if (normalized <= 1.2) step = 1;
+        else if (normalized <= 2.5) step = 2;
+        else if (normalized <= 5) step = 5;
+        
+        niceInterval = step * magnitude;
+        niceMax = Math.ceil(maxVal / niceInterval) * niceInterval;
       }
       
-      let areaPath = linePath + ` L ${points[points.length-1].x} ${height - paddingY} L ${points[0].x} ${height - paddingY} Z`;
-      const gradId = 'grad-' + Math.random().toString(36).substring(2, 9);
+      const LINE_COLORS = [
+        '#4f46e5', // Indigo
+        '#06b6d4', // Cyan
+        '#10b981', // Emerald
+        '#f43f5e', // Rose
+        '#eab308', // Amber
+        '#a855f7', // Purple
+        '#ec4899', // Pink
+        '#f97316', // Orange
+        '#14b8a6', // Teal
+        '#3b82f6', // Blue
+        '#84cc16', // Lime
+        '#22c55e', // Green
+        '#0284c7', // Sky
+        '#d946ef', // Fuchsia
+        '#8b5cf6', // Violet
+      ];
+      
+      // Calculate points for each subunit
+      const series = subNames.map((name, idx) => {
+        const data = subUnits[name][activeMetric];
+        const color = LINE_COLORS[idx % LINE_COLORS.length];
+        const points = data.map((val, mIdx) => {
+          const x = paddingLeft + mIdx * (chartWidth / 5);
+          const y = height - paddingBottom - (val / niceMax) * chartHeight;
+          return { x, y, val };
+        });
+        return { name, data, color, points };
+      });
+      
+      // Calculate collision-resolved Y coordinates for labels at the end of each line (month 6)
+      const labels = series.map(s => ({
+        name: s.name,
+        actualY: s.points[5].y,
+        y: s.points[5].y,
+        color: s.color
+      }));
+      
+      // Sort labels by actualY to preserve order
+      labels.sort((a, b) => a.y - b.y);
+      
+      const minGap = 13; // min vertical spacing
+      // Push down
+      for (let i = 1; i < labels.length; i++) {
+        if (labels[i].y - labels[i-1].y < minGap) {
+          labels[i].y = labels[i-1].y + minGap;
+        }
+      }
+      // Push up if out of bottom boundaries
+      const maxLimit = height - paddingBottom + 5;
+      if (labels.length > 0 && labels[labels.length - 1].y > maxLimit) {
+        labels[labels.length - 1].y = maxLimit;
+        for (let i = labels.length - 2; i >= 0; i--) {
+          if (labels[i+1].y - labels[i].y < minGap) {
+            labels[i].y = labels[i+1].y - minGap;
+          }
+        }
+      }
+      // Push down if out of top boundaries
+      const minLimit = paddingTop - 5;
+      if (labels.length > 0 && labels[0].y < minLimit) {
+        labels[0].y = minLimit;
+        for (let i = 1; i < labels.length; i++) {
+          if (labels[i].y - labels[i-1].y < minGap) {
+            labels[i].y = labels[i-1].y + minGap;
+          }
+        }
+      }
+      
+      const resolvedYMap = {};
+      labels.forEach(l => {
+        resolvedYMap[l.name] = l.y;
+      });
       
       let svgHtml = `
-        <div class="chart-tooltip" id="tooltip-${gradId}"></div>
-        <svg viewBox="0 0 ${width} ${height}" class="chart-svg">
-          <defs>
-            <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="var(--primary)" stop-opacity="0.3"/>
-              <stop offset="100%" stop-color="var(--primary)" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          
-          <!-- Grid lines -->
-          <line x1="${paddingX}" y1="${paddingY}" x2="${width - paddingX}" y2="${paddingY}" stroke="var(--border-color)" stroke-dasharray="3,3" />
-          <line x1="${paddingX}" y1="${height/2}" x2="${width - paddingX}" y2="${height/2}" stroke="var(--border-color)" stroke-dasharray="3,3" />
-          <line x1="${paddingX}" y1="${height - paddingY}" x2="${width - paddingX}" y2="${height - paddingY}" stroke="var(--border-color)" />
-          
+        <svg viewBox="0 0 ${width} ${height}" class="chart-svg" style="width:100%; height:100%;">
+      `;
+
+      // Y Axis Grid lines and labels using nice ticks
+      const gridCount = Math.round(niceMax / niceInterval);
+      for (let i = 0; i <= gridCount; i++) {
+        const val = i * niceInterval;
+        const y = height - paddingBottom - (val / niceMax) * chartHeight;
+        
+        svgHtml += `
+          <line x1="${paddingLeft}" y1="${y}" x2="${width - paddingRight}" y2="${y}" stroke="var(--border-color)" ${i === 0 ? '' : 'stroke-dasharray="3,3"'} />
+          <text x="${paddingLeft - 8}" y="${y + 4}" text-anchor="end" font-size="10" font-weight="700" fill="var(--text-muted)">${formatNum(val)}</text>
+        `;
+      }
+
+      svgHtml += `
           <!-- Interactive Guide Line -->
-          <line id="guide-${gradId}" x1="0" y1="${paddingY}" x2="0" y2="${height - paddingY}" stroke="var(--primary)" stroke-width="1.5" stroke-dasharray="4,4" style="display:none;" />
-          
-          ${isAllZero ? `
-            <text x="${width/2}" y="${height/2 + 5}" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-muted)">此期間無辨識數據</text>
-          ` : `
-            <path d="${areaPath}" fill="url(#${gradId})" />
-            <path d="${linePath}" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-            ${points.map((p, idx) => `
-              <circle id="dot-${gradId}-${idx}" cx="${p.x}" cy="${p.y}" r="4" fill="var(--bg-panel)" stroke="var(--primary)" stroke-width="2.5" class="chart-dot" />
-            `).join('')}
-          `}
-          
-          ${points.map((p, idx) => `
-            <text x="${p.x}" y="${height - 4}" text-anchor="middle" font-size="10" font-weight="700" fill="var(--text-muted)">${idx+1}月</text>
-          `).join('')}
-          
-          <rect class="chart-hover-trigger" x="${paddingX - 10}" y="0" width="${width - 2*paddingX + 20}" height="${height}" fill="transparent" />
-        </svg>
+          <line id="guide-consolidated" x1="0" y1="${paddingTop}" x2="0" y2="${height - paddingBottom}" stroke="var(--primary)" stroke-width="1.5" stroke-dasharray="4,4" style="display:none;" />
       `;
       
+      if (isAllZero) {
+        svgHtml += `
+          <text x="${(width - paddingRight + paddingLeft)/2}" y="${(height - paddingBottom + paddingTop)/2 + 5}" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text-muted)">此期間無辨識數據</text>
+        `;
+      } else {
+        // Helper lines to labels
+        series.forEach(s => {
+          const actualY = s.points[5].y;
+          const resolvedY = resolvedYMap[s.name];
+          if (Math.abs(actualY - resolvedY) > 1) {
+            svgHtml += `<path d="M ${s.points[5].x} ${actualY} L ${s.points[5].x + 10} ${resolvedY}" stroke="${s.color}" stroke-width="1" stroke-dasharray="2,2" fill="none" opacity="0.6" />`;
+          }
+        });
+        
+        // Draw paths
+        series.forEach(s => {
+          let linePath = `M ${s.points[0].x} ${s.points[0].y}`;
+          for (let i = 1; i < s.points.length; i++) {
+            linePath += ` L ${s.points[i].x} ${s.points[i].y}`;
+          }
+          
+          svgHtml += `
+            <path d="${linePath}" fill="none" stroke="${s.color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          `;
+          
+          // Draw small dots
+          s.points.forEach((p, idx) => {
+            svgHtml += `
+              <circle id="dot-consolidated-${s.name.replace(/\s+/g, '_')}-${idx}" cx="${p.x}" cy="${p.y}" r="3" fill="var(--bg-panel)" stroke="${s.color}" stroke-width="2" class="chart-dot" />
+            `;
+          });
+        });
+        
+        // Draw labels
+        labels.forEach(l => {
+          svgHtml += `
+            <text x="${paddingLeft + chartWidth + 12}" y="${l.y + 4}" fill="${l.color}" font-size="11" font-weight="700" text-anchor="start">${l.name}</text>
+          `;
+        });
+      }
+      
+      // X Axis
+      for (let i = 0; i < 6; i++) {
+        const x = paddingLeft + i * (chartWidth / 5);
+        svgHtml += `
+          <text x="${x}" y="${height - 12}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-muted)">${i+1}月</text>
+        `;
+      }
+      
+      if (!isAllZero) {
+        svgHtml += `
+          <rect class="chart-hover-trigger" x="${paddingLeft - 10}" y="0" width="${chartWidth + 20}" height="${height}" fill="transparent" />
+        `;
+      }
+      
+      svgHtml += `</svg>`;
       container.innerHTML = svgHtml;
       
-      const svg = container.querySelector('.chart-svg');
-      const tooltip = container.querySelector('.chart-tooltip');
-      const guideLine = svg.getElementById(`guide-${gradId}`);
-      const trigger = svg.querySelector('.chart-hover-trigger');
-      
       if (isAllZero) return;
+      
+      const svg = container.querySelector('svg');
+      const guideLine = svg.getElementById('guide-consolidated');
+      const trigger = svg.querySelector('.chart-hover-trigger');
       
       trigger.addEventListener('mousemove', (e) => {
         const rect = svg.getBoundingClientRect();
         const mouseX = e.clientX - rect.left;
-        
         const internalX = (mouseX / rect.width) * width;
         
         let closestIdx = 0;
         let minDist = Infinity;
-        points.forEach((p, idx) => {
-          const dist = Math.abs(p.x - internalX);
+        for (let i = 0; i < 6; i++) {
+          const x = paddingLeft + i * (chartWidth / 5);
+          const dist = Math.abs(x - internalX);
           if (dist < minDist) {
             minDist = dist;
-            closestIdx = idx;
+            closestIdx = i;
           }
-        });
+        }
         
-        const activePoint = points[closestIdx];
+        const activeX = paddingLeft + closestIdx * (chartWidth / 5);
         
-        guideLine.setAttribute('x1', activePoint.x);
-        guideLine.setAttribute('x2', activePoint.x);
+        guideLine.setAttribute('x1', activeX);
+        guideLine.setAttribute('x2', activeX);
         guideLine.style.display = 'block';
         
-        points.forEach((_, idx) => {
-          const dot = svg.getElementById(`dot-${gradId}-${idx}`);
-          if (idx === closestIdx) {
-            dot.classList.add('active');
-          } else {
-            dot.classList.remove('active');
+        series.forEach(s => {
+          for (let idx = 0; idx < 6; idx++) {
+            const dot = svg.getElementById(`dot-consolidated-${s.name.replace(/\s+/g, '_')}-${idx}`);
+            if (dot) {
+              if (idx === closestIdx) {
+                dot.classList.add('active');
+                dot.setAttribute('r', '5');
+              } else {
+                dot.classList.remove('active');
+                dot.setAttribute('r', '3');
+              }
+            }
           }
         });
         
-        const tooltipX = (activePoint.x / width) * rect.width + 10;
-        const tooltipY = (activePoint.y / height) * rect.height - 75;
+        const tooltipData = series.map(s => {
+          return {
+            name: s.name,
+            val: s.data[closestIdx],
+            color: s.color
+          };
+        }).sort((a, b) => b.val - a.val);
         
-        tooltip.innerHTML = `
-          <div class="tooltip-title">115年0${closestIdx + 1}月</div>
-          <div class="tooltip-row total"><span>總辨識:</span><span>${formatNum(fullSubObj.total[closestIdx])}</span></div>
-          <div class="tooltip-row normal"><span>正常車:</span><span>${formatNum(fullSubObj.normal[closestIdx])}</span></div>
-          <div class="tooltip-row warning"><span>警示車:</span><span>${formatNum(fullSubObj.warning[closestIdx])}</span></div>
+        const tooltipX = (activeX / width) * rect.width + 10;
+        const tooltipY = Math.max(10, (e.clientY - rect.top) - 100);
+        
+        let tooltipHtml = `
+          <div class="tooltip-title" style="font-weight:800; margin-bottom:6px; border-bottom:1px solid rgba(255,255,255,0.2); padding-bottom:4px; font-size:12px;">115年0${closestIdx + 1}月</div>
         `;
         
+        tooltipData.forEach(item => {
+          tooltipHtml += `
+            <div class="tooltip-row" style="display:flex; justify-content:space-between; gap:16px; margin-bottom:3px; font-variant-numeric:tabular-nums; font-size:11px;">
+              <span style="color:${item.color}; font-weight:700;">${item.name}:</span>
+              <span style="font-weight:700; color:#fff;">${formatNum(item.val)}</span>
+            </div>
+          `;
+        });
+        
+        tooltip.innerHTML = tooltipHtml;
         tooltip.style.left = `${tooltipX}px`;
         tooltip.style.top = `${tooltipY}px`;
         tooltip.style.display = 'block';
@@ -1549,35 +1971,112 @@
       
       trigger.addEventListener('mouseleave', () => {
         guideLine.style.display = 'none';
-        points.forEach((_, idx) => {
-          const dot = svg.getElementById(`dot-${gradId}-${idx}`);
-          if (dot) dot.classList.remove('active');
+        series.forEach(s => {
+          for (let idx = 0; idx < 6; idx++) {
+            const dot = svg.getElementById(`dot-consolidated-${s.name.replace(/\s+/g, '_')}-${idx}`);
+            if (dot) {
+              dot.classList.remove('active');
+              dot.setAttribute('r', '3');
+            }
+          }
         });
         tooltip.style.display = 'none';
       });
+    }
+    
+    // Render Sub-units Dynamic Consolidated Table
+    function renderSubUnitsTable(subUnits, subNames) {
+      const table = document.getElementById('subunit-consolidated-table');
+      
+      let html = `
+        <thead>
+          <tr>
+            <th style="text-align: left; padding-left: 16px;">子單位名稱</th>
+            <th>1月</th>
+            <th>2月</th>
+            <th>3月</th>
+            <th>4月</th>
+            <th>5月</th>
+            <th>6月</th>
+            <th>總計</th>
+          </tr>
+        </thead>
+        <tbody>
+      `;
+      
+      subNames.forEach(subName => {
+        const sub = subUnits[subName];
+        const activeData = sub[activeMetric];
+        const activeSum = sumArr(activeData);
+        
+        html += `
+          <tr>
+            <td style="text-align: left; padding-left: 16px; font-weight: 700;">${subName}</td>
+            <td>${formatNum(activeData[0])}</td>
+            <td>${formatNum(activeData[1])}</td>
+            <td>${formatNum(activeData[2])}</td>
+            <td>${formatNum(activeData[3])}</td>
+            <td>${formatNum(activeData[4])}</td>
+            <td>${formatNum(activeData[5])}</td>
+            <td class="sub-total-col" style="font-weight: 800; color: var(--primary);">${formatNum(activeSum)}</td>
+          </tr>
+        `;
+      });
+      
+      html += `</tbody>`;
+      table.innerHTML = html;
     }
     
     // Print Logic for Single Sub-unit Card
     window.printCard = function(event, subName) {
       event.stopPropagation();
       
-      const cards = document.querySelectorAll('.subunit-card');
-      let targetCard = null;
+      const sub = DATA[activeParentUnit][subName];
+      if (!sub) return;
       
-      cards.forEach(card => {
-        const title = card.querySelector('.subunit-card-title').innerText;
-        if (title === subName) {
-          targetCard = card;
-        }
-      });
+      const activeData = sub[activeMetric];
+      const activeSum = sumArr(activeData);
       
-      if (!targetCard) return;
+      // Create a temporary element for printing
+      const tempCard = document.createElement('div');
+      tempCard.id = 'temp-print-card';
+      tempCard.className = 'subunit-card print-target';
+      tempCard.style.cssText = 'background:#ffffff !important; border:1px solid #334155 !important; padding:25px !important; width:100% !important; margin:0 !important; display:flex; flex-direction:column; gap:16px;';
       
-      // Setup print mode
-      document.body.classList.add('print-mode-single');
-      targetCard.classList.add('print-target');
+      tempCard.innerHTML = `
+        <div class="subunit-card-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <span class="subunit-card-title" style="font-weight:800; font-size:18px; color:#000;">${subName}</span>
+          <span class="subunit-badge" style="font-weight:700; border:1px solid #cbd5e1; padding:4px 8px; border-radius:99px; font-size:12px; color:#000;">1-6月累計 ${formatNum(activeSum)}</span>
+        </div>
+        <div class="subunit-table-wrap" style="border:1px solid #475569 !important; border-radius:10px; overflow:visible;">
+          <table class="subunit-table" style="width:100%; border-collapse:collapse; font-size:12px; text-align:center; color:#000;">
+            <thead>
+              <tr style="background-color:#f1f5f9;">
+                <th style="border:1px solid #cbd5e1; padding:6px 8px; font-weight:700;">1月</th>
+                <th style="border:1px solid #cbd5e1; padding:6px 8px; font-weight:700;">2月</th>
+                <th style="border:1px solid #cbd5e1; padding:6px 8px; font-weight:700;">3月</th>
+                <th style="border:1px solid #cbd5e1; padding:6px 8px; font-weight:700;">4月</th>
+                <th style="border:1px solid #cbd5e1; padding:6px 8px; font-weight:700;">5月</th>
+                <th style="border:1px solid #cbd5e1; padding:6px 8px; font-weight:700;">6月</th>
+                <th style="border:1px solid #cbd5e1; padding:6px 8px; font-weight:700;">總計</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border:1px solid #cbd5e1; padding:6px 8px;">${formatNum(activeData[0])}</td>
+                <td style="border:1px solid #cbd5e1; padding:6px 8px;">${formatNum(activeData[1])}</td>
+                <td style="border:1px solid #cbd5e1; padding:6px 8px;">${formatNum(activeData[2])}</td>
+                <td style="border:1px solid #cbd5e1; padding:6px 8px;">${formatNum(activeData[3])}</td>
+                <td style="border:1px solid #cbd5e1; padding:6px 8px;">${formatNum(activeData[4])}</td>
+                <td style="border:1px solid #cbd5e1; padding:6px 8px;">${formatNum(activeData[5])}</td>
+                <td class="sub-total-col" style="border:1px solid #cbd5e1; padding:6px 8px; font-weight:800; background-color:#f8fafc; color:#4f46e5;">${formatNum(activeSum)}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `;
       
-      // Inject official print header dynamically
+      // Inject print header
       const printHeader = document.createElement('div');
       printHeader.className = 'print-only-header print-header-target';
       
@@ -1597,17 +2096,24 @@
         </div>
       `;
       
-      targetCard.parentNode.insertBefore(printHeader, targetCard);
+      // Add to body
+      const printContainer = document.createElement('div');
+      printContainer.id = 'temp-print-wrapper';
+      printContainer.appendChild(printHeader);
+      printContainer.appendChild(tempCard);
+      document.body.appendChild(printContainer);
+      
+      // Setup print mode class on body
+      document.body.classList.add('print-mode-single');
       
       // Trigger printing
       window.print();
       
-      // Clean up after print window opens
+      // Cleanup
       const cleanup = () => {
         document.body.classList.remove('print-mode-single');
-        targetCard.classList.remove('print-target');
-        const header = document.querySelector('.print-header-target');
-        if (header) header.remove();
+        const wrapper = document.getElementById('temp-print-wrapper');
+        if (wrapper) wrapper.remove();
       };
       
       window.onafterprint = cleanup;
@@ -1629,12 +2135,10 @@
       printHeader.innerHTML = `
         <div style="font-family: 'Microsoft JhengHei', sans-serif; margin-bottom: 25px; border-bottom: 3px double #475569; padding-bottom: 12px; color: #000000; display: flex; justify-content: space-between; align-items: flex-end;">
           <div>
-            <h1 style="font-size: 24px; font-weight: 800; margin: 0;">車牌辨識張數彙總報表</h1>
-            <div style="font-size: 14px; color: #475569; font-weight: 700; margin-top: 5px;">母單位：${activeParentUnit} 彙整報表</div>
+            <h1 style="font-size: 24px; font-weight: 800; margin: 0;">${activeParentUnit}</h1>
           </div>
           <div style="font-size: 11px; text-align: right; color: #64748b; font-weight: 500; line-height: 1.4;">
             <div>資料時間：115年1-6月</div>
-            <div>列印時間：${dateStr} ${timeStr}</div>
           </div>
         </div>
       `;
@@ -1675,5 +2179,20 @@
     renderParentList();
     updateDashboard();
   </script>
-</body>
-</html>
+
+
+<audio class="audio-output" style="display: none;"></audio><div id="volume-booster-visusalizer">
+                    <div class="sound">
+                        <div class="sound-icon"></div>
+                        <div class="sound-wave sound-wave_one"></div>
+                        <div class="sound-wave sound-wave_two"></div>
+                        <div class="sound-wave sound-wave_three"></div>
+                    </div>
+                    <div class="segments-box">
+                        <div data-range="1-20" class="segment"><span></span></div>
+                        <div data-range="21-40" class="segment"><span></span></div>
+                        <div data-range="41-60" class="segment"><span></span></div>
+                        <div data-range="61-80" class="segment"><span></span></div>
+                        <div data-range="81-100" class="segment"><span></span></div>
+                    </div>
+                </div></body></html>
