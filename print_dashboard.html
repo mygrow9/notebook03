@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>車牌辨識張數月報表 互動列印儀表板</title>
+  <style>
+    /* Design Tokens */
+    :root {
+      /* Light Theme (Default for Print-friendly Dashboard) */
+      --bg-app: #f8fafc;
+      --bg-sidebar: #ffffff;
+      --bg-panel: #ffffff;
+      --bg-panel-hover: #f1f5f9;
+      --border-color: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      
+      --primary: #4f46e5; /* Indigo */
+      --primary-glow: rgba(79, 70, 229, 0.1);
+      --accent-cyan: #0891b2;
+      --accent-rose: #e11d48;
+      --accent-emerald: #059669;
+      
+      --gradient-primary: linear-gradient(135deg, #4f46e5, #7c3aed);
+      --gradient-cyan: linear-gradient(135deg, #0891b2, #0284c7);
+      --gradient-rose: linear-gradient(135deg, #e11d48, #db2777);
+      --gradient-emerald: linear-gradient(135deg, #059669, #0d9488);
+      
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.02), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.03), 0 10px 10px -5px rgba(0, 0, 0, 0.01);
+      --transition-base: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    [data-theme="dark"] {
+      --bg-app: #0b0f19;
+      --bg-sidebar: #111827;
+      --bg-panel: #1e293b;
+      --bg-panel-hover: #334155;
+      --border-color: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      
+      --primary: #6366f1;
+      --primary-glow: rgba(99, 102, 241, 0.15);
+      --accent-cyan: #06b6d4;
+      --accent-rose: #f43f5e;
+      --accent-emerald: #10b981;
+      
+      --gradient-primary: linear-gradient(135deg, #6366f1, #8b5cf6);
+      --gradient-cyan: linear-gradient(135deg, #06b6d4, #0ea5e9);
+      --gradient-rose: linear-gradient(135deg, #f43f5e, #ec4899);
+      --gradient-emerald: linear-gradient(135deg, #10b981, #059669);
+      
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: "Microsoft JhengHei", "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-app);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition-base);
+    }
+    
+    /* Layout Structure */
+    .app-container {
+      display: flex;
+      flex: 1;
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      width: 340px;
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      flex-shrink: 0;
+      transition: var(--transition-base);
+      z-index: 100;
+    }
+    
+    .sidebar-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .sidebar-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .sidebar-title span {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .sidebar-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    
+    .search-container {
+      padding: 16px 24px;
+      position: relative;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 10px 14px 10px 38px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-app);
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition-base);
+    }
+    
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 36px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    
+    .parent-units-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 16px 20px;
+    }
+    
+    /* Scrollbar Style */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 99px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+    
+    /* Parent Unit Button/Card */
+    .parent-btn {
+      width: 100%;
+      border: 1px solid transparent;
+      background: transparent;
+      padding: 12px 16px;
+      border-radius: 12px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      transition: var(--transition-base);
+    }
+    
+    .parent-btn:hover {
+      background-color: var(--bg-panel-hover);
+    }
+    
+    .parent-btn.active {
+      background-color: var(--primary-glow);
+      border-color: var(--primary);
+    }
+    
+    .parent-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    
+    .parent-name {
+      font-weight: 700;
+      color: var(--text-main);
+      font-size: 15px;
+    }
+    
+    .parent-btn.active .parent-name {
+      color: var(--primary);
+    }
+    
+    .parent-sub-count {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    
+    .parent-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    
+    .parent-total {
+      font-weight: 800;
+      font-size: 15px;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    .sparkline-svg {
+      width: 60px;
+      height: 20px;
+      opacity: 0.7;
+    }
+    
+    .parent-btn.active .sparkline-svg {
+      opacity: 1;
+    }
+    
+    /* Main Content Area */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      background-color: var(--bg-app);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: relative;
+    }
+    
+    /* Top Toolbar */
+    .top-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 16px;
+    }
+    
+    .active-unit-header h2 {
+      font-size: 24px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .active-unit-header p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    /* Print All Button */
+    .print-all-btn {
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-panel);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-base);
+    }
+    
+    .print-all-btn:hover {
+      background-color: var(--bg-panel-hover);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    
+    /* Metrics Selector Toggle */
+    .metric-toggle {
+      display: flex;
+      background-color: var(--bg-panel);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+    }
+    
+    .toggle-btn {
+      border: 0;
+      background: transparent;
+      padding: 8px 16px;
+      border-radius: 7px;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition-base);
+    }
+    
+    .toggle-btn:hover {
+      color: var(--text-main);
+    }
+    
+    .toggle-btn.active {
+      background-color: var(--primary);
+      color: #fff;
+    }
+    
+    /* Theme Toggle Button */
+    .theme-toggle-btn {
+      background-color: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      width: 38px;
+      height: 38px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: var(--transition-base);
+    }
+    
+    .theme-toggle-btn:hover {
+      color: var(--text-main);
+      background-color: var(--bg-panel-hover);
+    }
+    
+    /* Overview Cards Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    
+    .metric-card {
+      background-color: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition-base);
+    }
+    
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+    }
+    
+    .metric-card.total::before { background: var(--gradient-primary); }
+    .metric-card.normal::before { background: var(--gradient-emerald); }
+    .metric-card.warning::before { background: var(--gradient-rose); }
+    .metric-card.details::before { background: var(--gradient-cyan); }
+    
+    .card-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    
+    .card-value {
+      font-size: 28px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    .card-subtext {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .detail-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      font-size: 11px;
+      margin-top: 4px;
+    }
+    
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 2px;
+    }
+    
+    .detail-item span:last-child {
+      font-weight: 700;
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+    }
+    
+    /* Comparison Bar Chart Card */
+    .comparison-section {
+      background-color: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .comp-title {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: var(--text-main);
+    }
+    
+    .comp-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 260px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    
+    .comp-row {
+      display: grid;
+      grid-template-columns: 140px 1fr 100px;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .comp-label {
+      font-size: 13px;
+      font-weight: 700;
+      text-align: right;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .comp-track {
+      height: 14px;
+      background-color: var(--bg-app);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    
+    .comp-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: var(--gradient-primary);
+      width: 0%;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .comp-value {
+      font-size: 13px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    /* Sub-units Grid */
+    .subunit-section-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-top: 10px;
+      border-left: 4px solid var(--primary);
+      padding-left: 10px;
+    }
+    
+    .subunits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 24px;
+    }
+    
+    .subunit-card {
+      background-color: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition-base);
+    }
+    
+    .subunit-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+    
+    .subunit-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .subunit-card-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+    
+    .subunit-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .subunit-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 99px;
+      background-color: var(--bg-app);
+      color: var(--primary);
+      border: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+    
+    /* Print Card Button */
+    .print-card-btn {
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-app);
+      color: var(--primary);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      transition: var(--transition-base);
+    }
+    
+    .print-card-btn:hover {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+    
+    /* Interactive SVG Charts */
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 160px;
+    }
+    
+    .chart-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    
+    .chart-dot {
+      transition: r 0.15s ease, fill 0.15s ease;
+      cursor: pointer;
+    }
+    
+    .chart-dot:hover, .chart-dot.active {
+      r: 6;
+      fill: var(--primary);
+      stroke-width: 3;
+      stroke: #fff;
+    }
+    
+    .chart-hover-trigger {
+      cursor: pointer;
+    }
+    
+    /* Tooltip styling */
+    .chart-tooltip {
+      position: absolute;
+      background-color: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--primary);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      pointer-events: none;
+      display: none;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      min-width: 130px;
+      backdrop-filter: blur(4px);
+      transition: opacity 0.1s ease;
+    }
+    
+    .tooltip-title {
+      font-weight: 800;
+      margin-bottom: 6px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: 4px;
+    }
+    
+    .tooltip-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2px;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    .tooltip-row span:last-child {
+      font-weight: 700;
+    }
+    
+    .tooltip-row.total span:last-child { color: #818cf8; }
+    .tooltip-row.normal span:last-child { color: #34d399; }
+    .tooltip-row.warning span:last-child { color: #fb7185; }
+    
+    /* Table inside subunit card */
+    .subunit-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+    }
+    
+    .subunit-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: center;
+      background-color: var(--bg-app);
+    }
+    
+    .subunit-table th {
+      background-color: var(--bg-panel-hover);
+      color: var(--text-muted);
+      font-weight: 700;
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .subunit-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+    }
+    
+    .subunit-table tr:last-child td {
+      border-bottom: 0;
+    }
+    
+    .subunit-table td.sub-total-col {
+      font-weight: 800;
+      background-color: var(--bg-panel-hover);
+      color: var(--primary);
+    }
+    
+    /* Empty State */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 300px;
+      color: var(--text-muted);
+      gap: 12px;
+    }
+    
+    .empty-icon {
+      font-size: 48px;
+      opacity: 0.5;
+    }
+    
+    /* Print Headers for single page print */
+    .print-only-header {
+      display: none;
+    }
+    
+    /* =======================================
+       Print Styles - Optimization for A4
+       ======================================= */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 12pt;
+      }
+      
+      /* Hide navigation sidebar, toolbar, search, etc */
+      .sidebar,
+      .top-toolbar,
+      .theme-toggle-btn,
+      .print-all-btn,
+      .print-card-btn,
+      .search-container {
+        display: none !important;
+      }
+      
+      /* Force full width on print area */
+      .app-container {
+        display: block !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+      
+      .main-content {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+        height: auto !important;
+      }
+      
+      /* Formatting overview cards for print (2-col grid) */
+      .metrics-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px !important;
+        margin-bottom: 20px !important;
+        page-break-inside: avoid;
+      }
+      
+      .metric-card {
+        background: #ffffff !important;
+        border: 1px solid #94a3b8 !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+        padding: 15px !important;
+        page-break-inside: avoid;
+      }
+      
+      .metric-card::before {
+        display: none !important;
+      }
+      
+      /* Detailed warning tags formatting inside Card 4 on print */
+      .detail-item {
+        border-bottom-color: #cbd5e1 !important;
+      }
+      .detail-item span:last-child {
+        color: #000000 !important;
+      }
+      
+      /* Ranking comparison chart printing styles */
+      .comparison-section {
+        background: #ffffff !important;
+        border: 1px solid #94a3b8 !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+        margin-bottom: 20px !important;
+        page-break-inside: avoid;
+      }
+      
+      .comp-track {
+        background-color: #f1f5f9 !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+      
+      .comp-fill {
+        background: #4f46e5 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      /* Subunit section title layout */
+      .subunit-section-title {
+        margin-top: 25px !important;
+        color: #000000 !important;
+        border-left-color: #4f46e5 !important;
+        page-break-after: avoid;
+      }
+      
+      /* Clean layout for subunit grids: linear stack prevents split card bugs */
+      .subunits-grid {
+        display: block !important;
+      }
+      
+      .subunit-card {
+        background: #ffffff !important;
+        border: 1px solid #94a3b8 !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+        margin-bottom: 25px !important;
+        padding: 20px !important;
+        page-break-inside: avoid; /* Prevent card split on paper page boundary */
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      
+      /* Chart printing rendering overrides */
+      .chart-container {
+        height: 140px !important;
+        page-break-inside: avoid;
+      }
+      
+      .chart-svg text {
+        fill: #334155 !important;
+      }
+      
+      .chart-svg line {
+        stroke: #cbd5e1 !important;
+      }
+      
+      .chart-svg path[stroke] {
+        stroke: #4f46e5 !important;
+      }
+      
+      .chart-dot {
+        fill: #ffffff !important;
+        stroke: #4f46e5 !important;
+      }
+      
+      /* Table printing overrides */
+      .subunit-table-wrap {
+        border: 1px solid #475569 !important;
+      }
+      
+      .subunit-table th {
+        background-color: #f1f5f9 !important;
+        color: #000000 !important;
+        border: 1px solid #cbd5e1 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      .subunit-table td {
+        border: 1px solid #cbd5e1 !important;
+        color: #000000 !important;
+      }
+      
+      .subunit-table td.sub-total-col {
+        background-color: #f8fafc !important;
+        color: #4f46e5 !important;
+        font-weight: 800;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      /* Single Card print view filters */
+      body.print-mode-single .subunit-card {
+        display: none !important;
+      }
+      
+      body.print-mode-single .subunit-card.print-target {
+        display: flex !important;
+        border: 1px solid #334155 !important;
+        margin: 0 !important;
+        padding: 25px !important;
+        width: 100% !important;
+      }
+      
+      body.print-mode-single .metrics-grid,
+      body.print-mode-single .comparison-section,
+      body.print-mode-single .subunit-section-title {
+        display: none !important;
+      }
+      
+      .print-only-header {
+        display: block !important;
+        width: 100% !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1 class="sidebar-title">
+          <span>車牌辨識張數</span>月報表
+        </h1>
+        <div class="sidebar-subtitle">資料時間：115年1-6月 • 列印版</div>
+      </div>
+      
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" class="search-input" placeholder="搜尋母單位...">
+      </div>
+      
+      <div class="parent-units-list" id="parent-units-list">
+        <!-- Rendered via JS -->
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+      <!-- Top Toolbar -->
+      <div class="top-toolbar">
+        <div class="active-unit-header">
+          <h2 id="active-unit-title">--</h2>
+          <p id="active-unit-subtitle">115年1-6月車牌辨識趨勢彙整</p>
+        </div>
+        
+        <div class="toolbar-actions">
+          <!-- Metric Select Toggle -->
+          <div class="metric-toggle">
+            <button class="toggle-btn active" data-metric="total">總數</button>
+            <button class="toggle-btn" data-metric="normal">正常車</button>
+            <button class="toggle-btn" data-metric="warning">警示車</button>
+          </div>
+          
+          <!-- Print All Button -->
+          <button class="print-all-btn" onclick="printAll()" title="列印整個畫面的報表">
+            <span>🖨️</span> 列印全分局
+          </button>
+          
+          <!-- Theme Toggle -->
+          <button class="theme-toggle-btn" id="theme-toggle-btn" title="切換主題">🌙</button>
+        </div>
+      </div>
+      
+      <!-- Metrics Overview -->
+      <section class="metrics-grid" id="metrics-overview">
+        <!-- Card 1: Selected Metric Total -->
+        <div class="metric-card total">
+          <div class="card-label" id="metric-total-label">總辨識數 (1-6月)</div>
+          <div class="card-value" id="metric-total-value">0</div>
+          <div class="card-subtext">
+            <span>母單位總加總</span>
+            <span id="metric-total-pct">100%</span>
+          </div>
+        </div>
+        
+        <!-- Card 2: Normal Car -->
+        <div class="metric-card normal">
+          <div class="card-label">正常車總計 (1-6月)</div>
+          <div class="card-value" id="metric-normal-value">0</div>
+          <div class="card-subtext">
+            <span>佔總辨識比率</span>
+            <span id="metric-normal-pct">0%</span>
+          </div>
+        </div>
+        
+        <!-- Card 3: Warning Car -->
+        <div class="metric-card warning">
+          <div class="card-label">警示車總計 (1-6月)</div>
+          <div class="card-value" id="metric-warning-value">0</div>
+          <div class="card-subtext">
+            <span>佔總辨識比率</span>
+            <span id="metric-warning-pct">0%</span>
+          </div>
+        </div>
+        
+        <!-- Card 4: Breakdown List -->
+        <div class="metric-card details">
+          <div class="card-label">細項警示車累計 (1-6月)</div>
+          <div class="detail-list">
+            <div class="detail-item"><span>失車</span><span id="breakdown-lost">0</span></div>
+            <div class="detail-item"><span>註銷</span><span id="breakdown-revoked">0</span></div>
+            <div class="detail-item"><span>典當</span><span id="breakdown-pawn">0</span></div>
+            <div class="detail-item"><span>AB車</span><span id="breakdown-ab">0</span></div>
+            <div class="detail-item"><span>權利車</span><span id="breakdown-right">0</span></div>
+            <div class="detail-item"><span>偽造</span><span id="breakdown-forged">0</span></div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Comparison Chart Section -->
+      <section class="comparison-section">
+        <h3 class="comp-title" id="comp-title-text">子單位數據佔比排行</h3>
+        <div class="comp-bars" id="comparison-bars">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+      
+      <!-- Sub-units Details Section -->
+      <section>
+        <h3 class="subunit-section-title" id="subunit-section-title">所屬派出所與子單位</h3>
+        <div class="subunits-grid" id="subunits-grid" style="margin-top: 16px;">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Embed Dataset -->
+  <script>
+    const DATA = {"保大":{"黎明中隊":{"fullName":"高市警局保大黎明中隊","total":[10232,5571,11337,10299,10632,13039],"normal":[10027,5486,11126,10127,10453,12817],"warning":[205,85,211,172,179,222],"lost":[17,18,9,9,18,11],"revoked":[109,36,114,84,83,108],"pawn":[75,30,84,65,69,89],"ab":[1,0,0,2,1,1],"right":[3,1,4,11,8,13],"forged":[0,0,0,1,0,0]},"雷霆中隊":{"fullName":"高市警局保大雷霆中隊","total":[0,0,73,0,0,3558],"normal":[0,0,70,0,0,3490],"warning":[0,0,3,0,0,68],"lost":[0,0,1,0,0,2],"revoked":[0,0,1,0,0,36],"pawn":[0,0,1,0,0,28],"ab":[0,0,0,0,0,1],"right":[0,0,0,0,0,1],"forged":[0,0,0,0,0,0]},"雄岡中隊":{"fullName":"高市警局保大雄岡中隊","total":[10526,7515,5666,4899,4597,7960],"normal":[10306,7376,5569,4801,4501,7808],"warning":[220,139,97,98,96,152],"lost":[23,11,9,8,5,15],"revoked":[103,66,50,45,63,81],"pawn":[81,48,36,39,25,48],"ab":[3,1,0,1,1,1],"right":[9,13,2,5,2,7],"forged":[1,0,0,0,0,0]},"迅雷中隊":{"fullName":"高市警局保大迅雷中隊","total":[1981,247,1266,741,1039,1342],"normal":[1935,243,1241,731,1019,1313],"warning":[46,4,25,10,20,29],"lost":[3,0,0,0,1,2],"revoked":[26,1,12,5,8,17],"pawn":[11,2,10,3,11,10],"ab":[0,1,1,0,0,0],"right":[6,0,2,2,0,0],"forged":[0,0,0,0,0,0]},"特勤中隊":{"fullName":"高市警局保大特勤中隊","total":[4,0,26,0,0,1894],"normal":[4,0,26,0,0,1862],"warning":[0,0,0,0,0,32],"lost":[0,0,0,0,0,3],"revoked":[0,0,0,0,0,11],"pawn":[0,0,0,0,0,16],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,2],"forged":[0,0,0,0,0,0]}},"三民第二分局":{"鼎金派出所":{"fullName":"高市三民第二分局鼎金派出所","total":[2358,5517,2688,625,559,849],"normal":[2303,5433,2639,614,548,844],"warning":[55,84,49,11,11,5],"lost":[3,7,4,1,1,0],"revoked":[28,38,22,3,5,3],"pawn":[20,37,20,6,3,2],"ab":[0,0,1,0,0,0],"right":[4,2,2,1,2,0],"forged":[0,0,0,0,0,0]},"鼎山派出所":{"fullName":"高市三民第二分局鼎山派出所","total":[1417,1343,1699,339,245,853],"normal":[1391,1320,1680,335,239,836],"warning":[26,23,19,4,6,17],"lost":[2,0,0,0,0,2],"revoked":[8,12,12,2,2,7],"pawn":[11,8,6,2,4,6],"ab":[0,0,0,0,0,0],"right":[3,3,1,0,0,2],"forged":[2,0,0,0,0,0]},"陽明派出所":{"fullName":"高市三民第二分局陽明派出所","total":[3470,2686,897,775,148,1056],"normal":[3397,2649,884,766,146,1043],"warning":[73,37,13,9,2,13],"lost":[6,1,3,1,1,0],"revoked":[33,20,2,1,1,3],"pawn":[30,15,8,4,0,8],"ab":[1,0,0,0,0,0],"right":[3,1,0,3,0,2],"forged":[0,0,0,0,0,0]},"警備隊":{"fullName":"高市三民第二分局警備隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"覺民路派出所":{"fullName":"高市三民第二分局覺民路派出所","total":[751,1670,289,429,1376,1268],"normal":[734,1643,284,421,1364,1247],"warning":[17,27,5,8,12,21],"lost":[1,6,0,0,0,0],"revoked":[4,13,4,2,5,10],"pawn":[11,6,1,5,7,11],"ab":[0,0,0,1,0,0],"right":[1,2,0,0,0,0],"forged":[0,0,0,0,0,0]},"民族路派出所":{"fullName":"高市三民第二分局民族路派出所","total":[1286,502,710,37,73,0],"normal":[1253,494,697,35,68,0],"warning":[33,8,13,2,5,0],"lost":[2,1,0,0,0,0],"revoked":[22,5,4,0,4,0],"pawn":[7,2,6,1,1,0],"ab":[1,0,1,0,0,0],"right":[1,0,2,1,0,0],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市三民第二分局交通分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"新興分局":{"自強路派出所":{"fullName":"高市新興分局自強路派出所","total":[32,8,709,214,28,4737],"normal":[30,7,689,208,28,4650],"warning":[2,1,20,6,0,87],"lost":[0,0,0,0,0,8],"revoked":[1,0,9,5,0,37],"pawn":[1,1,9,1,0,41],"ab":[0,0,0,0,0,0],"right":[0,0,2,0,0,1],"forged":[0,0,0,0,0,0]},"前金分駐所":{"fullName":"高市新興分局前金分駐所","total":[238,137,461,129,136,6357],"normal":[236,136,448,125,135,6227],"warning":[2,1,13,4,1,130],"lost":[0,0,0,0,0,11],"revoked":[1,0,10,2,0,45],"pawn":[0,1,3,2,0,60],"ab":[0,0,0,0,0,0],"right":[1,0,0,0,1,14],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市新興分局交通分隊","total":[0,0,0,0,0,248],"normal":[0,0,0,0,0,245],"warning":[0,0,0,0,0,3],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,2],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,1],"forged":[0,0,0,0,0,0]},"五福二路派出所":{"fullName":"高市新興分局五福二路派出所","total":[0,0,0,0,0,3990],"normal":[0,0,0,0,0,3905],"warning":[0,0,0,0,0,85],"lost":[0,0,0,0,0,8],"revoked":[0,0,0,0,0,24],"pawn":[0,0,0,0,0,48],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,5],"forged":[0,0,0,0,0,0]},"中正三路派出所":{"fullName":"高市新興分局中正三路派出所","total":[0,0,0,0,0,7825],"normal":[0,0,0,0,0,7652],"warning":[0,0,0,0,0,173],"lost":[0,0,0,0,0,17],"revoked":[0,0,0,0,0,62],"pawn":[0,0,0,0,0,80],"ab":[0,0,0,0,0,1],"right":[0,0,0,0,0,13],"forged":[0,0,0,0,0,0]},"中山路派出所":{"fullName":"高市新興分局中山路派出所","total":[0,0,0,0,0,7073],"normal":[0,0,0,0,0,6865],"warning":[0,0,0,0,0,208],"lost":[0,0,0,0,0,15],"revoked":[0,0,0,0,0,92],"pawn":[0,0,0,0,0,90],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,11],"forged":[0,0,0,0,0,0]},"秘書室":{"fullName":"高市新興分局秘書室","total":[0,0,0,0,0,1],"normal":[0,0,0,0,0,1],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"左營分局":{"警備隊":{"fullName":"高市左營分局警備隊","total":[0,0,2,0,0,1037],"normal":[0,0,2,0,0,1020],"warning":[0,0,0,0,0,17],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,7],"pawn":[0,0,0,0,0,8],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,2],"forged":[0,0,0,0,0,0]},"舊城派出所":{"fullName":"高市左營分局舊城派出所","total":[0,0,0,14,0,3491],"normal":[0,0,0,14,0,3424],"warning":[0,0,0,0,0,67],"lost":[0,0,0,0,0,4],"revoked":[0,0,0,0,0,27],"pawn":[0,0,0,0,0,30],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,6],"forged":[0,0,0,0,0,0]},"新莊派出所":{"fullName":"高市左營分局新莊派出所","total":[470,273,189,356,0,4839],"normal":[457,267,185,343,0,4744],"warning":[13,6,4,13,0,95],"lost":[3,1,0,0,0,3],"revoked":[3,5,2,7,0,58],"pawn":[7,0,1,6,0,29],"ab":[0,0,0,0,0,0],"right":[0,0,1,0,0,5],"forged":[0,0,0,0,0,0]},"文自派出所":{"fullName":"高市左營分局文自派出所","total":[1,0,8,0,0,4104],"normal":[1,0,8,0,0,4052],"warning":[0,0,0,0,0,52],"lost":[0,0,0,0,0,4],"revoked":[0,0,0,0,0,25],"pawn":[0,0,0,0,0,18],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,5],"forged":[0,0,0,0,0,0]},"左營派出所":{"fullName":"高市左營分局左營派出所","total":[79,13,178,566,63,7076],"normal":[78,13,175,546,62,6936],"warning":[1,0,3,20,1,140],"lost":[0,0,0,2,0,4],"revoked":[1,0,2,14,1,83],"pawn":[0,0,1,4,0,50],"ab":[0,0,0,0,0,1],"right":[0,0,0,0,0,2],"forged":[0,0,0,0,0,0]},"啟文派出所":{"fullName":"高市左營分局啟文派出所","total":[12,36,0,0,0,2392],"normal":[12,36,0,0,0,2331],"warning":[0,0,0,0,0,61],"lost":[0,0,0,0,0,4],"revoked":[0,0,0,0,0,35],"pawn":[0,0,0,0,0,16],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,6],"forged":[0,0,0,0,0,0]},"博愛四路派出所":{"fullName":"高市左營分局博愛四路派出所","total":[18,46,14,0,0,4156],"normal":[17,45,14,0,0,4082],"warning":[1,1,0,0,0,74],"lost":[0,1,0,0,0,8],"revoked":[1,0,0,0,0,30],"pawn":[0,0,0,0,0,27],"ab":[0,0,0,0,0,2],"right":[0,0,0,0,0,7],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市左營分局交通分隊","total":[0,0,0,0,0,2873],"normal":[0,0,0,0,0,2847],"warning":[0,0,0,0,0,26],"lost":[0,0,0,0,0,2],"revoked":[0,0,0,0,0,12],"pawn":[0,0,0,0,0,12],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"岡山分局":{"鳳雄派出所":{"fullName":"高市岡山分局鳳雄派出所","total":[46,46,1,0,0,303],"normal":[45,46,1,0,0,298],"warning":[1,0,0,0,0,5],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,4],"pawn":[1,0,0,0,0,1],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"赤崁派出所":{"fullName":"高市岡山分局赤崁派出所","total":[101,583,185,654,277,43],"normal":[95,574,180,651,276,41],"warning":[6,9,5,3,1,2],"lost":[1,0,0,0,0,0],"revoked":[4,2,3,2,1,1],"pawn":[1,7,2,1,0,1],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"舊港派出所":{"fullName":"高市岡山分局舊港派出所","total":[8,56,0,23,7,0],"normal":[8,55,0,22,7,0],"warning":[0,1,0,1,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,1,0,0,0,0],"pawn":[0,0,0,1,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"甲圍派出所":{"fullName":"高市岡山分局甲圍派出所","total":[512,527,261,159,444,250],"normal":[499,519,250,156,436,245],"warning":[13,8,11,3,8,5],"lost":[1,1,0,1,1,0],"revoked":[6,3,7,1,4,2],"pawn":[6,3,4,1,3,2],"ab":[0,0,0,0,0,0],"right":[0,1,0,0,0,1],"forged":[0,0,0,0,0,0]},"燕巢分駐所":{"fullName":"高市岡山分局燕巢分駐所","total":[197,369,108,183,68,393],"normal":[194,356,107,178,68,391],"warning":[3,13,1,5,0,2],"lost":[0,0,1,0,0,0],"revoked":[2,8,0,2,0,1],"pawn":[1,4,0,2,0,1],"ab":[0,0,0,0,0,0],"right":[0,1,0,1,0,0],"forged":[0,0,0,0,0,0]},"深水派出所":{"fullName":"高市岡山分局深水派出所","total":[237,275,244,24,58,480],"normal":[233,258,232,22,56,471],"warning":[4,17,12,2,2,9],"lost":[0,2,1,0,1,0],"revoked":[2,12,7,0,0,5],"pawn":[2,3,4,2,1,4],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"永安分駐所":{"fullName":"高市岡山分局永安分駐所","total":[2314,1252,658,804,777,163],"normal":[2274,1226,650,791,768,161],"warning":[40,26,8,13,9,2],"lost":[4,2,0,2,1,0],"revoked":[24,18,4,7,6,0],"pawn":[12,6,4,3,2,2],"ab":[0,0,0,0,0,0],"right":[0,0,0,1,0,0],"forged":[0,0,0,0,0,0]},"橋頭分駐所":{"fullName":"高市岡山分局橋頭分駐所","total":[1264,785,392,293,202,366],"normal":[1234,776,384,291,200,356],"warning":[30,9,8,2,2,10],"lost":[4,0,0,0,0,0],"revoked":[15,3,5,1,1,4],"pawn":[11,5,3,1,0,4],"ab":[0,0,0,0,0,0],"right":[0,1,0,0,1,2],"forged":[0,0,0,0,0,0]},"梓官分駐所":{"fullName":"高市岡山分局梓官分駐所","total":[186,141,23,32,0,379],"normal":[176,137,23,32,0,371],"warning":[10,4,0,0,0,8],"lost":[5,0,0,0,0,0],"revoked":[5,3,0,0,0,3],"pawn":[0,1,0,0,0,4],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,1],"forged":[0,0,0,0,0,0]},"彌陀分駐所":{"fullName":"高市岡山分局彌陀分駐所","total":[1843,1217,620,91,54,403],"normal":[1815,1191,610,90,54,396],"warning":[28,26,10,1,0,7],"lost":[1,1,0,0,0,0],"revoked":[16,12,3,1,0,5],"pawn":[10,12,7,0,0,1],"ab":[0,0,0,0,0,0],"right":[1,1,0,0,0,1],"forged":[0,0,0,0,0,0]},"壽天派出所":{"fullName":"高市岡山分局壽天派出所","total":[485,110,560,225,186,88],"normal":[472,106,550,224,184,88],"warning":[13,4,10,1,2,0],"lost":[2,0,1,0,0,0],"revoked":[8,2,3,0,1,0],"pawn":[2,1,5,1,1,0],"ab":[0,0,0,0,0,0],"right":[1,1,1,0,0,0],"forged":[0,0,0,0,0,0]},"嘉興派出所":{"fullName":"高市岡山分局嘉興派出所","total":[257,36,284,0,37,33],"normal":[250,36,282,0,36,31],"warning":[7,0,2,0,1,2],"lost":[1,0,0,0,0,0],"revoked":[5,0,2,0,1,2],"pawn":[0,0,0,0,0,0],"ab":[1,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"前峰派出所":{"fullName":"高市岡山分局前峰派出所","total":[24,60,62,6,0,1489],"normal":[24,58,62,6,0,1471],"warning":[0,2,0,0,0,18],"lost":[0,1,0,0,0,0],"revoked":[0,1,0,0,0,7],"pawn":[0,0,0,0,0,7],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,4],"forged":[0,0,0,0,0,0]},"偵查隊":{"fullName":"高市岡山分局偵查隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市岡山分局交通分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"警備隊":{"fullName":"高市岡山分局警備隊","total":[0,0,0,0,0,3],"normal":[0,0,0,0,0,3],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"秘書室":{"fullName":"高市岡山分局秘書室","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"仁武分局":{"鳥松分駐所":{"fullName":"高市仁武分局鳥松分駐所","total":[0,128,27,31,0,22],"normal":[0,127,27,31,0,22],"warning":[0,1,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,1,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"警備隊":{"fullName":"高市仁武分局警備隊","total":[0,0,0,0,0,2],"normal":[0,0,0,0,0,2],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"澄觀派出所":{"fullName":"高市仁武分局澄觀派出所","total":[0,94,3,0,0,15],"normal":[0,92,3,0,0,15],"warning":[0,2,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,1,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,1,0,0,0,0],"forged":[0,0,0,0,0,0]},"溪埔派出所":{"fullName":"高市仁武分局溪埔派出所","total":[0,0,0,0,0,88],"normal":[0,0,0,0,0,87],"warning":[0,0,0,0,0,1],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,1],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"大華派出所":{"fullName":"高市仁武分局大華派出所","total":[0,0,0,0,0,464],"normal":[0,0,0,0,0,456],"warning":[0,0,0,0,0,8],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,3],"pawn":[0,0,0,0,0,4],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,1],"forged":[0,0,0,0,0,0]},"大社分駐所":{"fullName":"高市仁武分局大社分駐所","total":[0,0,0,0,0,5544],"normal":[0,0,0,0,0,5421],"warning":[0,0,0,0,0,123],"lost":[0,0,0,0,0,4],"revoked":[0,0,0,0,0,59],"pawn":[0,0,0,0,0,54],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,6],"forged":[0,0,0,0,0,0]},"大樹分駐所":{"fullName":"高市仁武分局大樹分駐所","total":[0,0,0,0,0,1078],"normal":[0,0,0,0,0,1044],"warning":[0,0,0,0,0,34],"lost":[0,0,0,0,0,4],"revoked":[0,0,0,0,0,22],"pawn":[0,0,0,0,0,8],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"仁美派出所":{"fullName":"高市仁武分局仁美派出所","total":[0,216,53,0,40,70],"normal":[0,211,50,0,39,66],"warning":[0,5,3,0,1,4],"lost":[0,0,0,0,0,0],"revoked":[0,1,2,0,1,4],"pawn":[0,4,1,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"仁武派出所":{"fullName":"高市仁武分局仁武派出所","total":[23,85,3,423,390,11264],"normal":[22,81,3,418,388,11023],"warning":[1,4,0,5,2,241],"lost":[0,0,0,0,0,17],"revoked":[0,4,0,2,2,135],"pawn":[1,0,0,3,0,78],"ab":[0,0,0,0,0,2],"right":[0,0,0,0,0,9],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市仁武分局交通分隊","total":[0,0,209,0,0,658],"normal":[0,0,208,0,0,648],"warning":[0,0,1,0,0,10],"lost":[0,0,0,0,0,1],"revoked":[0,0,1,0,0,5],"pawn":[0,0,0,0,0,4],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"九曲派出所":{"fullName":"高市仁武分局九曲派出所","total":[3,6,0,0,0,844],"normal":[3,6,0,0,0,813],"warning":[0,0,0,0,0,31],"lost":[0,0,0,0,0,2],"revoked":[0,0,0,0,0,18],"pawn":[0,0,0,0,0,11],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"前鎮分局":{"警備隊":{"fullName":"高市前鎮分局警備隊","total":[0,0,0,0,0,504],"normal":[0,0,0,0,0,494],"warning":[0,0,0,0,0,10],"lost":[0,0,0,0,0,2],"revoked":[0,0,0,0,0,4],"pawn":[0,0,0,0,0,4],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"草衙派出所":{"fullName":"高市前鎮分局草衙派出所","total":[0,0,0,0,44,1786],"normal":[0,0,0,0,43,1752],"warning":[0,0,0,0,1,34],"lost":[0,0,0,0,0,2],"revoked":[0,0,0,0,1,14],"pawn":[0,0,0,0,0,14],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,4],"forged":[0,0,0,0,0,0]},"瑞隆派出所":{"fullName":"高市前鎮分局瑞隆派出所","total":[0,32,0,0,0,5731],"normal":[0,32,0,0,0,5584],"warning":[0,0,0,0,0,147],"lost":[0,0,0,0,0,6],"revoked":[0,0,0,0,0,81],"pawn":[0,0,0,0,0,57],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,3],"forged":[0,0,0,0,0,0]},"復興路派出所":{"fullName":"高市前鎮分局復興路派出所","total":[0,0,0,0,11,2018],"normal":[0,0,0,0,11,2006],"warning":[0,0,0,0,0,12],"lost":[0,0,0,0,0,1],"revoked":[0,0,0,0,0,8],"pawn":[0,0,0,0,0,1],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,2],"forged":[0,0,0,0,0,0]},"前鎮街派出所":{"fullName":"高市前鎮分局前鎮街派出所","total":[12,73,4,0,48,5158],"normal":[12,73,4,0,48,5080],"warning":[0,0,0,0,0,78],"lost":[0,0,0,0,0,3],"revoked":[0,0,0,0,0,37],"pawn":[0,0,0,0,0,33],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,5],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市前鎮分局交通分隊","total":[0,0,0,0,0,4746],"normal":[0,0,0,0,0,4682],"warning":[0,0,0,0,0,64],"lost":[0,0,0,0,0,1],"revoked":[0,0,0,0,0,33],"pawn":[0,0,0,0,0,30],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"一心路派出所":{"fullName":"高市前鎮分局一心路派出所","total":[109,97,0,0,24,1200],"normal":[107,94,0,0,22,1168],"warning":[2,3,0,0,2,32],"lost":[0,1,0,0,1,3],"revoked":[2,1,0,0,1,18],"pawn":[0,1,0,0,0,11],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"苓雅分局":{"警備隊":{"fullName":"高市苓雅分局警備隊","total":[0,0,0,0,0,1593],"normal":[0,0,0,0,0,1570],"warning":[0,0,0,0,0,23],"lost":[0,0,0,0,0,2],"revoked":[0,0,0,0,0,8],"pawn":[0,0,0,0,0,13],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"秘書室":{"fullName":"高市苓雅分局秘書室","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"福德二路派出所":{"fullName":"高市苓雅分局福德二路派出所","total":[654,621,308,339,189,3506],"normal":[642,615,304,335,187,3457],"warning":[12,6,4,4,2,49],"lost":[3,2,0,0,0,3],"revoked":[4,0,0,2,0,19],"pawn":[5,2,4,2,2,23],"ab":[0,0,0,0,0,0],"right":[0,2,0,0,0,4],"forged":[0,0,0,0,0,0]},"民權路派出所":{"fullName":"高市苓雅分局民權路派出所","total":[0,0,0,0,0,1618],"normal":[0,0,0,0,0,1569],"warning":[0,0,0,0,0,49],"lost":[0,0,0,0,0,6],"revoked":[0,0,0,0,0,23],"pawn":[0,0,0,0,0,18],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,2],"forged":[0,0,0,0,0,0]},"成功路派出所":{"fullName":"高市苓雅分局成功路派出所","total":[42,1,2,105,1,3358],"normal":[42,1,2,104,1,3271],"warning":[0,0,0,1,0,87],"lost":[0,0,0,0,0,5],"revoked":[0,0,0,1,0,44],"pawn":[0,0,0,0,0,34],"ab":[0,0,0,0,0,2],"right":[0,0,0,0,0,2],"forged":[0,0,0,0,0,0]},"凱旋路派出所":{"fullName":"高市苓雅分局凱旋路派出所","total":[0,37,0,0,0,3875],"normal":[0,36,0,0,0,3808],"warning":[0,1,0,0,0,67],"lost":[0,0,0,0,0,4],"revoked":[0,1,0,0,0,22],"pawn":[0,0,0,0,0,35],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,4],"forged":[0,0,0,0,0,2]},"交通分隊":{"fullName":"高市苓雅分局交通分隊","total":[24,53,0,0,0,0],"normal":[24,53,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"三多路派出所":{"fullName":"高市苓雅分局三多路派出所","total":[0,200,465,349,306,3008],"normal":[0,198,453,340,303,2962],"warning":[0,2,12,9,3,46],"lost":[0,0,0,0,0,12],"revoked":[0,1,8,3,3,21],"pawn":[0,1,4,5,0,11],"ab":[0,0,0,0,0,0],"right":[0,0,0,1,0,2],"forged":[0,0,0,0,0,0]},"偵查隊":{"fullName":"高市苓雅分局偵查隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"楠梓分局":{"警備隊":{"fullName":"高市楠梓分局警備隊","total":[60,23,3,89,293,660],"normal":[59,22,3,89,287,651],"warning":[1,1,0,0,6,9],"lost":[0,0,0,0,0,0],"revoked":[0,1,0,0,4,6],"pawn":[1,0,0,0,2,3],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"翠屏派出所":{"fullName":"高市楠梓分局翠屏派出所","total":[83,0,246,200,0,236],"normal":[80,0,237,196,0,228],"warning":[3,0,9,4,0,8],"lost":[0,0,0,0,0,0],"revoked":[2,0,7,3,0,3],"pawn":[1,0,2,1,0,5],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"楠梓派出所":{"fullName":"高市楠梓分局楠梓派出所","total":[32,0,0,1,0,54],"normal":[32,0,0,1,0,54],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"後勁派出所":{"fullName":"高市楠梓分局後勁派出所","total":[0,0,0,58,0,451],"normal":[0,0,0,57,0,446],"warning":[0,0,0,1,0,5],"lost":[0,0,0,0,0,1],"revoked":[0,0,0,1,0,1],"pawn":[0,0,0,0,0,3],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"右昌派出所":{"fullName":"高市楠梓分局右昌派出所","total":[336,411,1876,7208,3559,778],"normal":[328,402,1852,7077,3510,762],"warning":[8,9,24,131,49,16],"lost":[0,1,1,2,0,1],"revoked":[5,3,12,58,19,6],"pawn":[3,5,11,62,27,8],"ab":[0,0,0,1,0,0],"right":[0,0,0,8,3,1],"forged":[0,0,0,0,0,0]},"加昌派出所":{"fullName":"高市楠梓分局加昌派出所","total":[250,276,0,0,40,0],"normal":[237,272,0,0,38,0],"warning":[13,4,0,0,2,0],"lost":[5,0,0,0,0,0],"revoked":[6,2,0,0,1,0],"pawn":[2,2,0,0,1,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵查隊":{"fullName":"高市楠梓分局偵查隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市楠梓分局交通分隊","total":[0,0,3,0,0,41],"normal":[0,0,2,0,0,41],"warning":[0,0,1,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,1,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"鹽埕分局":{"建國四路派出所":{"fullName":"高市鹽埕分局建國四路派出所","total":[183,21,33,0,123,6387],"normal":[180,20,31,0,123,6282],"warning":[3,1,2,0,0,105],"lost":[0,0,0,0,0,8],"revoked":[1,1,2,0,0,42],"pawn":[2,0,0,0,0,49],"ab":[0,0,0,0,0,1],"right":[0,0,0,0,0,5],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市鹽埕分局交通分隊","total":[0,0,0,0,0,379],"normal":[0,0,0,0,0,373],"warning":[0,0,0,0,0,6],"lost":[0,0,0,0,0,1],"revoked":[0,0,0,0,0,4],"pawn":[0,0,0,0,0,1],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"五福四路派出所":{"fullName":"高市鹽埕分局五福四路派出所","total":[165,49,106,43,66,3261],"normal":[162,49,105,42,64,3177],"warning":[3,0,1,1,2,84],"lost":[1,0,0,0,0,4],"revoked":[2,0,0,1,2,36],"pawn":[0,0,1,0,0,43],"ab":[0,0,0,0,0,1],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"七賢路派出所":{"fullName":"高市鹽埕分局七賢路派出所","total":[1143,42,711,25,0,2018],"normal":[1120,40,696,25,0,1973],"warning":[23,2,15,0,0,45],"lost":[2,1,1,0,0,2],"revoked":[12,0,9,0,0,25],"pawn":[9,0,5,0,0,18],"ab":[0,0,0,0,0,0],"right":[0,1,0,0,0,0],"forged":[0,0,0,0,0,0]},"警備隊":{"fullName":"高市鹽埕分局警備隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"湖內分局":{"阿蓮分駐所":{"fullName":"高市湖內分局阿蓮分駐所","total":[252,665,556,270,392,75],"normal":[246,657,547,269,389,74],"warning":[6,8,9,1,3,1],"lost":[0,0,0,0,0,0],"revoked":[5,2,2,0,1,0],"pawn":[1,5,6,1,2,1],"ab":[0,0,0,0,0,0],"right":[0,1,1,0,0,0],"forged":[0,0,0,0,0,0]},"路竹分駐所":{"fullName":"高市湖內分局路竹分駐所","total":[252,276,53,3,50,278],"normal":[251,273,53,3,49,276],"warning":[1,3,0,0,1,2],"lost":[0,0,0,0,0,0],"revoked":[0,1,0,0,1,2],"pawn":[1,2,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"警備隊":{"fullName":"高市湖內分局警備隊","total":[0,0,0,0,0,21],"normal":[0,0,0,0,0,18],"warning":[0,0,0,0,0,3],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,2],"pawn":[0,0,0,0,0,1],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"蛙潭派出所":{"fullName":"高市湖內分局蛙潭派出所","total":[0,63,172,44,47,132],"normal":[0,59,167,44,47,132],"warning":[0,4,5,0,0,0],"lost":[0,1,0,0,0,0],"revoked":[0,1,3,0,0,0],"pawn":[0,2,1,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,1,0,0,0],"forged":[0,0,0,0,0,0]},"茄萣分駐所":{"fullName":"高市湖內分局茄萣分駐所","total":[16,63,823,214,600,259],"normal":[14,59,817,211,597,257],"warning":[2,4,6,3,3,2],"lost":[0,0,0,0,0,0],"revoked":[2,1,5,1,1,1],"pawn":[0,3,1,1,2,1],"ab":[0,0,0,0,0,0],"right":[0,0,0,1,0,0],"forged":[0,0,0,0,0,0]},"竹滬派出所":{"fullName":"高市湖內分局竹滬派出所","total":[478,210,85,0,93,293],"normal":[466,206,85,0,92,288],"warning":[12,4,0,0,1,5],"lost":[5,0,0,0,0,0],"revoked":[7,3,0,0,1,2],"pawn":[0,1,0,0,0,3],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"秘書室":{"fullName":"高市湖內分局秘書室","total":[0,0,0,0,0,49],"normal":[0,0,0,0,0,49],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"砂崙派出所":{"fullName":"高市湖內分局砂崙派出所","total":[0,0,0,0,0,1],"normal":[0,0,0,0,0,1],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"田寮分駐所":{"fullName":"高市湖內分局田寮分駐所","total":[2,0,222,176,55,80],"normal":[2,0,217,174,54,79],"warning":[0,0,5,2,1,1],"lost":[0,0,2,0,0,0],"revoked":[0,0,1,0,1,0],"pawn":[0,0,2,2,0,1],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"湖街派出所":{"fullName":"高市湖內分局湖街派出所","total":[131,11,0,0,41,82],"normal":[127,11,0,0,41,81],"warning":[4,0,0,0,0,1],"lost":[0,0,0,0,0,0],"revoked":[2,0,0,0,0,0],"pawn":[1,0,0,0,0,1],"ab":[0,0,0,0,0,0],"right":[1,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"湖內派出所":{"fullName":"高市湖內分局湖內派出所","total":[987,242,591,243,732,1102],"normal":[971,240,584,241,723,1077],"warning":[16,2,7,2,9,25],"lost":[1,0,1,0,0,0],"revoked":[12,1,1,2,5,17],"pawn":[3,1,5,0,4,7],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,1],"forged":[0,0,0,0,0,0]},"崇德派出所":{"fullName":"高市湖內分局崇德派出所","total":[24,63,11,4,50,318],"normal":[22,61,11,4,50,308],"warning":[2,2,0,0,0,10],"lost":[0,0,0,0,0,0],"revoked":[1,0,0,0,0,8],"pawn":[1,2,0,0,0,2],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵查隊":{"fullName":"高市湖內分局偵查隊","total":[0,0,0,0,0,14],"normal":[0,0,0,0,0,14],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市湖內分局交通分隊","total":[253,187,19,44,0,350],"normal":[250,187,18,44,0,346],"warning":[3,0,1,0,0,4],"lost":[0,0,0,0,0,0],"revoked":[1,0,1,0,0,3],"pawn":[1,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[1,0,0,0,0,1],"forged":[0,0,0,0,0,0]},"一甲派出所":{"fullName":"高市湖內分局一甲派出所","total":[369,28,201,277,212,366],"normal":[360,27,196,272,211,364],"warning":[9,1,5,5,1,2],"lost":[0,0,1,0,0,0],"revoked":[4,0,2,3,1,1],"pawn":[5,1,0,2,0,1],"ab":[0,0,0,0,0,0],"right":[0,0,2,0,0,0],"forged":[0,0,0,0,0,0]}},"林園分局":{"警備隊":{"fullName":"高市林園分局警備隊","total":[43,0,0,0,0,0],"normal":[43,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"港埔派出所":{"fullName":"高市林園分局港埔派出所","total":[0,0,0,2,4,193],"normal":[0,0,0,2,4,189],"warning":[0,0,0,0,0,4],"lost":[0,0,0,0,0,2],"revoked":[0,0,0,0,0,1],"pawn":[0,0,0,0,0,1],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"林園派出所":{"fullName":"高市林園分局林園派出所","total":[0,3,0,4,3,1749],"normal":[0,3,0,4,3,1715],"warning":[0,0,0,0,0,34],"lost":[0,0,0,0,0,2],"revoked":[0,0,0,0,0,18],"pawn":[0,0,0,0,0,14],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"昭明派出所":{"fullName":"高市林園分局昭明派出所","total":[105,389,72,230,169,119],"normal":[104,381,69,227,163,119],"warning":[1,8,3,3,6,0],"lost":[1,3,0,0,0,0],"revoked":[0,2,0,1,3,0],"pawn":[0,2,3,0,3,0],"ab":[0,0,0,0,0,0],"right":[0,1,0,2,0,0],"forged":[0,0,0,0,0,0]},"忠義派出所":{"fullName":"高市林園分局忠義派出所","total":[0,1,0,0,0,6137],"normal":[0,1,0,0,0,6133],"warning":[0,0,0,0,0,4],"lost":[0,0,0,0,0,2],"revoked":[0,0,0,0,0,2],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"大發駐在所":{"fullName":"高市林園分局大發駐在所","total":[0,0,0,0,0,541],"normal":[0,0,0,0,0,532],"warning":[0,0,0,0,0,9],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,2],"pawn":[0,0,0,0,0,7],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"大寮分駐所":{"fullName":"高市林園分局大寮分駐所","total":[0,0,1,0,0,36],"normal":[0,0,1,0,0,36],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市林園分局交通分隊","total":[0,0,0,0,0,137],"normal":[0,0,0,0,0,131],"warning":[0,0,0,0,0,6],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,5],"pawn":[0,0,0,0,0,1],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"中芸派出所":{"fullName":"高市林園分局中芸派出所","total":[0,0,0,0,0,722],"normal":[0,0,0,0,0,698],"warning":[0,0,0,0,0,24],"lost":[0,0,0,0,0,1],"revoked":[0,0,0,0,0,13],"pawn":[0,0,0,0,0,10],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"中庄派出所":{"fullName":"高市林園分局中庄派出所","total":[371,515,201,57,126,47],"normal":[363,504,201,57,123,47],"warning":[8,11,0,0,3,0],"lost":[0,0,0,0,0,0],"revoked":[5,5,0,0,1,0],"pawn":[3,5,0,0,2,0],"ab":[0,0,0,0,0,0],"right":[0,1,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵查隊":{"fullName":"高市林園分局偵查隊","total":[0,0,0,0,0,682],"normal":[0,0,0,0,0,666],"warning":[0,0,0,0,0,16],"lost":[0,0,0,0,0,5],"revoked":[0,0,0,0,0,4],"pawn":[0,0,0,0,0,7],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"小港分局":{"高松派出所":{"fullName":"高市小港分局高松派出所","total":[23,44,72,0,0,2296],"normal":[22,44,72,0,0,2253],"warning":[1,0,0,0,0,43],"lost":[1,0,0,0,0,3],"revoked":[0,0,0,0,0,21],"pawn":[0,0,0,0,0,19],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"警備隊":{"fullName":"高市小港分局警備隊","total":[0,0,0,0,0,1518],"normal":[0,0,0,0,0,1477],"warning":[0,0,0,0,0,41],"lost":[0,0,0,0,0,3],"revoked":[0,0,0,0,0,27],"pawn":[0,0,0,0,0,11],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"漢民派出所":{"fullName":"高市小港分局漢民派出所","total":[0,0,0,0,0,720],"normal":[0,0,0,0,0,694],"warning":[0,0,0,0,0,26],"lost":[0,0,0,0,0,1],"revoked":[0,0,0,0,0,16],"pawn":[0,0,0,0,0,9],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"桂陽路派出所":{"fullName":"高市小港分局桂陽路派出所","total":[0,83,0,135,11,511],"normal":[0,83,0,133,11,499],"warning":[0,0,0,2,0,12],"lost":[0,0,0,1,0,1],"revoked":[0,0,0,1,0,5],"pawn":[0,0,0,0,0,3],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,3],"forged":[0,0,0,0,0,0]},"小港派出所":{"fullName":"高市小港分局小港派出所","total":[59,0,0,0,0,1250],"normal":[58,0,0,0,0,1231],"warning":[1,0,0,0,0,19],"lost":[0,0,0,0,0,5],"revoked":[1,0,0,0,0,8],"pawn":[0,0,0,0,0,6],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"大林派出所":{"fullName":"高市小港分局大林派出所","total":[0,0,464,0,20,191],"normal":[0,0,453,0,18,184],"warning":[0,0,11,0,2,7],"lost":[0,0,0,0,1,0],"revoked":[0,0,5,0,1,6],"pawn":[0,0,5,0,0,1],"ab":[0,0,1,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市小港分局交通分隊","total":[0,202,562,87,173,2114],"normal":[0,196,556,85,171,2083],"warning":[0,6,6,2,2,31],"lost":[0,0,0,0,1,1],"revoked":[0,2,2,1,0,21],"pawn":[0,4,3,1,1,9],"ab":[0,0,0,0,0,0],"right":[0,0,1,0,0,0],"forged":[0,0,0,0,0,0]}},"交大":{"機動分隊":{"fullName":"高市警局交大機動分隊","total":[110,62,158,48,342,3946],"normal":[107,62,157,48,339,3881],"warning":[3,0,1,0,3,65],"lost":[0,0,0,0,0,6],"revoked":[2,0,0,0,0,27],"pawn":[1,0,1,0,3,27],"ab":[0,0,0,0,0,2],"right":[0,0,0,0,0,3],"forged":[0,0,0,0,0,0]},"橋頭分隊":{"fullName":"高市警局交大橋頭分隊","total":[0,0,0,0,0,81],"normal":[0,0,0,0,0,79],"warning":[0,0,0,0,0,2],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,1],"pawn":[0,0,0,0,0,1],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"憲政中隊":{"fullName":"高市警局交大憲政中隊","total":[152,340,336,229,339,2455],"normal":[149,328,329,225,330,2410],"warning":[3,12,7,4,9,45],"lost":[0,0,0,0,1,4],"revoked":[3,9,1,3,4,25],"pawn":[0,3,6,1,4,15],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,1],"forged":[0,0,0,0,0,0]},"國泰分隊":{"fullName":"高市警局交大國泰分隊","total":[0,0,0,0,0,983],"normal":[0,0,0,0,0,966],"warning":[0,0,0,0,0,17],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,10],"pawn":[0,0,0,0,0,7],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"鼓山分局":{"龍華派出所":{"fullName":"高市鼓山分局龍華派出所","total":[520,10,41,7,64,379],"normal":[508,10,41,7,63,374],"warning":[12,0,0,0,1,5],"lost":[2,0,0,0,0,0],"revoked":[4,0,0,0,1,1],"pawn":[6,0,0,0,0,4],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"鼓山派出所":{"fullName":"高市鼓山分局鼓山派出所","total":[2343,944,788,742,448,274],"normal":[2290,927,780,726,443,270],"warning":[53,17,8,16,5,4],"lost":[2,2,0,1,0,0],"revoked":[40,13,6,10,3,2],"pawn":[11,2,2,5,1,2],"ab":[0,0,0,0,1,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"旗津分駐所":{"fullName":"高市鼓山分局旗津分駐所","total":[362,6,0,42,8,84],"normal":[357,6,0,42,8,82],"warning":[5,0,0,0,0,2],"lost":[1,0,0,0,0,0],"revoked":[1,0,0,0,0,0],"pawn":[3,0,0,0,0,2],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"新濱派出所":{"fullName":"高市鼓山分局新濱派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"內惟派出所":{"fullName":"高市鼓山分局內惟派出所","total":[15,0,0,0,1,850],"normal":[15,0,0,0,1,831],"warning":[0,0,0,0,0,19],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,9],"pawn":[0,0,0,0,0,8],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,2],"forged":[0,0,0,0,0,0]},"偵查隊":{"fullName":"高市鼓山分局偵查隊","total":[13,0,0,0,0,0],"normal":[11,0,0,0,0,0],"warning":[2,0,0,0,0,0],"lost":[1,0,0,0,0,0],"revoked":[1,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市鼓山分局交通分隊","total":[8,0,0,0,0,44],"normal":[8,0,0,0,0,42],"warning":[0,0,0,0,0,2],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,2],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"中洲派出所":{"fullName":"高市鼓山分局中洲派出所","total":[16,0,0,0,0,0],"normal":[15,0,0,0,0,0],"warning":[1,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[1,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"警備隊":{"fullName":"高市鼓山分局警備隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"三民第一分局":{"長明派出所":{"fullName":"高市三民第一分局長明派出所","total":[570,538,297,155,4,11],"normal":[561,522,293,152,4,9],"warning":[9,16,4,3,0,2],"lost":[0,0,0,2,0,1],"revoked":[7,7,2,1,0,1],"pawn":[1,9,1,0,0,0],"ab":[0,0,0,0,0,0],"right":[1,0,1,0,0,0],"forged":[0,0,0,0,0,0]},"警備隊":{"fullName":"高市三民第一分局警備隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"哈爾濱街派出所":{"fullName":"高市三民第一分局哈爾濱街派出所","total":[544,356,492,393,331,59],"normal":[528,346,475,379,322,56],"warning":[16,10,17,14,9,3],"lost":[0,1,0,1,0,0],"revoked":[6,5,14,8,5,3],"pawn":[7,4,2,4,4,0],"ab":[1,0,0,0,0,0],"right":[2,0,1,1,0,0],"forged":[0,0,0,0,0,0]},"十全路派出所":{"fullName":"高市三民第一分局十全路派出所","total":[8,6,13,36,0,0],"normal":[8,6,12,36,0,0],"warning":[0,0,1,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,1,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市三民第一分局交通分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"三民派出所":{"fullName":"高市三民第一分局三民派出所","total":[2154,443,728,4,23,79],"normal":[2105,435,718,4,22,75],"warning":[49,8,10,0,1,4],"lost":[4,0,0,0,0,0],"revoked":[23,1,7,0,0,0],"pawn":[21,7,3,0,0,3],"ab":[0,0,0,0,0,0],"right":[1,0,0,0,1,1],"forged":[0,0,0,0,0,0]}},"婦幼隊":{"婦幼隊":{"fullName":"高市警局婦幼隊","total":[1619,723,809,1549,1199,855],"normal":[1578,712,795,1519,1181,837],"warning":[41,11,14,30,18,18],"lost":[6,1,1,2,0,3],"revoked":[22,3,7,15,10,6],"pawn":[12,7,6,12,6,9],"ab":[0,0,0,0,1,0],"right":[1,0,0,1,1,0],"forged":[0,0,0,0,0,0]}},"鳳山分局":{"鳳崗派出所":{"fullName":"高市鳳山分局鳳崗派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"過埤派出所":{"fullName":"高市鳳山分局過埤派出所","total":[36,0,16,0,0,0],"normal":[36,0,15,0,0,0],"warning":[0,0,1,0,0,0],"lost":[0,0,1,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"新甲派出所":{"fullName":"高市鳳山分局新甲派出所","total":[1,0,0,0,0,998],"normal":[1,0,0,0,0,973],"warning":[0,0,0,0,0,25],"lost":[0,0,0,0,0,1],"revoked":[0,0,0,0,0,11],"pawn":[0,0,0,0,0,13],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"文山派出所":{"fullName":"高市鳳山分局文山派出所","total":[242,402,86,0,0,87],"normal":[228,393,86,0,0,87],"warning":[14,9,0,0,0,0],"lost":[2,0,0,0,0,0],"revoked":[7,1,0,0,0,0],"pawn":[1,8,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[4,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"成功派出所":{"fullName":"高市鳳山分局成功派出所","total":[0,0,0,2,0,1648],"normal":[0,0,0,2,0,1617],"warning":[0,0,0,0,0,31],"lost":[0,0,0,0,0,7],"revoked":[0,0,0,0,0,13],"pawn":[0,0,0,0,0,11],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"忠孝派出所":{"fullName":"高市鳳山分局忠孝派出所","total":[199,28,0,18,0,253],"normal":[193,28,0,16,0,247],"warning":[6,0,0,2,0,6],"lost":[1,0,0,1,0,0],"revoked":[4,0,0,0,0,5],"pawn":[1,0,0,1,0,1],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"埤頂派出所":{"fullName":"高市鳳山分局埤頂派出所","total":[463,9,187,69,98,94],"normal":[452,9,183,65,92,91],"warning":[11,0,4,4,6,3],"lost":[1,0,0,0,0,0],"revoked":[5,0,1,1,5,1],"pawn":[3,0,2,3,1,2],"ab":[0,0,0,0,0,0],"right":[2,0,1,0,0,0],"forged":[0,0,0,0,0,0]},"南成派出所":{"fullName":"高市鳳山分局南成派出所","total":[0,0,0,0,0,73],"normal":[0,0,0,0,0,72],"warning":[0,0,0,0,0,1],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,1],"forged":[0,0,0,0,0,0]},"偵查隊":{"fullName":"高市鳳山分局偵查隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市鳳山分局交通分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"五甲派出所":{"fullName":"高市鳳山分局五甲派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"警備隊":{"fullName":"高市鳳山分局警備隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"旗山分局":{"龍肚派出所":{"fullName":"高市旗山分局龍肚派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"警備隊":{"fullName":"高市旗山分局警備隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"美濃分駐所":{"fullName":"高市旗山分局美濃分駐所","total":[68,195,23,43,13,84],"normal":[66,191,23,42,13,82],"warning":[2,4,0,1,0,2],"lost":[0,0,0,0,0,0],"revoked":[0,1,0,0,0,1],"pawn":[1,3,0,1,0,0],"ab":[1,0,0,0,0,1],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"甲仙分駐所":{"fullName":"高市旗山分局甲仙分駐所","total":[0,1,0,0,0,125],"normal":[0,1,0,0,0,123],"warning":[0,0,0,0,0,2],"lost":[0,0,0,0,0,1],"revoked":[0,0,0,0,0,1],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"杉林分駐所":{"fullName":"高市旗山分局杉林分駐所","total":[0,0,0,0,0,21],"normal":[0,0,0,0,0,21],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"旗尾派出所":{"fullName":"高市旗山分局旗尾派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"建國派出所":{"fullName":"高市旗山分局建國派出所","total":[80,88,0,193,166,147],"normal":[79,88,0,188,157,143],"warning":[1,0,0,5,9,4],"lost":[0,0,0,0,1,1],"revoked":[0,0,0,3,6,1],"pawn":[1,0,0,2,1,2],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,1,0],"forged":[0,0,0,0,0,0]},"廣興派出所":{"fullName":"高市旗山分局廣興派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"廣福派出所":{"fullName":"高市旗山分局廣福派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"嶺口派出所":{"fullName":"高市旗山分局嶺口派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"大洲派出所":{"fullName":"高市旗山分局大洲派出所","total":[0,0,0,0,0,39],"normal":[0,0,0,0,0,38],"warning":[0,0,0,0,0,1],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,1],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"圓潭派出所":{"fullName":"高市旗山分局圓潭派出所","total":[0,0,0,0,0,93],"normal":[0,0,0,0,0,88],"warning":[0,0,0,0,0,5],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,3],"pawn":[0,0,0,0,0,2],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"吉東派出所":{"fullName":"高市旗山分局吉東派出所","total":[14,46,0,0,0,0],"normal":[14,46,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"內門分駐所":{"fullName":"高市旗山分局內門分駐所","total":[0,10,0,0,39,345],"normal":[0,10,0,0,38,341],"warning":[0,0,0,0,1,4],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,2],"pawn":[0,0,0,0,1,2],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵查隊":{"fullName":"高市旗山分局偵查隊","total":[0,0,0,184,0,6],"normal":[0,0,0,180,0,6],"warning":[0,0,0,4,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,1,0,0],"pawn":[0,0,0,3,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市旗山分局交通分隊","total":[22,0,28,68,0,90],"normal":[21,0,27,66,0,88],"warning":[1,0,1,2,0,2],"lost":[1,0,0,0,0,0],"revoked":[0,0,1,1,0,0],"pawn":[0,0,0,0,0,1],"ab":[0,0,0,0,0,0],"right":[0,0,0,1,0,1],"forged":[0,0,0,0,0,0]},"中壇派出所":{"fullName":"高市旗山分局中壇派出所","total":[143,41,30,61,0,0],"normal":[137,41,29,61,0,0],"warning":[6,0,1,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[2,0,0,0,0,0],"pawn":[4,0,1,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"中埔派出所":{"fullName":"高市旗山分局中埔派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"六龜分局":{"高中派出所":{"fullName":"高市六龜分局高中派出所","total":[0,0,0,0,0,8],"normal":[0,0,0,0,0,6],"warning":[0,0,0,0,0,2],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,2],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"那瑪夏分駐所":{"fullName":"高市六龜分局那瑪夏分駐所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"達卡努瓦派出所":{"fullName":"高市六龜分局達卡努瓦派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"警備隊":{"fullName":"高市六龜分局警備隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"荖濃派出所":{"fullName":"高市六龜分局荖濃派出所","total":[0,0,0,0,0,45],"normal":[0,0,0,0,0,44],"warning":[0,0,0,0,0,1],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,1],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"茂林分駐所":{"fullName":"高市六龜分局茂林分駐所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"義寶派出所":{"fullName":"高市六龜分局義寶派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"森濤派出所":{"fullName":"高市六龜分局森濤派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"梅山派出所":{"fullName":"高市六龜分局梅山派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"桃源分駐所":{"fullName":"高市六龜分局桃源分駐所","total":[0,0,0,0,0,10],"normal":[0,0,0,0,0,10],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"新威派出所":{"fullName":"高市六龜分局新威派出所","total":[0,0,0,0,0,58],"normal":[0,0,0,0,0,53],"warning":[0,0,0,0,0,5],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,4],"pawn":[0,0,0,0,0,1],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"拉芙蘭派出所":{"fullName":"高市六龜分局拉芙蘭派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"寶山派出所":{"fullName":"高市六龜分局寶山派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"寶來派出所":{"fullName":"高市六龜分局寶來派出所","total":[0,0,0,0,0,58],"normal":[0,0,0,0,0,57],"warning":[0,0,0,0,0,1],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,1],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"多納派出所":{"fullName":"高市六龜分局多納派出所","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"交通分隊":{"fullName":"高市六龜分局交通分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"森山派出所":{"fullName":"高市六龜分局森山派出所","total":[0,0,0,0,0,1],"normal":[0,0,0,0,0,1],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"捷運隊":{"捷運隊":{"fullName":"高市警局捷運隊","total":[0,0,0,0,0,171],"normal":[0,0,0,0,0,169],"warning":[0,0,0,0,0,2],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,2],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"刑大":{"偵四隊十分隊":{"fullName":"高市刑大偵四隊十分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵六隊十六分隊":{"fullName":"高市刑大偵六隊十六分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵八隊二十三分隊":{"fullName":"高市刑大偵八隊二十三分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵七隊二十分隊":{"fullName":"高市刑大偵七隊二十分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵一隊二分隊":{"fullName":"高市刑大偵一隊二分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵二隊四分隊":{"fullName":"高市刑大偵二隊四分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵七隊十九分隊":{"fullName":"高市刑大偵七隊十九分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵七隊二十一分隊":{"fullName":"高市刑大偵七隊二十一分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵一隊三分隊":{"fullName":"高市刑大偵一隊三分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"科偵隊":{"fullName":"高市警局刑大科偵隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵四隊十一分隊":{"fullName":"高市刑大偵四隊十一分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵六隊十七分隊":{"fullName":"高市刑大偵六隊十七分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵五隊十四分隊":{"fullName":"高市刑大偵五隊十四分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵一隊一分隊":{"fullName":"高市刑大偵一隊一分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵四隊十二分隊":{"fullName":"高市刑大偵四隊十二分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]},"偵五隊十五分隊":{"fullName":"高市刑大偵五隊十五分隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}},"少年隊":{"少年隊":{"fullName":"高市警局少年隊","total":[0,0,0,0,0,0],"normal":[0,0,0,0,0,0],"warning":[0,0,0,0,0,0],"lost":[0,0,0,0,0,0],"revoked":[0,0,0,0,0,0],"pawn":[0,0,0,0,0,0],"ab":[0,0,0,0,0,0],"right":[0,0,0,0,0,0],"forged":[0,0,0,0,0,0]}}};
+    
+    // Theme Management - Default is LIGHT mode for print-friendly file
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    let currentTheme = localStorage.getItem('theme_print') || 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    themeToggleBtn.innerText = currentTheme === 'dark' ? '☀️' : '🌙';
+    
+    themeToggleBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      themeToggleBtn.innerText = currentTheme === 'dark' ? '☀️' : '🌙';
+      localStorage.setItem('theme_print', currentTheme);
+    });
+    
+    // App State
+    let activeParentUnit = localStorage.getItem('activeParentUnit_print') || Object.keys(DATA)[0];
+    if (!DATA[activeParentUnit]) {
+      activeParentUnit = Object.keys(DATA)[0];
+    }
+    let activeMetric = 'total'; // 'total', 'normal', 'warning'
+    let searchQuery = '';
+    
+    // Helpers
+    function formatNum(num) {
+      return num.toLocaleString();
+    }
+    
+    function sumArr(arr) {
+      return arr.reduce((a, b) => a + b, 0);
+    }
+    
+    // Initialize Sparkline rendering in Parent Units list
+    function drawSparklineHTML(data) {
+      const maxVal = Math.max(...data, 1);
+      const points = data.map((val, idx) => {
+        const x = (idx * 12);
+        const y = 18 - (val / maxVal) * 16;
+        return x + ',' + y;
+      }).join(' ');
+      
+      return `<svg class="sparkline-svg" viewBox="0 0 60 20">
+        <polyline fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${points}" />
+      </svg>`;
+    }
+    
+    // Render Left Sidebar Parent Units
+    function renderParentList() {
+      const container = document.getElementById('parent-units-list');
+      container.innerHTML = '';
+      
+      const parentKeys = Object.keys(DATA);
+      const filteredKeys = parentKeys.filter(key => {
+        if (key.includes(searchQuery)) return true;
+        const subUnits = Object.keys(DATA[key]);
+        return subUnits.some(sub => sub.includes(searchQuery));
+      });
+      
+      if (filteredKeys.length === 0) {
+        container.innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div><div>無符合的單位</div></div>';
+        return;
+      }
+      
+      filteredKeys.forEach(pKey => {
+        const subUnits = DATA[pKey];
+        const subNames = Object.keys(subUnits);
+        
+        let totalVal = 0;
+        let trendData = [0, 0, 0, 0, 0, 0];
+        
+        subNames.forEach(subName => {
+          const sub = subUnits[subName];
+          const valArray = sub[activeMetric];
+          totalVal += sumArr(valArray);
+          valArray.forEach((v, idx) => {
+            trendData[idx] += v;
+          });
+        });
+        
+        const btn = document.createElement('button');
+        btn.className = `parent-btn ${pKey === activeParentUnit ? 'active' : ''}`;
+        btn.setAttribute('data-unit', pKey);
+        
+        btn.innerHTML = `
+          <div class="parent-info">
+            <span class="parent-name">${pKey}</span>
+            <span class="parent-sub-count">${subNames.length} 個子單位</span>
+          </div>
+          <div class="parent-meta">
+            <span class="parent-total">${formatNum(totalVal)}</span>
+            ${drawSparklineHTML(trendData)}
+          </div>
+        `;
+        
+        btn.addEventListener('click', () => {
+          const prevActive = container.querySelector('.parent-btn.active');
+          if (prevActive) prevActive.classList.remove('active');
+          btn.classList.add('active');
+          activeParentUnit = pKey;
+          localStorage.setItem('activeParentUnit_print', pKey);
+          
+          updateDashboard();
+        });
+        
+        container.appendChild(btn);
+      });
+    }
+    
+    // Render Dashboard Content based on current Parent Unit & Metric
+    function updateDashboard() {
+      const pKey = activeParentUnit;
+      const subUnits = DATA[pKey];
+      const subNames = Object.keys(subUnits);
+      
+      document.getElementById('active-unit-title').innerText = pKey;
+      document.getElementById('subunit-section-title').innerText = `所屬派出所與子單位 (${subNames.length})`;
+      
+      let grandTotal = 0;
+      let grandNormal = 0;
+      let grandWarning = 0;
+      let grandLost = 0;
+      let grandRevoked = 0;
+      let grandPawn = 0;
+      let grandAB = 0;
+      let grandRight = 0;
+      let grandForged = 0;
+      
+      let monthlyAggTotal = [0, 0, 0, 0, 0, 0];
+      let monthlyAggNormal = [0, 0, 0, 0, 0, 0];
+      let monthlyAggWarning = [0, 0, 0, 0, 0, 0];
+      
+      subNames.forEach(subName => {
+        const sub = subUnits[subName];
+        grandTotal += sumArr(sub.total);
+        grandNormal += sumArr(sub.normal);
+        grandWarning += sumArr(sub.warning);
+        grandLost += sumArr(sub.lost);
+        grandRevoked += sumArr(sub.revoked);
+        grandPawn += sumArr(sub.pawn);
+        grandAB += sumArr(sub.ab);
+        grandRight += sumArr(sub.right);
+        grandForged += sumArr(sub.forged);
+        
+        for (let i = 0; i < 6; i++) {
+          monthlyAggTotal[i] += sub.total[i];
+          monthlyAggNormal[i] += sub.normal[i];
+          monthlyAggWarning[i] += sub.warning[i];
+        }
+      });
+      
+      let activeMetricVal = 0;
+      let activeLabel = '總辨識數 (1-6月)';
+      if (activeMetric === 'total') {
+        activeMetricVal = grandTotal;
+        activeLabel = '總辨識數 (1-6月)';
+      } else if (activeMetric === 'normal') {
+        activeMetricVal = grandNormal;
+        activeLabel = '正常車總數 (1-6月)';
+      } else if (activeMetric === 'warning') {
+        activeMetricVal = grandWarning;
+        activeLabel = '警示車總數 (1-6月)';
+      }
+      
+      document.getElementById('metric-total-label').innerText = activeLabel;
+      document.getElementById('metric-total-value').innerText = formatNum(activeMetricVal);
+      
+      document.getElementById('metric-normal-value').innerText = formatNum(grandNormal);
+      const normalPct = grandTotal > 0 ? ((grandNormal / grandTotal) * 100).toFixed(2) : 0;
+      document.getElementById('metric-normal-pct').innerText = `${normalPct}%`;
+      
+      document.getElementById('metric-warning-value').innerText = formatNum(grandWarning);
+      const warningPct = grandTotal > 0 ? ((grandWarning / grandTotal) * 100).toFixed(2) : 0;
+      document.getElementById('metric-warning-pct').innerText = `${warningPct}%`;
+      
+      document.getElementById('breakdown-lost').innerText = formatNum(grandLost);
+      document.getElementById('breakdown-revoked').innerText = formatNum(grandRevoked);
+      document.getElementById('breakdown-pawn').innerText = formatNum(grandPawn);
+      document.getElementById('breakdown-ab').innerText = formatNum(grandAB);
+      document.getElementById('breakdown-right').innerText = formatNum(grandRight);
+      document.getElementById('breakdown-forged').innerText = formatNum(grandForged);
+      
+      const metricTextMap = { 'total': '總辨識數', 'normal': '正常車數', 'warning': '警示車數' };
+      document.getElementById('comp-title-text').innerText = `子單位 ${metricTextMap[activeMetric]} 佔比排行`;
+      
+      renderComparisonRanking(subUnits, subNames);
+      renderSubUnitsCards(subUnits, subNames);
+    }
+    
+    // Render Ranking comparison bars
+    function renderComparisonRanking(subUnits, subNames) {
+      const container = document.getElementById('comparison-bars');
+      container.innerHTML = '';
+      
+      const items = subNames.map(name => {
+        const sub = subUnits[name];
+        const val = sumArr(sub[activeMetric]);
+        return { name, val };
+      }).sort((a, b) => b.val - a.val);
+      
+      const maxVal = Math.max(...items.map(item => item.val), 1);
+      
+      items.forEach(item => {
+        const pct = ((item.val / maxVal) * 100).toFixed(1);
+        const row = document.createElement('div');
+        row.className = 'comp-row';
+        row.innerHTML = `
+          <div class="comp-label" title="${item.name}">${item.name}</div>
+          <div class="comp-track">
+            <div class="comp-fill" style="width: 0%" data-pct="${pct}"></div>
+          </div>
+          <div class="comp-value">${formatNum(item.val)}</div>
+        `;
+        container.appendChild(row);
+      });
+      
+      setTimeout(() => {
+        container.querySelectorAll('.comp-fill').forEach(fill => {
+          fill.style.width = fill.getAttribute('data-pct') + '%';
+        });
+      }, 50);
+    }
+    
+    // Render Sub-units Grid Cards
+    function renderSubUnitsCards(subUnits, subNames) {
+      const grid = document.getElementById('subunits-grid');
+      grid.innerHTML = '';
+      
+      subNames.forEach(subName => {
+        const sub = subUnits[subName];
+        const card = document.createElement('div');
+        card.className = 'subunit-card';
+        
+        const activeData = sub[activeMetric];
+        const activeSum = sumArr(activeData);
+        
+        card.innerHTML = `
+          <div class="subunit-card-header">
+            <span class="subunit-card-title">${subName}</span>
+            <div class="subunit-header-actions">
+              <span class="subunit-badge">1-6月累計 ${formatNum(activeSum)}</span>
+              <button class="print-card-btn" onclick="printCard(event, '${subName}')">
+                <span>🖨️</span>列印
+              </button>
+            </div>
+          </div>
+          
+          <div class="chart-container" id="chart-${subName.replace(/\s+/g, '_')}">
+            <!-- Custom interactive SVG gets injected here -->
+          </div>
+          
+          <div class="subunit-table-wrap">
+            <table class="subunit-table">
+              <thead>
+                <tr>
+                  <th>1月</th>
+                  <th>2月</th>
+                  <th>3月</th>
+                  <th>4月</th>
+                  <th>5月</th>
+                  <th>6月</th>
+                  <th>總計</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>${formatNum(activeData[0])}</td>
+                  <td>${formatNum(activeData[1])}</td>
+                  <td>${formatNum(activeData[2])}</td>
+                  <td>${formatNum(activeData[3])}</td>
+                  <td>${formatNum(activeData[4])}</td>
+                  <td>${formatNum(activeData[5])}</td>
+                  <td class="sub-total-col">${formatNum(activeSum)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+        
+        const chartContainer = card.querySelector('.chart-container');
+        injectInteractiveSVG(chartContainer, activeData, subName, sub);
+      });
+    }
+    
+    // Draw and Inject interactive SVG chart
+    function injectInteractiveSVG(container, data, unitName, fullSubObj) {
+      const width = 450;
+      const height = 150;
+      const paddingX = 35;
+      const paddingY = 20;
+      
+      const maxVal = Math.max(...data, 1);
+      const isAllZero = sumArr(data) === 0;
+      
+      const points = data.map((val, idx) => {
+        const x = paddingX + (idx * (width - 2 * paddingX) / 5);
+        const y = height - paddingY - (val / maxVal) * (height - 2 * paddingY);
+        return { x, y, val };
+      });
+      
+      let linePath = `M ${points[0].x} ${points[0].y}`;
+      for (let i = 1; i < points.length; i++) {
+        linePath += ` L ${points[i].x} ${points[i].y}`;
+      }
+      
+      let areaPath = linePath + ` L ${points[points.length-1].x} ${height - paddingY} L ${points[0].x} ${height - paddingY} Z`;
+      const gradId = 'grad-' + Math.random().toString(36).substring(2, 9);
+      
+      let svgHtml = `
+        <div class="chart-tooltip" id="tooltip-${gradId}"></div>
+        <svg viewBox="0 0 ${width} ${height}" class="chart-svg">
+          <defs>
+            <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--primary)" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="var(--primary)" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          
+          <!-- Grid lines -->
+          <line x1="${paddingX}" y1="${paddingY}" x2="${width - paddingX}" y2="${paddingY}" stroke="var(--border-color)" stroke-dasharray="3,3" />
+          <line x1="${paddingX}" y1="${height/2}" x2="${width - paddingX}" y2="${height/2}" stroke="var(--border-color)" stroke-dasharray="3,3" />
+          <line x1="${paddingX}" y1="${height - paddingY}" x2="${width - paddingX}" y2="${height - paddingY}" stroke="var(--border-color)" />
+          
+          <!-- Interactive Guide Line -->
+          <line id="guide-${gradId}" x1="0" y1="${paddingY}" x2="0" y2="${height - paddingY}" stroke="var(--primary)" stroke-width="1.5" stroke-dasharray="4,4" style="display:none;" />
+          
+          ${isAllZero ? `
+            <text x="${width/2}" y="${height/2 + 5}" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-muted)">此期間無辨識數據</text>
+          ` : `
+            <path d="${areaPath}" fill="url(#${gradId})" />
+            <path d="${linePath}" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+            ${points.map((p, idx) => `
+              <circle id="dot-${gradId}-${idx}" cx="${p.x}" cy="${p.y}" r="4" fill="var(--bg-panel)" stroke="var(--primary)" stroke-width="2.5" class="chart-dot" />
+            `).join('')}
+          `}
+          
+          ${points.map((p, idx) => `
+            <text x="${p.x}" y="${height - 4}" text-anchor="middle" font-size="10" font-weight="700" fill="var(--text-muted)">${idx+1}月</text>
+          `).join('')}
+          
+          <rect class="chart-hover-trigger" x="${paddingX - 10}" y="0" width="${width - 2*paddingX + 20}" height="${height}" fill="transparent" />
+        </svg>
+      `;
+      
+      container.innerHTML = svgHtml;
+      
+      const svg = container.querySelector('.chart-svg');
+      const tooltip = container.querySelector('.chart-tooltip');
+      const guideLine = svg.getElementById(`guide-${gradId}`);
+      const trigger = svg.querySelector('.chart-hover-trigger');
+      
+      if (isAllZero) return;
+      
+      trigger.addEventListener('mousemove', (e) => {
+        const rect = svg.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        
+        const internalX = (mouseX / rect.width) * width;
+        
+        let closestIdx = 0;
+        let minDist = Infinity;
+        points.forEach((p, idx) => {
+          const dist = Math.abs(p.x - internalX);
+          if (dist < minDist) {
+            minDist = dist;
+            closestIdx = idx;
+          }
+        });
+        
+        const activePoint = points[closestIdx];
+        
+        guideLine.setAttribute('x1', activePoint.x);
+        guideLine.setAttribute('x2', activePoint.x);
+        guideLine.style.display = 'block';
+        
+        points.forEach((_, idx) => {
+          const dot = svg.getElementById(`dot-${gradId}-${idx}`);
+          if (idx === closestIdx) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+        
+        const tooltipX = (activePoint.x / width) * rect.width + 10;
+        const tooltipY = (activePoint.y / height) * rect.height - 75;
+        
+        tooltip.innerHTML = `
+          <div class="tooltip-title">115年0${closestIdx + 1}月</div>
+          <div class="tooltip-row total"><span>總辨識:</span><span>${formatNum(fullSubObj.total[closestIdx])}</span></div>
+          <div class="tooltip-row normal"><span>正常車:</span><span>${formatNum(fullSubObj.normal[closestIdx])}</span></div>
+          <div class="tooltip-row warning"><span>警示車:</span><span>${formatNum(fullSubObj.warning[closestIdx])}</span></div>
+        `;
+        
+        tooltip.style.left = `${tooltipX}px`;
+        tooltip.style.top = `${tooltipY}px`;
+        tooltip.style.display = 'block';
+      });
+      
+      trigger.addEventListener('mouseleave', () => {
+        guideLine.style.display = 'none';
+        points.forEach((_, idx) => {
+          const dot = svg.getElementById(`dot-${gradId}-${idx}`);
+          if (dot) dot.classList.remove('active');
+        });
+        tooltip.style.display = 'none';
+      });
+    }
+    
+    // Print Logic for Single Sub-unit Card
+    window.printCard = function(event, subName) {
+      event.stopPropagation();
+      
+      const cards = document.querySelectorAll('.subunit-card');
+      let targetCard = null;
+      
+      cards.forEach(card => {
+        const title = card.querySelector('.subunit-card-title').innerText;
+        if (title === subName) {
+          targetCard = card;
+        }
+      });
+      
+      if (!targetCard) return;
+      
+      // Setup print mode
+      document.body.classList.add('print-mode-single');
+      targetCard.classList.add('print-target');
+      
+      // Inject official print header dynamically
+      const printHeader = document.createElement('div');
+      printHeader.className = 'print-only-header print-header-target';
+      
+      const dateStr = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' });
+      const timeStr = new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+      
+      printHeader.innerHTML = `
+        <div style="font-family: 'Microsoft JhengHei', sans-serif; margin-bottom: 25px; border-bottom: 3px double #475569; padding-bottom: 12px; color: #000000; display: flex; justify-content: space-between; align-items: flex-end;">
+          <div>
+            <h1 style="font-size: 22px; font-weight: 800; margin: 0;">車牌辨識張數報表</h1>
+            <div style="font-size: 13px; color: #475569; font-weight: 700; margin-top: 5px;">母單位：${activeParentUnit} &nbsp;|&nbsp; 派出所/子單位：${subName}</div>
+          </div>
+          <div style="font-size: 11px; text-align: right; color: #64748b; font-weight: 500; line-height: 1.4;">
+            <div>資料時間：115年1-6月</div>
+            <div>列印時間：${dateStr} ${timeStr}</div>
+          </div>
+        </div>
+      `;
+      
+      targetCard.parentNode.insertBefore(printHeader, targetCard);
+      
+      // Trigger printing
+      window.print();
+      
+      // Clean up after print window opens
+      const cleanup = () => {
+        document.body.classList.remove('print-mode-single');
+        targetCard.classList.remove('print-target');
+        const header = document.querySelector('.print-header-target');
+        if (header) header.remove();
+      };
+      
+      window.onafterprint = cleanup;
+      setTimeout(cleanup, 1500); // Fail-safe
+    };
+    
+    // Print Logic for the Entire active unit dashboard
+    window.printAll = function() {
+      // Create temporary print header for entire parent unit report
+      const mainContent = document.getElementById('main-content');
+      const firstChild = mainContent.firstChild;
+      
+      const printHeader = document.createElement('div');
+      printHeader.className = 'print-only-header print-header-target';
+      
+      const dateStr = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' });
+      const timeStr = new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+      
+      printHeader.innerHTML = `
+        <div style="font-family: 'Microsoft JhengHei', sans-serif; margin-bottom: 25px; border-bottom: 3px double #475569; padding-bottom: 12px; color: #000000; display: flex; justify-content: space-between; align-items: flex-end;">
+          <div>
+            <h1 style="font-size: 24px; font-weight: 800; margin: 0;">車牌辨識張數彙總報表</h1>
+            <div style="font-size: 14px; color: #475569; font-weight: 700; margin-top: 5px;">母單位：${activeParentUnit} 彙整報表</div>
+          </div>
+          <div style="font-size: 11px; text-align: right; color: #64748b; font-weight: 500; line-height: 1.4;">
+            <div>資料時間：115年1-6月</div>
+            <div>列印時間：${dateStr} ${timeStr}</div>
+          </div>
+        </div>
+      `;
+      
+      mainContent.insertBefore(printHeader, firstChild);
+      
+      window.print();
+      
+      const cleanup = () => {
+        const header = document.querySelector('.print-header-target');
+        if (header) header.remove();
+      };
+      window.onafterprint = cleanup;
+      setTimeout(cleanup, 1500); // Fail-safe
+    };
+    
+    // Setup Metric Button Clicks
+    const metricBtns = document.querySelectorAll('.toggle-btn[data-metric]');
+    metricBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        metricBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeMetric = btn.getAttribute('data-metric');
+        
+        renderParentList();
+        updateDashboard();
+      });
+    });
+    
+    // Setup search filter
+    const searchInput = document.getElementById('search-input');
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
+      renderParentList();
+    });
+    
+    // Initial Run
+    renderParentList();
+    updateDashboard();
+  </script>
+</body>
+</html>
