@@ -1,7 +1,7 @@
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-<meta charset="utf-8">
+<!DOCTYPE html>
+<!-- saved from url=(0048)https://ephemeral-blancmange-2655db.netlify.app/ -->
+<html lang="zh-Hant"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>車牌辨識張數月報表彙整</title>
 <style>
@@ -55,6 +55,57 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
   .bar-row { grid-template-columns: 100px 1fr 76px; gap: 8px; }
   .app { padding: 16px 12px 30px; }
 }
+
+.print-btn {
+  border: 0;
+  border-radius: 10px;
+  background: var(--primary);
+  color: #fff;
+  padding: 11px 16px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(31,78,121,.22);
+  white-space: nowrap;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+.print-btn:hover {
+  background: #173d61;
+}
+.print-btn:active {
+  transform: scale(0.98);
+}
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .tabs,
+  .print-btn {
+    display: none !important;
+  }
+  .table-wrap {
+    overflow: visible !important;
+  }
+  .tab-panel {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+  .chart-card {
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+  }
+  .bar-track {
+    border: 1px solid #cbd5e1 !important;
+    background-color: #f1f5f9 !important;
+  }
+  .bar-fill {
+    background: #1f4e79 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
 </style>
 </head>
 <body>
@@ -64,22 +115,23 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
       <h1>車牌辨識張數月報表彙整</h1>
       <p>資料來源：115年01月、115年02月、115年03月、115年04月、115年05月、115年06月；網頁可離線開啟。</p>
     </div>
-</div>
+    <button class="print-btn" onclick="window.print()">列印</button>
+  </div>
   <nav class="tabs" aria-label="頁籤">
-    <button class="tab-btn active" data-target="tab_summary">加總</button>
-<button class="tab-btn " data-target="tab_monthly_summary">母單位月彙總</button>
-<button class="tab-btn " data-target="tab_chart">直條圖</button>
-<button class="tab-btn " data-target="tab_115_01_">115年01月</button>
+    <button class="tab-btn" data-target="tab_summary">加總</button>
+<button class="tab-btn active" data-target="tab_monthly_summary">單位月彙總</button>
+<button class="tab-btn" data-target="tab_chart">直條圖</button>
+<button class="tab-btn" data-target="tab_115_01_">115年01月</button>
 <button class="tab-btn " data-target="tab_115_02_">115年02月</button>
 <button class="tab-btn " data-target="tab_115_03_">115年03月</button>
 <button class="tab-btn " data-target="tab_115_04_">115年04月</button>
 <button class="tab-btn " data-target="tab_115_05_">115年05月</button>
 <button class="tab-btn " data-target="tab_115_06_">115年06月</button>
   </nav>
-  <section id="tab_summary" class="tab-panel active">
-        <div class="section-head"><h2>加總</h2><p>將原始單位重新彙整為母單位，共 24 筆母單位資料；彙整時排除原月報表「小計」列，避免重複計算。</p></div>
+  <section id="tab_summary" class="tab-panel">
+        <div class="section-head"><h2>加總</h2><p>將原始單位重新彙整為單位，共 24 筆單位資料；彙整時排除原月報表「小計」列，避免重複計算。</p></div>
         <div class="table-wrap"><table class="data-table">
-<thead><tr><th>母單位</th><th>總數(正常車及警示車)</th><th>正常車</th><th>警示車</th><th>失車</th><th>註(吊)銷</th><th>典當車</th><th>AB車</th><th>權利車</th><th>偽造車</th><th>警示車_未分類</th></tr></thead><tbody>
+<thead><tr><th>單位</th><th>總數(正常車及警示車)</th><th>正常車</th><th>警示車</th><th>失車</th><th>註(吊)銷</th><th>典當車</th><th>AB車</th><th>權利車</th><th>偽造車</th><th>警示車_未分類</th></tr></thead><tbody>
 <tr class=""><td>保大</td><td class="num">114,444</td><td class="num">112,331</td><td class="num">2,113</td><td class="num">165</td><td class="num">1,059</td><td class="num">781</td><td class="num">15</td><td class="num">91</td><td class="num">2</td><td class="num">0</td></tr>
 <tr class=""><td>三民第二分局</td><td class="num">35,915</td><td class="num">35,307</td><td class="num">608</td><td class="num">42</td><td class="num">275</td><td class="num">248</td><td class="num">5</td><td class="num">36</td><td class="num">2</td><td class="num">0</td></tr>
 <tr class=""><td>新興分局</td><td class="num">32,323</td><td class="num">31,587</td><td class="num">736</td><td class="num">59</td><td class="num">290</td><td class="num">337</td><td class="num">1</td><td class="num">49</td><td class="num">0</td><td class="num">0</td></tr>
@@ -105,10 +157,10 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <tr class=""><td>少年隊</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
 <tr class="total-row"><td>總計</td><td class="num">413,290</td><td class="num">405,551</td><td class="num">7,739</td><td class="num">558</td><td class="num">3,793</td><td class="num">2,999</td><td class="num">40</td><td class="num">343</td><td class="num">6</td><td class="num">0</td></tr>
 </tbody></table></div>
-    </section><section id="tab_monthly_summary" class="tab-panel">
-        <div class="section-head"><h2>母單位月彙總</h2><p>各母單位每月「總數(正常車及警示車)」與總計。</p></div>
+    </section><section id="tab_monthly_summary" class="tab-panel active">
+        <div class="section-head"><h2>單位月彙總</h2><p>各單位每月「總數(正常車及警示車)」與總計。</p></div>
         <div class="table-wrap"><table class="data-table">
-<thead><tr><th>母單位</th><th>115年01月</th><th>115年02月</th><th>115年03月</th><th>115年04月</th><th>115年05月</th><th>115年06月</th><th>總計</th></tr></thead><tbody>
+<thead><tr><th>單位</th><th>115年01月</th><th>115年02月</th><th>115年03月</th><th>115年04月</th><th>115年05月</th><th>115年06月</th><th>總計</th></tr></thead><tbody>
 <tr class=""><td>保大</td><td class="num">22,743</td><td class="num">13,333</td><td class="num">18,368</td><td class="num">15,939</td><td class="num">16,268</td><td class="num">27,793</td><td class="num">114,444</td></tr>
 <tr class=""><td>三民第二分局</td><td class="num">9,282</td><td class="num">11,718</td><td class="num">6,283</td><td class="num">2,205</td><td class="num">2,401</td><td class="num">4,026</td><td class="num">35,915</td></tr>
 <tr class=""><td>新興分局</td><td class="num">270</td><td class="num">145</td><td class="num">1,170</td><td class="num">343</td><td class="num">164</td><td class="num">30,231</td><td class="num">32,323</td></tr>
@@ -135,12 +187,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <tr class="total-row"><td>總計</td><td class="num">56,535</td><td class="num">40,779</td><td class="num">41,799</td><td class="num">36,421</td><td class="num">31,993</td><td class="num">205,763</td><td class="num">413,290</td></tr>
 </tbody></table></div>
     </section><section id="tab_chart" class="tab-panel">
-        <div class="section-head"><h2>直條圖</h2><p>使用母單位總計資料產生，零件數單位仍列出但長條寬度為 0。</p></div>
-        <div class="chart-card"><div class="chart-note">依「母單位總計」繪製；已依需求排除指定科偵隊資料列。件數為 0 時長條寬度固定為 0。</div><div class="bar-list"><div class="bar-row"><div class="bar-label">保大</div><div class="bar-track"><div class="bar-fill" style="width:100.000000%"></div></div><div class="bar-value">114,444</div></div><div class="bar-row"><div class="bar-label">三民第二分局</div><div class="bar-track"><div class="bar-fill" style="width:31.382161%"></div></div><div class="bar-value">35,915</div></div><div class="bar-row"><div class="bar-label">新興分局</div><div class="bar-track"><div class="bar-fill" style="width:28.243508%"></div></div><div class="bar-value">32,323</div></div><div class="bar-row"><div class="bar-label">左營分局</div><div class="bar-track"><div class="bar-fill" style="width:28.228653%"></div></div><div class="bar-value">32,306</div></div><div class="bar-row"><div class="bar-label">岡山分局</div><div class="bar-track"><div class="bar-fill" style="width:22.129601%"></div></div><div class="bar-value">25,326</div></div><div class="bar-row"><div class="bar-label">仁武分局</div><div class="bar-track"><div class="bar-fill" style="width:19.033763%"></div></div><div class="bar-value">21,783</div></div><div class="bar-row"><div class="bar-label">前鎮分局</div><div class="bar-track"><div class="bar-fill" style="width:18.871238%"></div></div><div class="bar-value">21,597</div></div><div class="bar-row"><div class="bar-label">苓雅分局</div><div class="bar-track"><div class="bar-fill" style="width:18.047255%"></div></div><div class="bar-value">20,654</div></div><div class="bar-row"><div class="bar-label">楠梓分局</div><div class="bar-track"><div class="bar-fill" style="width:15.087728%"></div></div><div class="bar-value">17,267</div></div><div class="bar-row"><div class="bar-label">鹽埕分局</div><div class="bar-track"><div class="bar-fill" style="width:12.892769%"></div></div><div class="bar-value">14,755</div></div><div class="bar-row"><div class="bar-label">湖內分局</div><div class="bar-track"><div class="bar-fill" style="width:12.470728%"></div></div><div class="bar-value">14,272</div></div><div class="bar-row"><div class="bar-label">林園分局</div><div class="bar-track"><div class="bar-fill" style="width:11.061305%"></div></div><div class="bar-value">12,659</div></div><div class="bar-row"><div class="bar-label">小港分局</div><div class="bar-track"><div class="bar-fill" style="width:9.205376%"></div></div><div class="bar-value">10,535</div></div><div class="bar-row"><div class="bar-label">交大</div><div class="bar-track"><div class="bar-fill" style="width:8.371780%"></div></div><div class="bar-value">9,581</div></div><div class="bar-row"><div class="bar-label">鼓山分局</div><div class="bar-track"><div class="bar-fill" style="width:6.998183%"></div></div><div class="bar-value">8,009</div></div><div class="bar-row"><div class="bar-label">三民第一分局</div><div class="bar-track"><div class="bar-fill" style="width:6.329733%"></div></div><div class="bar-value">7,244</div></div><div class="bar-row"><div class="bar-label">婦幼隊</div><div class="bar-track"><div class="bar-fill" style="width:5.901576%"></div></div><div class="bar-value">6,754</div></div><div class="bar-row"><div class="bar-label">鳳山分局</div><div class="bar-track"><div class="bar-fill" style="width:4.376813%"></div></div><div class="bar-value">5,009</div></div><div class="bar-row"><div class="bar-label">旗山分局</div><div class="bar-track"><div class="bar-fill" style="width:2.189717%"></div></div><div class="bar-value">2,506</div></div><div class="bar-row"><div class="bar-label">六龜分局</div><div class="bar-track"><div class="bar-fill" style="width:0.157282%"></div></div><div class="bar-value">180</div></div><div class="bar-row"><div class="bar-label">捷運隊</div><div class="bar-track"><div class="bar-fill" style="width:0.149418%"></div></div><div class="bar-value">171</div></div><div class="bar-row"><div class="bar-label">刑大</div><div class="bar-track"><div class="bar-fill" style="width:0.000000%"></div></div><div class="bar-value">0</div></div><div class="bar-row"><div class="bar-label">少年隊</div><div class="bar-track"><div class="bar-fill" style="width:0.000000%"></div></div><div class="bar-value">0</div></div></div></div>
+        <div class="section-head"><h2>直條圖</h2><p>使用單位總計資料產生，零件數單位仍列出但長條寬度為 0。</p></div>
+        <div class="chart-card"><div class="chart-note">依「單位總計」繪製；已依需求排除指定科偵隊資料列。件數為 0 時長條寬度固定為 0。</div><div class="bar-list"><div class="bar-row"><div class="bar-label">保大</div><div class="bar-track"><div class="bar-fill" style="width:100.000000%"></div></div><div class="bar-value">114,444</div></div><div class="bar-row"><div class="bar-label">三民第二分局</div><div class="bar-track"><div class="bar-fill" style="width:31.382161%"></div></div><div class="bar-value">35,915</div></div><div class="bar-row"><div class="bar-label">新興分局</div><div class="bar-track"><div class="bar-fill" style="width:28.243508%"></div></div><div class="bar-value">32,323</div></div><div class="bar-row"><div class="bar-label">左營分局</div><div class="bar-track"><div class="bar-fill" style="width:28.228653%"></div></div><div class="bar-value">32,306</div></div><div class="bar-row"><div class="bar-label">岡山分局</div><div class="bar-track"><div class="bar-fill" style="width:22.129601%"></div></div><div class="bar-value">25,326</div></div><div class="bar-row"><div class="bar-label">仁武分局</div><div class="bar-track"><div class="bar-fill" style="width:19.033763%"></div></div><div class="bar-value">21,783</div></div><div class="bar-row"><div class="bar-label">前鎮分局</div><div class="bar-track"><div class="bar-fill" style="width:18.871238%"></div></div><div class="bar-value">21,597</div></div><div class="bar-row"><div class="bar-label">苓雅分局</div><div class="bar-track"><div class="bar-fill" style="width:18.047255%"></div></div><div class="bar-value">20,654</div></div><div class="bar-row"><div class="bar-label">楠梓分局</div><div class="bar-track"><div class="bar-fill" style="width:15.087728%"></div></div><div class="bar-value">17,267</div></div><div class="bar-row"><div class="bar-label">鹽埕分局</div><div class="bar-track"><div class="bar-fill" style="width:12.892769%"></div></div><div class="bar-value">14,755</div></div><div class="bar-row"><div class="bar-label">湖內分局</div><div class="bar-track"><div class="bar-fill" style="width:12.470728%"></div></div><div class="bar-value">14,272</div></div><div class="bar-row"><div class="bar-label">林園分局</div><div class="bar-track"><div class="bar-fill" style="width:11.061305%"></div></div><div class="bar-value">12,659</div></div><div class="bar-row"><div class="bar-label">小港分局</div><div class="bar-track"><div class="bar-fill" style="width:9.205376%"></div></div><div class="bar-value">10,535</div></div><div class="bar-row"><div class="bar-label">交大</div><div class="bar-track"><div class="bar-fill" style="width:8.371780%"></div></div><div class="bar-value">9,581</div></div><div class="bar-row"><div class="bar-label">鼓山分局</div><div class="bar-track"><div class="bar-fill" style="width:6.998183%"></div></div><div class="bar-value">8,009</div></div><div class="bar-row"><div class="bar-label">三民第一分局</div><div class="bar-track"><div class="bar-fill" style="width:6.329733%"></div></div><div class="bar-value">7,244</div></div><div class="bar-row"><div class="bar-label">婦幼隊</div><div class="bar-track"><div class="bar-fill" style="width:5.901576%"></div></div><div class="bar-value">6,754</div></div><div class="bar-row"><div class="bar-label">鳳山分局</div><div class="bar-track"><div class="bar-fill" style="width:4.376813%"></div></div><div class="bar-value">5,009</div></div><div class="bar-row"><div class="bar-label">旗山分局</div><div class="bar-track"><div class="bar-fill" style="width:2.189717%"></div></div><div class="bar-value">2,506</div></div><div class="bar-row"><div class="bar-label">六龜分局</div><div class="bar-track"><div class="bar-fill" style="width:0.157282%"></div></div><div class="bar-value">180</div></div><div class="bar-row"><div class="bar-label">捷運隊</div><div class="bar-track"><div class="bar-fill" style="width:0.149418%"></div></div><div class="bar-value">171</div></div><div class="bar-row"><div class="bar-label">刑大</div><div class="bar-track"><div class="bar-fill" style="width:0.000000%"></div></div><div class="bar-value">0</div></div><div class="bar-row"><div class="bar-label">少年隊</div><div class="bar-track"><div class="bar-fill" style="width:0.000000%"></div></div><div class="bar-value">0</div></div></div></div>
     </section><section id="tab_115_01_" class="tab-panel">
             <div class="section-head"><h2>115年01月</h2><p>僅保留欄位與下方資料列。</p></div>
             <div class="table-wrap"><table class="raw-table">
-<tr class="header-row">
+<tbody><tr class="header-row">
 <th>單位</th>
 <th>總數(正常車及警示車)</th>
 <th>正常車</th>
@@ -2532,11 +2584,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <td class="num">3</td>
 <td class="num">0</td>
 </tr>
-</table></div>
+</tbody></table></div>
         </section><section id="tab_115_02_" class="tab-panel">
             <div class="section-head"><h2>115年02月</h2><p>僅保留欄位與下方資料列。</p></div>
             <div class="table-wrap"><table class="raw-table">
-<tr class="header-row">
+<tbody><tr class="header-row">
 <th>單位</th>
 <th>總數(正常車及警示車)</th>
 <th>正常車</th>
@@ -4954,11 +5006,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
-</table></div>
+</tbody></table></div>
         </section><section id="tab_115_03_" class="tab-panel">
             <div class="section-head"><h2>115年03月</h2><p>僅保留欄位與下方資料列。</p></div>
             <div class="table-wrap"><table class="raw-table">
-<tr class="header-row">
+<tbody><tr class="header-row">
 <th>單位</th>
 <th>總數(正常車及警示車)</th>
 <th>正常車</th>
@@ -7337,11 +7389,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
-</table></div>
+</tbody></table></div>
         </section><section id="tab_115_04_" class="tab-panel">
             <div class="section-head"><h2>115年04月</h2><p>僅保留欄位與下方資料列。</p></div>
             <div class="table-wrap"><table class="raw-table">
-<tr class="header-row">
+<tbody><tr class="header-row">
 <th>單位</th>
 <th>總數(正常車及警示車)</th>
 <th>正常車</th>
@@ -9772,11 +9824,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <td class="num">1</td>
 <td class="num">0</td>
 </tr>
-</table></div>
+</tbody></table></div>
         </section><section id="tab_115_05_" class="tab-panel">
             <div class="section-head"><h2>115年05月</h2><p>僅保留欄位與下方資料列。</p></div>
             <div class="table-wrap"><table class="raw-table">
-<tr class="header-row">
+<tbody><tr class="header-row">
 <th>單位</th>
 <th>總數(正常車及警示車)</th>
 <th>正常車</th>
@@ -12168,11 +12220,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
-</table></div>
+</tbody></table></div>
         </section><section id="tab_115_06_" class="tab-panel">
             <div class="section-head"><h2>115年06月</h2><p>僅保留欄位與下方資料列。</p></div>
             <div class="table-wrap"><table class="raw-table">
-<tr class="header-row">
+<tbody><tr class="header-row">
 <th>單位</th>
 <th>總數(正常車及警示車)</th>
 <th>正常車</th>
@@ -14616,7 +14668,7 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <td class="num">2</td>
 <td class="num">0</td>
 </tr>
-</table></div>
+</tbody></table></div>
         </section>
 </div>
 <script>
@@ -14631,5 +14683,19 @@ buttons.forEach(btn => {
   });
 });
 </script>
-</body>
-</html>
+
+<audio class="audio-output" style="display: none;"></audio><div id="volume-booster-visusalizer">
+                    <div class="sound">
+                        <div class="sound-icon"></div>
+                        <div class="sound-wave sound-wave_one"></div>
+                        <div class="sound-wave sound-wave_two"></div>
+                        <div class="sound-wave sound-wave_three"></div>
+                    </div>
+                    <div class="segments-box">
+                        <div data-range="1-20" class="segment"><span></span></div>
+                        <div data-range="21-40" class="segment"><span></span></div>
+                        <div data-range="41-60" class="segment"><span></span></div>
+                        <div data-range="61-80" class="segment"><span></span></div>
+                        <div data-range="81-100" class="segment"><span></span></div>
+                    </div>
+                </div></body></html>
