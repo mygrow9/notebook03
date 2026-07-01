@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-<!-- saved from url=(0048)https://ephemeral-blancmange-2655db.netlify.app/ -->
-<html lang="zh-Hant"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>車牌辨識張數月報表彙整</title>
 <style>
@@ -55,57 +55,6 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
   .bar-row { grid-template-columns: 100px 1fr 76px; gap: 8px; }
   .app { padding: 16px 12px 30px; }
 }
-
-.print-btn {
-  border: 0;
-  border-radius: 10px;
-  background: var(--primary);
-  color: #fff;
-  padding: 11px 16px;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: pointer;
-  box-shadow: 0 6px 14px rgba(31,78,121,.22);
-  white-space: nowrap;
-  transition: background 0.2s ease, transform 0.1s ease;
-}
-.print-btn:hover {
-  background: #173d61;
-}
-.print-btn:active {
-  transform: scale(0.98);
-}
-@media print {
-  body {
-    background: #ffffff !important;
-    color: #000000 !important;
-  }
-  .tabs,
-  .print-btn {
-    display: none !important;
-  }
-  .table-wrap {
-    overflow: visible !important;
-  }
-  .tab-panel {
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 !important;
-  }
-  .chart-card {
-    border: 1px solid #cbd5e1 !important;
-    box-shadow: none !important;
-  }
-  .bar-track {
-    border: 1px solid #cbd5e1 !important;
-    background-color: #f1f5f9 !important;
-  }
-  .bar-fill {
-    background: #1f4e79 !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-}
 </style>
 </head>
 <body>
@@ -115,23 +64,22 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
       <h1>車牌辨識張數月報表彙整</h1>
       <p>資料來源：115年01月、115年02月、115年03月、115年04月、115年05月、115年06月；網頁可離線開啟。</p>
     </div>
-    <button class="print-btn" onclick="window.print()">列印</button>
-  </div>
+</div>
   <nav class="tabs" aria-label="頁籤">
-    <button class="tab-btn" data-target="tab_summary">加總</button>
-<button class="tab-btn active" data-target="tab_monthly_summary">單位月彙總</button>
-<button class="tab-btn" data-target="tab_chart">直條圖</button>
-<button class="tab-btn" data-target="tab_115_01_">115年01月</button>
+    <button class="tab-btn active" data-target="tab_summary">加總</button>
+<button class="tab-btn " data-target="tab_monthly_summary">母單位月彙總</button>
+<button class="tab-btn " data-target="tab_chart">直條圖</button>
+<button class="tab-btn " data-target="tab_115_01_">115年01月</button>
 <button class="tab-btn " data-target="tab_115_02_">115年02月</button>
 <button class="tab-btn " data-target="tab_115_03_">115年03月</button>
 <button class="tab-btn " data-target="tab_115_04_">115年04月</button>
 <button class="tab-btn " data-target="tab_115_05_">115年05月</button>
 <button class="tab-btn " data-target="tab_115_06_">115年06月</button>
   </nav>
-  <section id="tab_summary" class="tab-panel">
-        <div class="section-head"><h2>加總</h2><p>將原始單位重新彙整為單位，共 24 筆單位資料；彙整時排除原月報表「小計」列，避免重複計算。</p></div>
+  <section id="tab_summary" class="tab-panel active">
+        <div class="section-head"><h2>加總</h2><p>將原始單位重新彙整為母單位，共 24 筆母單位資料；彙整時排除原月報表「小計」列，避免重複計算。</p></div>
         <div class="table-wrap"><table class="data-table">
-<thead><tr><th>單位</th><th>總數(正常車及警示車)</th><th>正常車</th><th>警示車</th><th>失車</th><th>註(吊)銷</th><th>典當車</th><th>AB車</th><th>權利車</th><th>偽造車</th><th>警示車_未分類</th></tr></thead><tbody>
+<thead><tr><th>母單位</th><th>總數(正常車及警示車)</th><th>正常車</th><th>警示車</th><th>失車</th><th>註(吊)銷</th><th>典當車</th><th>AB車</th><th>權利車</th><th>偽造車</th><th>警示車_未分類</th></tr></thead><tbody>
 <tr class=""><td>保大</td><td class="num">116,004</td><td class="num">113,868</td><td class="num">2,136</td><td class="num">170</td><td class="num">1,069</td><td class="num">788</td><td class="num">15</td><td class="num">92</td><td class="num">2</td><td class="num">0</td></tr>
 <tr class=""><td>三民第二分局</td><td class="num">36,452</td><td class="num">35,836</td><td class="num">616</td><td class="num">42</td><td class="num">280</td><td class="num">251</td><td class="num">5</td><td class="num">36</td><td class="num">2</td><td class="num">0</td></tr>
 <tr class=""><td>新興分局</td><td class="num">33,206</td><td class="num">32,442</td><td class="num">764</td><td class="num">61</td><td class="num">304</td><td class="num">348</td><td class="num">1</td><td class="num">50</td><td class="num">0</td><td class="num">0</td></tr>
@@ -157,10 +105,10 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <tr class=""><td>少年隊</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
 <tr class="total-row"><td>總計</td><td class="num">436,048</td><td class="num">427,887</td><td class="num">8,161</td><td class="num">591</td><td class="num">4,000</td><td class="num">3,159</td><td class="num">40</td><td class="num">364</td><td class="num">7</td><td class="num">0</td></tr>
 </tbody></table></div>
-    </section><section id="tab_monthly_summary" class="tab-panel active">
-        <div class="section-head"><h2>單位月彙總</h2><p>各單位每月「總數(正常車及警示車)」與總計。</p></div>
+    </section><section id="tab_monthly_summary" class="tab-panel">
+        <div class="section-head"><h2>母單位月彙總</h2><p>各母單位每月「總數(正常車及警示車)」與總計。</p></div>
         <div class="table-wrap"><table class="data-table">
-<thead><tr><th>單位</th><th>115年01月</th><th>115年02月</th><th>115年03月</th><th>115年04月</th><th>115年05月</th><th>115年06月</th><th>總計</th></tr></thead><tbody>
+<thead><tr><th>母單位</th><th>115年01月</th><th>115年02月</th><th>115年03月</th><th>115年04月</th><th>115年05月</th><th>115年06月</th><th>總計</th></tr></thead><tbody>
 <tr class=""><td>保大</td><td class="num">22,743</td><td class="num">13,333</td><td class="num">18,368</td><td class="num">15,939</td><td class="num">16,268</td><td class="num">29,353</td><td class="num">116,004</td></tr>
 <tr class=""><td>三民第二分局</td><td class="num">9,282</td><td class="num">11,718</td><td class="num">6,283</td><td class="num">2,205</td><td class="num">2,401</td><td class="num">4,563</td><td class="num">36,452</td></tr>
 <tr class=""><td>新興分局</td><td class="num">270</td><td class="num">145</td><td class="num">1,170</td><td class="num">343</td><td class="num">164</td><td class="num">31,114</td><td class="num">33,206</td></tr>
@@ -187,8 +135,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <tr class="total-row"><td>總計</td><td class="num">56,535</td><td class="num">40,779</td><td class="num">41,799</td><td class="num">36,421</td><td class="num">31,993</td><td class="num">228,521</td><td class="num">436,048</td></tr>
 </tbody></table></div>
     </section><section id="tab_chart" class="tab-panel">
-        <div class="section-head"><h2>直條圖</h2><p>使用單位總計資料產生，零件數單位仍列出但長條寬度為 0。</p></div>
-        <div class="chart-card"><div class="chart-note">依「單位總計」繪製；已依需求排除指定科偵隊資料列。件數為 0 時長條寬度固定為 0。</div><div class="bar-list">
+        <div class="section-head"><h2>直條圖</h2><p>使用母單位總計資料產生，零件數單位仍列出但長條寬度為 0。</p></div>
+        <div class="chart-card"><div class="chart-note">依「母單位總計」繪製；已依需求排除指定科偵隊資料列。件數為 0 時長條寬度固定為 0。</div><div class="bar-list">
 <div class="bar-row"><div class="bar-label">保大</div><div class="bar-track"><div class="bar-fill" style="width:100.000000%"></div></div><div class="bar-value">116,004</div></div>
 <div class="bar-row"><div class="bar-label">三民第二分局</div><div class="bar-track"><div class="bar-fill" style="width:31.423054%"></div></div><div class="bar-value">36,452</div></div>
 <div class="bar-row"><div class="bar-label">新興分局</div><div class="bar-track"><div class="bar-fill" style="width:28.624875%"></div></div><div class="bar-value">33,206</div></div>
@@ -212,201 +160,10 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <div class="bar-row"><div class="bar-label">捷運隊</div><div class="bar-track"><div class="bar-fill" style="width:0.147409%"></div></div><div class="bar-value">171</div></div>
 <div class="bar-row"><div class="bar-label">刑大</div><div class="bar-track"><div class="bar-fill" style="width:0.000000%"></div></div><div class="bar-value">0</div></div>
 <div class="bar-row"><div class="bar-label">少年隊</div><div class="bar-track"><div class="bar-fill" style="width:0.000000%"></div></div><div class="bar-value">0</div></div>
-TYPE html>
-<!-- saved from url=(0048)https://ephemeral-blancmange-2655db.netlify.app/ -->
-<html lang="zh-Hant"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>車牌辨識張數月報表彙整</title>
-<style>
-:root {
-  --bg: #f5f7fb;
-  --panel: #ffffff;
-  --text: #1f2937;
-  --muted: #64748b;
-  --line: #dbe4f0;
-  --primary: #1f4e79;
-  --primary-2: #2f75b5;
-  --soft: #eaf2f8;
-}
-* { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--text); font-family: "Microsoft JhengHei", "Noto Sans TC", Arial, sans-serif; }
-.app { max-width: 1480px; margin: 0 auto; padding: 22px 24px 40px; }
-.topbar { display: flex; justify-content: space-between; gap: 18px; align-items: flex-start; margin-bottom: 16px; }
-.title-block h1 { margin: 0 0 6px; color: var(--primary); font-size: 28px; letter-spacing: .03em; }
-.title-block p { margin: 0; color: var(--muted); font-size: 14px; }
-.download-btn { border: 0; border-radius: 10px; background: var(--primary); color: #fff; padding: 11px 16px; font-weight: 700; font-size: 15px; cursor: pointer; box-shadow: 0 6px 14px rgba(31,78,121,.22); white-space: nowrap; }
-.download-btn:hover { background: #173d61; }
-.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 14px; position: sticky; top: 0; background: rgba(245,247,251,.96); padding: 10px 0; z-index: 10; backdrop-filter: blur(6px); }
-.tab-btn { border: 1px solid var(--line); background: #fff; color: #334155; padding: 9px 13px; border-radius: 999px; font-weight: 700; cursor: pointer; }
-.tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-.tab-panel { display: none; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px; box-shadow: 0 10px 28px rgba(15,23,42,.06); }
-.tab-panel.active { display: block; }
-.section-head { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; margin-bottom: 12px; }
-.section-head h2 { margin: 0; color: var(--primary); font-size: 22px; }
-.section-head p { margin: 0; color: var(--muted); font-size: 13px; }
-.table-wrap { width: 100%; overflow: auto; border: 1px solid var(--line); border-radius: 12px; }
-table { width: 100%; border-collapse: collapse; background: #fff; }
-th, td { border-bottom: 1px solid #e6edf5; border-right: 1px solid #eef3f8; padding: 8px 10px; font-size: 14px; white-space: nowrap; }
-th:last-child, td:last-child { border-right: 0; }
-thead th, .header-row th { position: sticky; top: 0; background: var(--primary); color: #fff; font-weight: 700; text-align: center; z-index: 2; }
-.data-table td:first-child { font-weight: 700; color: #1e3a5f; }
-.num { text-align: right; font-variant-numeric: tabular-nums; }
-.total-row td, .subtotal-row td { background: var(--soft); font-weight: 800; }
-.raw-table .title-row th, .raw-table .title-row td { background: #fff; color: var(--primary); font-size: 18px; font-weight: 800; text-align: center; }
-.raw-table tr:nth-child(even):not(.header-row):not(.subtotal-row):not(.title-row) td { background: #fbfdff; }
-.chart-card { border: 1px solid var(--line); border-radius: 14px; padding: 18px; background: #fff; }
-.chart-note { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
-.bar-list { display: grid; gap: 9px; }
-.bar-row { display: grid; grid-template-columns: 150px 1fr 95px; align-items: center; gap: 12px; min-height: 28px; }
-.bar-label { font-weight: 700; color: #334155; text-align: right; }
-.bar-track { height: 19px; border-radius: 999px; background: #edf2f7; overflow: hidden; position: relative; }
-.bar-fill { height: 100%; border-radius: 999px; background: var(--primary-2); min-width: 0; }
-.bar-value { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
-.hidden-data { display: none; }
-@media (max-width: 760px) {
-  .topbar, .section-head { flex-direction: column; align-items: flex-start; }
-  .bar-row { grid-template-columns: 100px 1fr 76px; gap: 8px; }
-  .app { padding: 16px 12px 30px; }
-}
-
-.print-btn {
-  border: 0;
-  border-radius: 10px;
-  background: var(--primary);
-  color: #fff;
-  padding: 11px 16px;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: pointer;
-  box-shadow: 0 6px 14px rgba(31,78,121,.22);
-  white-space: nowrap;
-  transition: background 0.2s ease, transform 0.1s ease;
-}
-.print-btn:hover {
-  background: #173d61;
-}
-.print-btn:active {
-  transform: scale(0.98);
-}
-@media print {
-  body {
-    background: #ffffff !important;
-    color: #000000 !important;
-  }
-  .tabs,
-  .print-btn {
-    display: none !important;
-  }
-  .table-wrap {
-    overflow: visible !important;
-  }
-  .tab-panel {
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 !important;
-  }
-  .chart-card {
-    border: 1px solid #cbd5e1 !important;
-    box-shadow: none !important;
-  }
-  .bar-track {
-    border: 1px solid #cbd5e1 !important;
-    background-color: #f1f5f9 !important;
-  }
-  .bar-fill {
-    background: #1f4e79 !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-}
-</style>
-</head>
-<body>
-<div class="app">
-  <div class="topbar">
-    <div class="title-block">
-      <h1>車牌辨識張數月報表彙整</h1>
-      <p>資料來源：115年01月、115年02月、115年03月、115年04月、115年05月、115年06月；網頁可離線開啟。</p>
-    </div>
-    <button class="print-btn" onclick="window.print()">列印</button>
-  </div>
-  <nav class="tabs" aria-label="頁籤">
-    <button class="tab-btn" data-target="tab_summary">加總</button>
-<button class="tab-btn active" data-target="tab_monthly_summary">單位月彙總</button>
-<button class="tab-btn" data-target="tab_chart">直條圖</button>
-<button class="tab-btn" data-target="tab_115_01_">115年01月</button>
-<button class="tab-btn " data-target="tab_115_02_">115年02月</button>
-<button class="tab-btn " data-target="tab_115_03_">115年03月</button>
-<button class="tab-btn " data-target="tab_115_04_">115年04月</button>
-<button class="tab-btn " data-target="tab_115_05_">115年05月</button>
-<button class="tab-btn " data-target="tab_115_06_">115年06月</button>
-  </nav>
-  <section id="tab_summary" class="tab-panel">
-        <div class="section-head"><h2>加總</h2><p>將原始單位重新彙整為單位，共 24 筆單位資料；彙整時排除原月報表「小計」列，避免重複計算。</p></div>
-        <div class="table-wrap"><table class="data-table">
-<thead><tr><th>單位</th><th>總數(正常車及警示車)</th><th>正常車</th><th>警示車</th><th>失車</th><th>註(吊)銷</th><th>典當車</th><th>AB車</th><th>權利車</th><th>偽造車</th><th>警示車_未分類</th></tr></thead><tbody>
-<tr class=""><td>保大</td><td class="num">116,004</td><td class="num">113,868</td><td class="num">2,136</td><td class="num">170</td><td class="num">1,069</td><td class="num">788</td><td class="num">15</td><td class="num">92</td><td class="num">2</td><td class="num">0</td></tr>
-<tr class=""><td>三民第二分局</td><td class="num">36,452</td><td class="num">35,836</td><td class="num">616</td><td class="num">42</td><td class="num">280</td><td class="num">251</td><td class="num">5</td><td class="num">36</td><td class="num">2</td><td class="num">0</td></tr>
-<tr class=""><td>新興分局</td><td class="num">33,206</td><td class="num">32,442</td><td class="num">764</td><td class="num">61</td><td class="num">304</td><td class="num">348</td><td class="num">1</td><td class="num">50</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>左營分局</td><td class="num">41,097</td><td class="num">40,366</td><td class="num">731</td><td class="num">42</td><td class="num">377</td><td class="num">269</td><td class="num">3</td><td class="num">40</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>岡山分局</td><td class="num">26,449</td><td class="num">25,969</td><td class="num">480</td><td class="num">35</td><td class="num">257</td><td class="num">166</td><td class="num">1</td><td class="num">20</td><td class="num">1</td><td class="num">0</td></tr>
-<tr class=""><td>仁武分局</td><td class="num">23,165</td><td class="num">22,662</td><td class="num">503</td><td class="num">29</td><td class="num">274</td><td class="num">179</td><td class="num">2</td><td class="num">19</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>前鎮分局</td><td class="num">22,385</td><td class="num">21,979</td><td class="num">406</td><td class="num">25</td><td class="num">212</td><td class="num">153</td><td class="num">0</td><td class="num">16</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>苓雅分局</td><td class="num">23,149</td><td class="num">22,708</td><td class="num">441</td><td class="num">41</td><td class="num">200</td><td class="num">175</td><td class="num">2</td><td class="num">21</td><td class="num">2</td><td class="num">0</td></tr>
-<tr class=""><td>楠梓分局</td><td class="num">17,527</td><td class="num">17,221</td><td class="num">306</td><td class="num">11</td><td class="num">141</td><td class="num">141</td><td class="num">1</td><td class="num">12</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>鹽埕分局</td><td class="num">16,120</td><td class="num">15,802</td><td class="num">318</td><td class="num">22</td><td class="num">145</td><td class="num">139</td><td class="num">2</td><td class="num">10</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>湖內分局</td><td class="num">14,548</td><td class="num">14,334</td><td class="num">214</td><td class="num">12</td><td class="num">113</td><td class="num">79</td><td class="num">0</td><td class="num">10</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>林園分局</td><td class="num">13,887</td><td class="num">13,723</td><td class="num">164</td><td class="num">18</td><td class="num">70</td><td class="num">72</td><td class="num">0</td><td class="num">4</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>小港分局</td><td class="num">10,831</td><td class="num">10,610</td><td class="num">221</td><td class="num">19</td><td class="num">121</td><td class="num">76</td><td class="num">1</td><td class="num">4</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>交大</td><td class="num">9,968</td><td class="num">9,789</td><td class="num">179</td><td class="num">11</td><td class="num">89</td><td class="num">72</td><td class="num">2</td><td class="num">5</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>鼓山分局</td><td class="num">8,086</td><td class="num">7,932</td><td class="num">154</td><td class="num">9</td><td class="num">96</td><td class="num">46</td><td class="num">1</td><td class="num">2</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>三民第一分局</td><td class="num">7,244</td><td class="num">7,068</td><td class="num">176</td><td class="num">9</td><td class="num">91</td><td class="num">66</td><td class="num">1</td><td class="num">9</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>婦幼隊</td><td class="num">6,906</td><td class="num">6,769</td><td class="num">137</td><td class="num">13</td><td class="num">67</td><td class="num">53</td><td class="num">1</td><td class="num">3</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>鳳山分局</td><td class="num">5,774</td><td class="num">5,636</td><td class="num">138</td><td class="num">17</td><td class="num">59</td><td class="num">54</td><td class="num">0</td><td class="num">8</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>旗山分局</td><td class="num">2,718</td><td class="num">2,655</td><td class="num">63</td><td class="num">4</td><td class="num">26</td><td class="num">28</td><td class="num">2</td><td class="num">3</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>六龜分局</td><td class="num">361</td><td class="num">349</td><td class="num">12</td><td class="num">1</td><td class="num">9</td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>捷運隊</td><td class="num">171</td><td class="num">169</td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>刑大</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>少年隊</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class="total-row"><td>總計</td><td class="num">436,048</td><td class="num">427,887</td><td class="num">8,161</td><td class="num">591</td><td class="num">4,000</td><td class="num">3,159</td><td class="num">40</td><td class="num">364</td><td class="num">7</td><td class="num">0</td></tr>
-</tbody></table></div>
-    </section><section id="tab_monthly_summary" class="tab-panel active">
-        <div class="section-head"><h2>單位月彙總</h2><p>各單位每月「總數(正常車及警示車)」與總計。</p></div>
-        <div class="table-wrap"><table class="data-table">
-<thead><tr><th>單位</th><th>115年01月</th><th>115年02月</th><th>115年03月</th><th>115年04月</th><th>115年05月</th><th>115年06月</th><th>總計</th></tr></thead><tbody>
-<tr class=""><td>保大</td><td class="num">22,743</td><td class="num">13,333</td><td class="num">18,368</td><td class="num">15,939</td><td class="num">16,268</td><td class="num">29,353</td><td class="num">116,004</td></tr>
-<tr class=""><td>三民第二分局</td><td class="num">9,282</td><td class="num">11,718</td><td class="num">6,283</td><td class="num">2,205</td><td class="num">2,401</td><td class="num">4,563</td><td class="num">36,452</td></tr>
-<tr class=""><td>新興分局</td><td class="num">270</td><td class="num">145</td><td class="num">1,170</td><td class="num">343</td><td class="num">164</td><td class="num">31,114</td><td class="num">33,206</td></tr>
-<tr class=""><td>左營分局</td><td class="num">580</td><td class="num">368</td><td class="num">391</td><td class="num">936</td><td class="num">63</td><td class="num">38,759</td><td class="num">41,097</td></tr>
-<tr class=""><td>岡山分局</td><td class="num">7,474</td><td class="num">5,457</td><td class="num">3,398</td><td class="num">2,494</td><td class="num">2,110</td><td class="num">5,516</td><td class="num">26,449</td></tr>
-<tr class=""><td>仁武分局</td><td class="num">26</td><td class="num">529</td><td class="num">295</td><td class="num">454</td><td class="num">430</td><td class="num">21,431</td><td class="num">23,165</td></tr>
-<tr class=""><td>前鎮分局</td><td class="num">121</td><td class="num">202</td><td class="num">4</td><td class="num">0</td><td class="num">127</td><td class="num">21,931</td><td class="num">22,385</td></tr>
-<tr class=""><td>苓雅分局</td><td class="num">720</td><td class="num">912</td><td class="num">775</td><td class="num">793</td><td class="num">496</td><td class="num">19,453</td><td class="num">23,149</td></tr>
-<tr class=""><td>楠梓分局</td><td class="num">761</td><td class="num">710</td><td class="num">2,128</td><td class="num">7,556</td><td class="num">3,892</td><td class="num">2,480</td><td class="num">17,527</td></tr>
-<tr class=""><td>鹽埕分局</td><td class="num">1,491</td><td class="num">112</td><td class="num">850</td><td class="num">68</td><td class="num">189</td><td class="num">13,410</td><td class="num">16,120</td></tr>
-<tr class=""><td>湖內分局</td><td class="num">2,764</td><td class="num">1,808</td><td class="num">2,733</td><td class="num">1,275</td><td class="num">2,272</td><td class="num">3,696</td><td class="num">14,548</td></tr>
-<tr class=""><td>林園分局</td><td class="num">519</td><td class="num">908</td><td class="num">274</td><td class="num">293</td><td class="num">302</td><td class="num">11,591</td><td class="num">13,887</td></tr>
-<tr class=""><td>小港分局</td><td class="num">82</td><td class="num">329</td><td class="num">1,098</td><td class="num">222</td><td class="num">204</td><td class="num">8,896</td><td class="num">10,831</td></tr>
-<tr class=""><td>交大</td><td class="num">262</td><td class="num">402</td><td class="num">494</td><td class="num">277</td><td class="num">681</td><td class="num">7,852</td><td class="num">9,968</td></tr>
-<tr class=""><td>鼓山分局</td><td class="num">3,277</td><td class="num">960</td><td class="num">829</td><td class="num">791</td><td class="num">521</td><td class="num">1,708</td><td class="num">8,086</td></tr>
-<tr class=""><td>三民第一分局</td><td class="num">3,276</td><td class="num">1,343</td><td class="num">1,530</td><td class="num">588</td><td class="num">358</td><td class="num">149</td><td class="num">7,244</td></tr>
-<tr class=""><td>婦幼隊</td><td class="num">1,619</td><td class="num">723</td><td class="num">809</td><td class="num">1,549</td><td class="num">1,199</td><td class="num">1,007</td><td class="num">6,906</td></tr>
-<tr class=""><td>鳳山分局</td><td class="num">941</td><td class="num">439</td><td class="num">289</td><td class="num">89</td><td class="num">98</td><td class="num">3,918</td><td class="num">5,774</td></tr>
-<tr class=""><td>旗山分局</td><td class="num">327</td><td class="num">381</td><td class="num">81</td><td class="num">549</td><td class="num">218</td><td class="num">1,162</td><td class="num">2,718</td></tr>
-<tr class=""><td>六龜分局</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">361</td><td class="num">361</td></tr>
-<tr class=""><td>捷運隊</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">171</td><td class="num">171</td></tr>
-<tr class=""><td>刑大</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class=""><td>少年隊</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-<tr class="total-row"><td>總計</td><td class="num">56,535</td><td class="num">40,779</td><td class="num">41,799</td><td class="num">36,421</td><td class="num">31,993</td><td class="num">228,521</td><td class="num">436,048</td></tr>
-</tbody></table></div>
-    </section><section id="tab_chart" class="tab-panel">
-        <div class="section-head"><h2>直條圖</h2><p>使用單位總計資料產生，零件數單位仍列出但長條寬度為 0。</p></div>
-        <div class="chart-card"><div class="chart-note">依「單位總計」繪製；已依需求排除指定科偵隊資料列。件數為 0 時長條寬度固定為 0。</div><div class="bar-list"><div class="bar-row"><div class="bar-label">保大</div><div class="bar-track"><div class="bar-fill" style="width:100.000000%"></div></div><div class="bar-value">114,444</div></div><div class="bar-row"><div class="bar-label">三民第二分局</div><div class="bar-track"><div class="bar-fill" style="width:31.382161%"></div></div><div class="bar-value">35,915</div></div><div class="bar-row"><div class="bar-label">新興分局</div><div class="bar-track"><div class="bar-fill" style="width:28.243508%"></div></div><div class="bar-value">32,323</div></div><div class="bar-row"><div class="bar-label">左營分局</div><div class="bar-track"><div class="bar-fill" style="width:28.228653%"></div></div><div class="bar-value">32,306</div></div><div class="bar-row"><div class="bar-label">岡山分局</div><div class="bar-track"><div class="bar-fill" style="width:22.129601%"></div></div><div class="bar-value">25,326</div></div><div class="bar-row"><div class="bar-label">仁武分局</div><div class="bar-track"><div class="bar-fill" style="width:19.033763%"></div></div><div class="bar-value">21,783</div></div><div class="bar-row"><div class="bar-label">前鎮分局</div><div class="bar-track"><div class="bar-fill" style="width:18.871238%"></div></div><div class="bar-value">21,597</div></div><div class="bar-row"><div class="bar-label">苓雅分局</div><div class="bar-track"><div class="bar-fill" style="width:18.047255%"></div></div><div class="bar-value">20,654</div></div><div class="bar-row"><div class="bar-label">楠梓分局</div><div class="bar-track"><div class="bar-fill" style="width:15.087728%"></div></div><div class="bar-value">17,267</div></div><div class="bar-row"><div class="bar-label">鹽埕分局</div><div class="bar-track"><div class="bar-fill" style="width:12.892769%"></div></div><div class="bar-value">14,755</div></div><div class="bar-row"><div class="bar-label">湖內分局</div><div class="bar-track"><div class="bar-fill" style="width:12.470728%"></div></div><div class="bar-value">14,272</div></div><div class="bar-row"><div class="bar-label">林園分局</div><div class="bar-track"><div class="bar-fill" style="width:11.061305%"></div></div><div class="bar-value">12,659</div></div><div class="bar-row"><div class="bar-label">小港分局</div><div class="bar-track"><div class="bar-fill" style="width:9.205376%"></div></div><div class="bar-value">10,535</div></div><div class="bar-row"><div class="bar-label">交大</div><div class="bar-track"><div class="bar-fill" style="width:8.371780%"></div></div><div class="bar-value">9,581</div></div><div class="bar-row"><div class="bar-label">鼓山分局</div><div class="bar-track"><div class="bar-fill" style="width:6.998183%"></div></div><div class="bar-value">8,009</div></div><div class="bar-row"><div class="bar-label">三民第一分局</div><div class="bar-track"><div class="bar-fill" style="width:6.329733%"></div></div><div class="bar-value">7,244</div></div><div class="bar-row"><div class="bar-label">婦幼隊</div><div class="bar-track"><div class="bar-fill" style="width:5.901576%"></div></div><div class="bar-value">6,754</div></div><div class="bar-row"><div class="bar-label">鳳山分局</div><div class="bar-track"><div class="bar-fill" style="width:4.376813%"></div></div><div class="bar-value">5,009</div></div><div class="bar-row"><div class="bar-label">旗山分局</div><div class="bar-track"><div class="bar-fill" style="width:2.189717%"></div></div><div class="bar-value">2,506</div></div><div class="bar-row"><div class="bar-label">六龜分局</div><div class="bar-track"><div class="bar-fill" style="width:0.157282%"></div></div><div class="bar-value">180</div></div><div class="bar-row"><div class="bar-label">捷運隊</div><div class="bar-track"><div class="bar-fill" style="width:0.149418%"></div></div><div class="bar-value">171</div></div><div class="bar-row"><div class="bar-label">刑大</div><div class="bar-track"><div class="bar-fill" style="width:0.000000%"></div></div><div class="bar-value">0</div></div><div class="bar-row"><div class="bar-label">少年隊</div><div class="bar-track"><div class="bar-fill" style="width:0.000000%"></div></div><div class="bar-value">0</div></div></div></div>
+</div>
     </section><section id="tab_115_01_" class="tab-panel">
             <div class="section-head"><h2>115年01月</h2><p>僅保留欄位與下方資料列。</p></div>
             <div class="table-wrap"><table class="raw-table">
-<tbody>
 <tr class="header-row">
 <th>單位</th>
 <th>總數(正常車及警示車)</th>
@@ -422,12 +179,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鼓山分局龍華派出所</td>
-<td class="num">455</td>
-<td class="num">448</td>
-<td class="num">7</td>
-<td class="num">0</td>
-<td class="num">3</td>
+<td class="num">520</td>
+<td class="num">508</td>
+<td class="num">12</td>
+<td class="num">2</td>
 <td class="num">4</td>
+<td class="num">6</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -435,12 +192,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鼓山分局鼓山派出所</td>
-<td class="num">274</td>
-<td class="num">270</td>
-<td class="num">4</td>
-<td class="num">0</td>
+<td class="num">2,343</td>
+<td class="num">2,290</td>
+<td class="num">53</td>
 <td class="num">2</td>
-<td class="num">2</td>
+<td class="num">40</td>
+<td class="num">11</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -448,12 +205,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鼓山分局旗津分駐所</td>
-<td class="num">85</td>
-<td class="num">83</td>
-<td class="num">2</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">2</td>
+<td class="num">362</td>
+<td class="num">357</td>
+<td class="num">5</td>
+<td class="num">1</td>
+<td class="num">1</td>
+<td class="num">3</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -474,24 +231,24 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鼓山分局內惟派出所</td>
-<td class="num">850</td>
-<td class="num">831</td>
-<td class="num">19</td>
+<td class="num">15</td>
+<td class="num">15</td>
 <td class="num">0</td>
-<td class="num">9</td>
-<td class="num">8</td>
 <td class="num">0</td>
-<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市鼓山分局偵查隊</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">13</td>
+<td class="num">11</td>
+<td class="num">2</td>
+<td class="num">1</td>
+<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -500,11 +257,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鼓山分局交通分隊</td>
-<td class="num">44</td>
-<td class="num">42</td>
-<td class="num">2</td>
+<td class="num">8</td>
+<td class="num">8</td>
 <td class="num">0</td>
-<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -513,11 +270,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鼓山分局中洲派出所</td>
+<td class="num">16</td>
+<td class="num">15</td>
+<td class="num">1</td>
 <td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -526,25 +283,25 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鹽埕分局建國四路派出所</td>
-<td class="num">7,741</td>
-<td class="num">7,612</td>
-<td class="num">129</td>
-<td class="num">10</td>
-<td class="num">49</td>
-<td class="num">60</td>
+<td class="num">183</td>
+<td class="num">180</td>
+<td class="num">3</td>
+<td class="num">0</td>
 <td class="num">1</td>
-<td class="num">9</td>
+<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市鹽埕分局交通分隊</td>
-<td class="num">390</td>
-<td class="num">383</td>
-<td class="num">7</td>
-<td class="num">1</td>
-<td class="num">5</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -552,25 +309,25 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鹽埕分局五福四路派出所</td>
-<td class="num">3,261</td>
-<td class="num">3,177</td>
-<td class="num">84</td>
-<td class="num">4</td>
-<td class="num">36</td>
-<td class="num">43</td>
+<td class="num">165</td>
+<td class="num">162</td>
+<td class="num">3</td>
 <td class="num">1</td>
+<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市鹽埕分局七賢路派出所</td>
-<td class="num">2,018</td>
-<td class="num">1,973</td>
-<td class="num">45</td>
+<td class="num">1,143</td>
+<td class="num">1,120</td>
+<td class="num">23</td>
 <td class="num">2</td>
-<td class="num">25</td>
-<td class="num">18</td>
+<td class="num">12</td>
+<td class="num">9</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -591,8 +348,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鳳山分局過埤派出所</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">36</td>
+<td class="num">36</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -604,12 +361,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鳳山分局新甲派出所</td>
-<td class="num">1,723</td>
-<td class="num">1,685</td>
-<td class="num">38</td>
-<td class="num">3</td>
-<td class="num">15</td>
-<td class="num">20</td>
+<td class="num">1</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -617,25 +374,25 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鳳山分局文山派出所</td>
-<td class="num">87</td>
-<td class="num">87</td>
+<td class="num">242</td>
+<td class="num">228</td>
+<td class="num">14</td>
+<td class="num">2</td>
+<td class="num">7</td>
+<td class="num">1</td>
 <td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">4</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市鳳山分局成功派出所</td>
-<td class="num">1,688</td>
-<td class="num">1,655</td>
-<td class="num">33</td>
-<td class="num">8</td>
-<td class="num">14</td>
-<td class="num">11</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -643,11 +400,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鳳山分局忠孝派出所</td>
-<td class="num">253</td>
-<td class="num">247</td>
+<td class="num">199</td>
+<td class="num">193</td>
 <td class="num">6</td>
-<td class="num">0</td>
-<td class="num">5</td>
+<td class="num">1</td>
+<td class="num">4</td>
 <td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -656,27 +413,27 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鳳山分局埤頂派出所</td>
-<td class="num">94</td>
-<td class="num">91</td>
+<td class="num">463</td>
+<td class="num">452</td>
+<td class="num">11</td>
+<td class="num">1</td>
+<td class="num">5</td>
 <td class="num">3</td>
 <td class="num">0</td>
-<td class="num">1</td>
 <td class="num">2</td>
-<td class="num">0</td>
-<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市鳳山分局南成派出所</td>
-<td class="num">73</td>
-<td class="num">72</td>
-<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
@@ -721,12 +478,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市警局捷運隊</td>
-<td class="num">171</td>
-<td class="num">169</td>
-<td class="num">2</td>
 <td class="num">0</td>
 <td class="num">0</td>
-<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -747,103 +504,103 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市警局婦幼隊</td>
-<td class="num">1,007</td>
-<td class="num">984</td>
-<td class="num">23</td>
-<td class="num">3</td>
-<td class="num">10</td>
-<td class="num">10</td>
+<td class="num">1,619</td>
+<td class="num">1,578</td>
+<td class="num">41</td>
+<td class="num">6</td>
+<td class="num">22</td>
+<td class="num">12</td>
 <td class="num">0</td>
-<td class="num">0</td>
+<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市警局保大黎明中隊</td>
-<td class="num">13,488</td>
-<td class="num">13,261</td>
-<td class="num">227</td>
-<td class="num">11</td>
-<td class="num">111</td>
-<td class="num">90</td>
+<td class="num">10,232</td>
+<td class="num">10,027</td>
+<td class="num">205</td>
+<td class="num">17</td>
+<td class="num">109</td>
+<td class="num">75</td>
 <td class="num">1</td>
-<td class="num">14</td>
+<td class="num">3</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市警局保大雷霆中隊</td>
-<td class="num">4,075</td>
-<td class="num">4,000</td>
-<td class="num">75</td>
-<td class="num">4</td>
-<td class="num">39</td>
-<td class="num">30</td>
-<td class="num">1</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市警局保大雄岡中隊</td>
-<td class="num">8,278</td>
-<td class="num">8,124</td>
-<td class="num">154</td>
-<td class="num">15</td>
-<td class="num">82</td>
-<td class="num">49</td>
+<td class="num">10,526</td>
+<td class="num">10,306</td>
+<td class="num">220</td>
+<td class="num">23</td>
+<td class="num">103</td>
+<td class="num">81</td>
+<td class="num">3</td>
+<td class="num">9</td>
 <td class="num">1</td>
-<td class="num">7</td>
-<td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市警局保大迅雷中隊</td>
-<td class="num">1,384</td>
-<td class="num">1,354</td>
-<td class="num">30</td>
+<td class="num">1,981</td>
+<td class="num">1,935</td>
+<td class="num">46</td>
 <td class="num">3</td>
-<td class="num">17</td>
-<td class="num">10</td>
+<td class="num">26</td>
+<td class="num">11</td>
 <td class="num">0</td>
-<td class="num">0</td>
+<td class="num">6</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市警局保大特勤中隊</td>
-<td class="num">2,128</td>
-<td class="num">2,088</td>
-<td class="num">40</td>
-<td class="num">5</td>
-<td class="num">14</td>
-<td class="num">19</td>
+<td class="num">4</td>
+<td class="num">4</td>
 <td class="num">0</td>
-<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市警局交大機動分隊</td>
-<td class="num">4,220</td>
-<td class="num">4,149</td>
-<td class="num">71</td>
-<td class="num">6</td>
-<td class="num">30</td>
-<td class="num">29</td>
+<td class="num">110</td>
+<td class="num">107</td>
+<td class="num">3</td>
+<td class="num">0</td>
 <td class="num">2</td>
-<td class="num">4</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市警局交大橋頭分隊</td>
-<td class="num">82</td>
-<td class="num">80</td>
-<td class="num">2</td>
 <td class="num">0</td>
-<td class="num">1</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -851,25 +608,25 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市警局交大憲政中隊</td>
-<td class="num">2,567</td>
-<td class="num">2,520</td>
-<td class="num">47</td>
-<td class="num">4</td>
-<td class="num">26</td>
-<td class="num">16</td>
+<td class="num">152</td>
+<td class="num">149</td>
+<td class="num">3</td>
 <td class="num">0</td>
-<td class="num">1</td>
+<td class="num">3</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市警局交大國泰分隊</td>
-<td class="num">983</td>
-<td class="num">966</td>
-<td class="num">17</td>
 <td class="num">0</td>
-<td class="num">10</td>
-<td class="num">7</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -877,12 +634,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市苓雅分局警備隊</td>
-<td class="num">1,618</td>
-<td class="num">1,595</td>
-<td class="num">23</td>
-<td class="num">2</td>
-<td class="num">8</td>
-<td class="num">13</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -903,60 +660,60 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市苓雅分局福德二路派出所</td>
-<td class="num">4,045</td>
-<td class="num">3,979</td>
-<td class="num">66</td>
+<td class="num">654</td>
+<td class="num">642</td>
+<td class="num">12</td>
+<td class="num">3</td>
 <td class="num">4</td>
-<td class="num">32</td>
-<td class="num">24</td>
+<td class="num">5</td>
 <td class="num">0</td>
-<td class="num">6</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市苓雅分局民權路派出所</td>
-<td class="num">1,714</td>
-<td class="num">1,664</td>
-<td class="num">50</td>
-<td class="num">6</td>
-<td class="num">23</td>
-<td class="num">19</td>
 <td class="num">0</td>
-<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市苓雅分局成功路派出所</td>
-<td class="num">4,524</td>
-<td class="num">4,407</td>
-<td class="num">117</td>
-<td class="num">7</td>
-<td class="num">61</td>
-<td class="num">44</td>
-<td class="num">2</td>
-<td class="num">3</td>
+<td class="num">42</td>
+<td class="num">42</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市苓雅分局凱旋路派出所</td>
-<td class="num">4,111</td>
-<td class="num">4,039</td>
-<td class="num">72</td>
-<td class="num">4</td>
-<td class="num">24</td>
-<td class="num">38</td>
 <td class="num">0</td>
-<td class="num">4</td>
-<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市苓雅分局交通分隊</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">24</td>
+<td class="num">24</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -968,24 +725,24 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市苓雅分局三多路派出所</td>
-<td class="num">3,441</td>
-<td class="num">3,384</td>
-<td class="num">57</td>
-<td class="num">13</td>
-<td class="num">29</td>
-<td class="num">12</td>
 <td class="num">0</td>
-<td class="num">3</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市湖內分局阿蓮分駐所</td>
-<td class="num">75</td>
-<td class="num">74</td>
-<td class="num">1</td>
+<td class="num">252</td>
+<td class="num">246</td>
+<td class="num">6</td>
 <td class="num">0</td>
-<td class="num">0</td>
+<td class="num">5</td>
 <td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -994,24 +751,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市湖內分局路竹分駐所</td>
-<td class="num">293</td>
-<td class="num">291</td>
-<td class="num">2</td>
-<td class="num">0</td>
-<td class="num">2</td>
+<td class="num">252</td>
+<td class="num">251</td>
+<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-</tr>
-<tr class="">
-<td>高市湖內分局警備隊</td>
-<td class="num">21</td>
-<td class="num">18</td>
-<td class="num">3</td>
-<td class="num">0</td>
-<td class="num">2</td>
 <td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1019,9 +763,22 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <td class="num">0</td>
 </tr>
 <tr class="">
+<td>高市湖內分局警備隊</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr class="">
 <td>高市湖內分局蛙潭派出所</td>
-<td class="num">132</td>
-<td class="num">132</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1033,12 +790,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市湖內分局茄萣分駐所</td>
-<td class="num">259</td>
-<td class="num">257</td>
+<td class="num">16</td>
+<td class="num">14</td>
 <td class="num">2</td>
 <td class="num">0</td>
-<td class="num">1</td>
-<td class="num">1</td>
+<td class="num">2</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1046,12 +803,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市湖內分局竹滬派出所</td>
-<td class="num">293</td>
-<td class="num">288</td>
+<td class="num">478</td>
+<td class="num">466</td>
+<td class="num">12</td>
 <td class="num">5</td>
+<td class="num">7</td>
 <td class="num">0</td>
-<td class="num">2</td>
-<td class="num">3</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1059,8 +816,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市湖內分局秘書室</td>
-<td class="num">49</td>
-<td class="num">49</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1072,8 +829,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市湖內分局砂崙派出所</td>
-<td class="num">8</td>
-<td class="num">8</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1085,12 +842,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市湖內分局田寮分駐所</td>
-<td class="num">174</td>
-<td class="num">169</td>
-<td class="num">5</td>
-<td class="num">1</td>
-<td class="num">1</td>
-<td class="num">3</td>
+<td class="num">2</td>
+<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1098,38 +855,38 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市湖內分局湖街派出所</td>
-<td class="num">82</td>
-<td class="num">81</td>
+<td class="num">131</td>
+<td class="num">127</td>
+<td class="num">4</td>
+<td class="num">0</td>
+<td class="num">2</td>
 <td class="num">1</td>
 <td class="num">0</td>
-<td class="num">0</td>
 <td class="num">1</td>
-<td class="num">0</td>
-<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市湖內分局湖內派出所</td>
-<td class="num">1,157</td>
-<td class="num">1,132</td>
-<td class="num">25</td>
-<td class="num">0</td>
-<td class="num">17</td>
-<td class="num">7</td>
-<td class="num">0</td>
+<td class="num">987</td>
+<td class="num">971</td>
+<td class="num">16</td>
 <td class="num">1</td>
+<td class="num">12</td>
+<td class="num">3</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市湖內分局崇德派出所</td>
-<td class="num">318</td>
-<td class="num">308</td>
-<td class="num">10</td>
-<td class="num">0</td>
-<td class="num">8</td>
+<td class="num">24</td>
+<td class="num">22</td>
 <td class="num">2</td>
+<td class="num">0</td>
+<td class="num">1</td>
+<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1137,8 +894,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市湖內分局偵查隊</td>
-<td class="num">14</td>
-<td class="num">14</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1150,12 +907,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市湖內分局交通分隊</td>
-<td class="num">350</td>
-<td class="num">346</td>
-<td class="num">4</td>
-<td class="num">0</td>
+<td class="num">253</td>
+<td class="num">250</td>
 <td class="num">3</td>
 <td class="num">0</td>
+<td class="num">1</td>
+<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">1</td>
 <td class="num">0</td>
@@ -1163,8 +920,34 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市湖內分局一甲派出所</td>
-<td class="num">471</td>
-<td class="num">468</td>
+<td class="num">369</td>
+<td class="num">360</td>
+<td class="num">9</td>
+<td class="num">0</td>
+<td class="num">4</td>
+<td class="num">5</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr class="">
+<td>高市楠梓分局警備隊</td>
+<td class="num">60</td>
+<td class="num">59</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr class="">
+<td>高市楠梓分局翠屏派出所</td>
+<td class="num">83</td>
+<td class="num">80</td>
 <td class="num">3</td>
 <td class="num">0</td>
 <td class="num">2</td>
@@ -1175,35 +958,9 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <td class="num">0</td>
 </tr>
 <tr class="">
-<td>高市楠梓分局警備隊</td>
-<td class="num">660</td>
-<td class="num">651</td>
-<td class="num">9</td>
-<td class="num">0</td>
-<td class="num">6</td>
-<td class="num">3</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-</tr>
-<tr class="">
-<td>高市楠梓分局翠屏派出所</td>
-<td class="num">249</td>
-<td class="num">241</td>
-<td class="num">8</td>
-<td class="num">0</td>
-<td class="num">3</td>
-<td class="num">5</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-</tr>
-<tr class="">
 <td>高市楠梓分局楠梓派出所</td>
-<td class="num">54</td>
-<td class="num">54</td>
+<td class="num">32</td>
+<td class="num">32</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1215,12 +972,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市楠梓分局後勁派出所</td>
-<td class="num">698</td>
-<td class="num">691</td>
-<td class="num">7</td>
-<td class="num">1</td>
-<td class="num">1</td>
-<td class="num">5</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1228,25 +985,25 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市楠梓分局右昌派出所</td>
-<td class="num">778</td>
-<td class="num">762</td>
-<td class="num">16</td>
-<td class="num">1</td>
-<td class="num">6</td>
+<td class="num">336</td>
+<td class="num">328</td>
 <td class="num">8</td>
 <td class="num">0</td>
-<td class="num">1</td>
+<td class="num">5</td>
+<td class="num">3</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市楠梓分局加昌派出所</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">250</td>
+<td class="num">237</td>
+<td class="num">13</td>
+<td class="num">5</td>
+<td class="num">6</td>
+<td class="num">2</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1267,8 +1024,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市楠梓分局交通分隊</td>
-<td class="num">41</td>
-<td class="num">41</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1280,8 +1037,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局警備隊</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">43</td>
+<td class="num">43</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1293,12 +1050,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局港埔派出所</td>
-<td class="num">500</td>
-<td class="num">485</td>
-<td class="num">15</td>
-<td class="num">3</td>
-<td class="num">5</td>
-<td class="num">7</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1306,12 +1063,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局林園派出所</td>
-<td class="num">1,837</td>
-<td class="num">1,802</td>
-<td class="num">35</td>
-<td class="num">3</td>
-<td class="num">18</td>
-<td class="num">14</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1319,10 +1076,10 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局昭明派出所</td>
-<td class="num">120</td>
-<td class="num">120</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">105</td>
+<td class="num">104</td>
+<td class="num">1</td>
+<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1332,12 +1089,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局忠義派出所</td>
-<td class="num">6,229</td>
-<td class="num">6,224</td>
-<td class="num">5</td>
-<td class="num">2</td>
-<td class="num">2</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1345,12 +1102,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局大發駐在所</td>
-<td class="num">690</td>
-<td class="num">679</td>
-<td class="num">11</td>
 <td class="num">0</td>
-<td class="num">2</td>
-<td class="num">9</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1358,12 +1115,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局大寮分駐所</td>
-<td class="num">493</td>
-<td class="num">486</td>
-<td class="num">7</td>
 <td class="num">0</td>
-<td class="num">2</td>
-<td class="num">5</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1371,12 +1128,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局交通分隊</td>
-<td class="num">137</td>
-<td class="num">131</td>
-<td class="num">6</td>
 <td class="num">0</td>
-<td class="num">5</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1384,12 +1141,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局中芸派出所</td>
-<td class="num">805</td>
-<td class="num">781</td>
-<td class="num">24</td>
-<td class="num">1</td>
-<td class="num">13</td>
-<td class="num">10</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1397,12 +1154,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局中庄派出所</td>
-<td class="num">55</td>
-<td class="num">55</td>
+<td class="num">371</td>
+<td class="num">363</td>
+<td class="num">8</td>
 <td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">5</td>
+<td class="num">3</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1436,11 +1193,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市旗山分局美濃分駐所</td>
-<td class="num">168</td>
-<td class="num">164</td>
-<td class="num">4</td>
-<td class="num">0</td>
+<td class="num">68</td>
+<td class="num">66</td>
 <td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">1</td>
 <td class="num">1</td>
 <td class="num">0</td>
@@ -1449,11 +1206,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市旗山分局甲仙分駐所</td>
-<td class="num">125</td>
-<td class="num">123</td>
-<td class="num">2</td>
-<td class="num">1</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1462,11 +1219,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市旗山分局杉林分駐所</td>
-<td class="num">24</td>
-<td class="num">23</td>
-<td class="num">1</td>
 <td class="num">0</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1488,12 +1245,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市旗山分局建國派出所</td>
-<td class="num">147</td>
-<td class="num">143</td>
-<td class="num">4</td>
+<td class="num">80</td>
+<td class="num">79</td>
 <td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">1</td>
-<td class="num">2</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1540,11 +1297,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市旗山分局大洲派出所</td>
-<td class="num">39</td>
-<td class="num">38</td>
-<td class="num">1</td>
 <td class="num">0</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1553,12 +1310,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市旗山分局圓潭派出所</td>
-<td class="num">161</td>
-<td class="num">155</td>
-<td class="num">6</td>
 <td class="num">0</td>
-<td class="num">3</td>
-<td class="num">3</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1566,8 +1323,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市旗山分局吉東派出所</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">14</td>
+<td class="num">14</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1579,12 +1336,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市旗山分局內門分駐所</td>
-<td class="num">402</td>
-<td class="num">397</td>
-<td class="num">5</td>
 <td class="num">0</td>
-<td class="num">2</td>
-<td class="num">3</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1592,8 +1349,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市旗山分局偵查隊</td>
-<td class="num">6</td>
-<td class="num">6</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1605,25 +1362,25 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市旗山分局交通分隊</td>
-<td class="num">90</td>
-<td class="num">88</td>
-<td class="num">2</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">22</td>
+<td class="num">21</td>
+<td class="num">1</td>
 <td class="num">1</td>
 <td class="num">0</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市旗山分局中壇派出所</td>
+<td class="num">143</td>
+<td class="num">137</td>
+<td class="num">6</td>
 <td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">4</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1644,181 +1401,181 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市新興分局自強路派出所</td>
-<td class="num">5,009</td>
-<td class="num">4,915</td>
-<td class="num">94</td>
-<td class="num">8</td>
-<td class="num">40</td>
-<td class="num">44</td>
-<td class="num">0</td>
+<td class="num">32</td>
+<td class="num">30</td>
 <td class="num">2</td>
+<td class="num">0</td>
+<td class="num">1</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市新興分局前金分駐所</td>
-<td class="num">6,357</td>
-<td class="num">6,227</td>
-<td class="num">130</td>
-<td class="num">11</td>
-<td class="num">45</td>
-<td class="num">60</td>
+<td class="num">238</td>
+<td class="num">236</td>
+<td class="num">2</td>
 <td class="num">0</td>
-<td class="num">14</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市新興分局交通分隊</td>
-<td class="num">248</td>
-<td class="num">245</td>
-<td class="num">3</td>
-<td class="num">0</td>
-<td class="num">2</td>
 <td class="num">0</td>
 <td class="num">0</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市新興分局五福二路派出所</td>
-<td class="num">4,124</td>
-<td class="num">4,031</td>
-<td class="num">93</td>
-<td class="num">8</td>
-<td class="num">28</td>
-<td class="num">52</td>
 <td class="num">0</td>
-<td class="num">5</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市新興分局中正三路派出所</td>
-<td class="num">8,158</td>
-<td class="num">7,977</td>
-<td class="num">181</td>
-<td class="num">17</td>
-<td class="num">67</td>
-<td class="num">83</td>
-<td class="num">1</td>
-<td class="num">13</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市新興分局中山路派出所</td>
-<td class="num">7,151</td>
-<td class="num">6,941</td>
-<td class="num">210</td>
-<td class="num">15</td>
-<td class="num">94</td>
-<td class="num">90</td>
 <td class="num">0</td>
-<td class="num">11</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市左營分局警備隊</td>
-<td class="num">1,193</td>
-<td class="num">1,173</td>
-<td class="num">20</td>
 <td class="num">0</td>
-<td class="num">9</td>
-<td class="num">9</td>
 <td class="num">0</td>
-<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市左營分局舊城派出所</td>
-<td class="num">7,848</td>
-<td class="num">7,717</td>
-<td class="num">131</td>
-<td class="num">6</td>
-<td class="num">56</td>
-<td class="num">60</td>
 <td class="num">0</td>
-<td class="num">9</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市左營分局新莊派出所</td>
-<td class="num">5,269</td>
-<td class="num">5,169</td>
-<td class="num">100</td>
+<td class="num">470</td>
+<td class="num">457</td>
+<td class="num">13</td>
 <td class="num">3</td>
-<td class="num">61</td>
-<td class="num">31</td>
+<td class="num">3</td>
+<td class="num">7</td>
 <td class="num">0</td>
-<td class="num">5</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市左營分局文自派出所</td>
-<td class="num">4,379</td>
-<td class="num">4,324</td>
-<td class="num">55</td>
-<td class="num">4</td>
-<td class="num">27</td>
-<td class="num">19</td>
+<td class="num">1</td>
+<td class="num">1</td>
 <td class="num">0</td>
-<td class="num">5</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市左營分局左營派出所</td>
-<td class="num">7,641</td>
-<td class="num">7,492</td>
-<td class="num">149</td>
-<td class="num">4</td>
-<td class="num">86</td>
-<td class="num">56</td>
+<td class="num">79</td>
+<td class="num">78</td>
 <td class="num">1</td>
-<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市左營分局啟文派出所</td>
-<td class="num">3,236</td>
-<td class="num">3,159</td>
-<td class="num">77</td>
-<td class="num">5</td>
-<td class="num">46</td>
-<td class="num">20</td>
+<td class="num">12</td>
+<td class="num">12</td>
 <td class="num">0</td>
-<td class="num">6</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市左營分局博愛四路派出所</td>
-<td class="num">6,049</td>
-<td class="num">5,940</td>
-<td class="num">109</td>
-<td class="num">11</td>
-<td class="num">44</td>
-<td class="num">42</td>
-<td class="num">2</td>
-<td class="num">10</td>
+<td class="num">18</td>
+<td class="num">17</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市左營分局交通分隊</td>
-<td class="num">3,144</td>
-<td class="num">3,117</td>
-<td class="num">27</td>
-<td class="num">2</td>
-<td class="num">12</td>
-<td class="num">13</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1826,11 +1583,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局鳳雄派出所</td>
-<td class="num">303</td>
-<td class="num">298</td>
-<td class="num">5</td>
+<td class="num">46</td>
+<td class="num">45</td>
+<td class="num">1</td>
 <td class="num">0</td>
-<td class="num">4</td>
+<td class="num">0</td>
 <td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1839,11 +1596,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局赤崁派出所</td>
-<td class="num">79</td>
-<td class="num">77</td>
-<td class="num">2</td>
-<td class="num">0</td>
+<td class="num">101</td>
+<td class="num">95</td>
+<td class="num">6</td>
 <td class="num">1</td>
+<td class="num">4</td>
 <td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1852,8 +1609,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局舊港派出所</td>
-<td class="num">2</td>
-<td class="num">2</td>
+<td class="num">8</td>
+<td class="num">8</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1865,25 +1622,25 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局甲圍派出所</td>
-<td class="num">291</td>
-<td class="num">286</td>
-<td class="num">5</td>
-<td class="num">0</td>
-<td class="num">2</td>
-<td class="num">2</td>
-<td class="num">0</td>
+<td class="num">512</td>
+<td class="num">499</td>
+<td class="num">13</td>
 <td class="num">1</td>
+<td class="num">6</td>
+<td class="num">6</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市岡山分局燕巢分駐所</td>
-<td class="num">744</td>
-<td class="num">737</td>
-<td class="num">7</td>
-<td class="num">0</td>
-<td class="num">4</td>
+<td class="num">197</td>
+<td class="num">194</td>
 <td class="num">3</td>
+<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1891,12 +1648,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局深水派出所</td>
-<td class="num">512</td>
-<td class="num">503</td>
-<td class="num">9</td>
-<td class="num">0</td>
-<td class="num">5</td>
+<td class="num">237</td>
+<td class="num">233</td>
 <td class="num">4</td>
+<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">2</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1904,12 +1661,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局永安分駐所</td>
-<td class="num">209</td>
-<td class="num">207</td>
-<td class="num">2</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">2</td>
+<td class="num">2,314</td>
+<td class="num">2,274</td>
+<td class="num">40</td>
+<td class="num">4</td>
+<td class="num">24</td>
+<td class="num">12</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -1917,38 +1674,38 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局橋頭分駐所</td>
-<td class="num">386</td>
-<td class="num">376</td>
-<td class="num">10</td>
-<td class="num">0</td>
+<td class="num">1,264</td>
+<td class="num">1,234</td>
+<td class="num">30</td>
 <td class="num">4</td>
-<td class="num">4</td>
+<td class="num">15</td>
+<td class="num">11</td>
 <td class="num">0</td>
-<td class="num">2</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市岡山分局梓官分駐所</td>
-<td class="num">379</td>
-<td class="num">371</td>
-<td class="num">8</td>
+<td class="num">186</td>
+<td class="num">176</td>
+<td class="num">10</td>
+<td class="num">5</td>
+<td class="num">5</td>
 <td class="num">0</td>
-<td class="num">3</td>
-<td class="num">4</td>
 <td class="num">0</td>
-<td class="num">1</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市岡山分局彌陀分駐所</td>
-<td class="num">419</td>
-<td class="num">411</td>
-<td class="num">8</td>
-<td class="num">0</td>
-<td class="num">6</td>
+<td class="num">1,843</td>
+<td class="num">1,815</td>
+<td class="num">28</td>
 <td class="num">1</td>
+<td class="num">16</td>
+<td class="num">10</td>
 <td class="num">0</td>
 <td class="num">1</td>
 <td class="num">0</td>
@@ -1956,41 +1713,41 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局壽天派出所</td>
-<td class="num">88</td>
-<td class="num">88</td>
+<td class="num">485</td>
+<td class="num">472</td>
+<td class="num">13</td>
+<td class="num">2</td>
+<td class="num">8</td>
+<td class="num">2</td>
 <td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市岡山分局嘉興派出所</td>
-<td class="num">109</td>
-<td class="num">106</td>
-<td class="num">3</td>
+<td class="num">257</td>
+<td class="num">250</td>
+<td class="num">7</td>
+<td class="num">1</td>
+<td class="num">5</td>
 <td class="num">0</td>
-<td class="num">3</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市岡山分局前峰派出所</td>
-<td class="num">1,985</td>
-<td class="num">1,961</td>
+<td class="num">24</td>
 <td class="num">24</td>
 <td class="num">0</td>
-<td class="num">11</td>
-<td class="num">8</td>
 <td class="num">0</td>
-<td class="num">4</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
@@ -2021,12 +1778,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市小港分局高松派出所</td>
-<td class="num">2,302</td>
-<td class="num">2,259</td>
-<td class="num">43</td>
-<td class="num">3</td>
-<td class="num">21</td>
-<td class="num">19</td>
+<td class="num">23</td>
+<td class="num">22</td>
+<td class="num">1</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2034,12 +1791,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市小港分局警備隊</td>
-<td class="num">1,678</td>
-<td class="num">1,631</td>
-<td class="num">47</td>
-<td class="num">3</td>
-<td class="num">30</td>
-<td class="num">14</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2047,12 +1804,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市小港分局漢民派出所</td>
-<td class="num">759</td>
-<td class="num">733</td>
-<td class="num">26</td>
-<td class="num">1</td>
-<td class="num">16</td>
-<td class="num">9</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2060,25 +1817,25 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市小港分局桂陽路派出所</td>
-<td class="num">511</td>
-<td class="num">499</td>
-<td class="num">12</td>
-<td class="num">1</td>
-<td class="num">5</td>
-<td class="num">3</td>
 <td class="num">0</td>
-<td class="num">3</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市小港分局小港派出所</td>
-<td class="num">1,320</td>
-<td class="num">1,298</td>
-<td class="num">22</td>
-<td class="num">6</td>
-<td class="num">9</td>
-<td class="num">7</td>
+<td class="num">59</td>
+<td class="num">58</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">1</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2086,12 +1843,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市小港分局大林派出所</td>
-<td class="num">202</td>
-<td class="num">195</td>
-<td class="num">7</td>
 <td class="num">0</td>
-<td class="num">6</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2099,12 +1856,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市小港分局交通分隊</td>
-<td class="num">2,124</td>
-<td class="num">2,093</td>
-<td class="num">31</td>
-<td class="num">1</td>
-<td class="num">21</td>
-<td class="num">9</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2112,12 +1869,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市前鎮分局警備隊</td>
-<td class="num">559</td>
-<td class="num">545</td>
-<td class="num">14</td>
-<td class="num">3</td>
-<td class="num">7</td>
-<td class="num">4</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2125,64 +1882,64 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市前鎮分局草衙派出所</td>
-<td class="num">1,849</td>
-<td class="num">1,813</td>
-<td class="num">36</td>
-<td class="num">2</td>
-<td class="num">14</td>
-<td class="num">14</td>
 <td class="num">0</td>
-<td class="num">6</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市前鎮分局瑞隆派出所</td>
-<td class="num">5,862</td>
-<td class="num">5,714</td>
-<td class="num">148</td>
-<td class="num">7</td>
-<td class="num">81</td>
-<td class="num">57</td>
 <td class="num">0</td>
-<td class="num">3</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市前鎮分局復興路派出所</td>
-<td class="num">2,159</td>
-<td class="num">2,143</td>
-<td class="num">16</td>
-<td class="num">2</td>
-<td class="num">11</td>
-<td class="num">1</td>
 <td class="num">0</td>
-<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市前鎮分局前鎮街派出所</td>
-<td class="num">5,165</td>
-<td class="num">5,086</td>
-<td class="num">79</td>
-<td class="num">3</td>
-<td class="num">38</td>
-<td class="num">33</td>
+<td class="num">12</td>
+<td class="num">12</td>
 <td class="num">0</td>
-<td class="num">5</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市前鎮分局交通分隊</td>
-<td class="num">4,830</td>
-<td class="num">4,764</td>
-<td class="num">66</td>
-<td class="num">1</td>
-<td class="num">35</td>
-<td class="num">30</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2190,12 +1947,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市前鎮分局一心路派出所</td>
-<td class="num">1,507</td>
-<td class="num">1,468</td>
-<td class="num">39</td>
-<td class="num">5</td>
-<td class="num">21</td>
-<td class="num">13</td>
+<td class="num">109</td>
+<td class="num">107</td>
+<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2268,11 +2025,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市六龜分局高中派出所</td>
-<td class="num">8</td>
-<td class="num">6</td>
-<td class="num">2</td>
 <td class="num">0</td>
-<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2320,11 +2077,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市六龜分局荖濃派出所</td>
-<td class="num">84</td>
-<td class="num">83</td>
-<td class="num">1</td>
 <td class="num">0</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2333,8 +2090,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市六龜分局茂林分駐所</td>
-<td class="num">4</td>
-<td class="num">4</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2346,8 +2103,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市六龜分局義寶派出所</td>
-<td class="num">2</td>
-<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2385,8 +2142,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市六龜分局桃源分駐所</td>
-<td class="num">39</td>
-<td class="num">39</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2398,12 +2155,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市六龜分局新威派出所</td>
-<td class="num">64</td>
-<td class="num">59</td>
-<td class="num">5</td>
 <td class="num">0</td>
-<td class="num">4</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2437,12 +2194,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市六龜分局寶來派出所</td>
-<td class="num">154</td>
-<td class="num">150</td>
-<td class="num">4</td>
-<td class="num">1</td>
-<td class="num">2</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2475,22 +2232,9 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <td class="num">0</td>
 </tr>
 <tr class="">
-<td>高市六龜分局萬山派出所</td>
-<td class="num">5</td>
-<td class="num">5</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-</tr>
-<tr class="">
 <td>高市仁武分局鳥松分駐所</td>
-<td class="num">22</td>
-<td class="num">22</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2502,8 +2246,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市仁武分局警備隊</td>
-<td class="num">2</td>
-<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2515,8 +2259,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市仁武分局澄觀派出所</td>
-<td class="num">15</td>
-<td class="num">15</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2528,12 +2272,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市仁武分局溪埔派出所</td>
-<td class="num">125</td>
-<td class="num">122</td>
-<td class="num">3</td>
 <td class="num">0</td>
-<td class="num">1</td>
-<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2541,38 +2285,38 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市仁武分局大華派出所</td>
-<td class="num">464</td>
-<td class="num">456</td>
-<td class="num">8</td>
 <td class="num">0</td>
-<td class="num">3</td>
-<td class="num">4</td>
 <td class="num">0</td>
-<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市仁武分局大社分駐所</td>
-<td class="num">5,996</td>
-<td class="num">5,859</td>
-<td class="num">137</td>
-<td class="num">4</td>
-<td class="num">67</td>
-<td class="num">58</td>
 <td class="num">0</td>
-<td class="num">8</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市仁武分局大樹分駐所</td>
-<td class="num">1,112</td>
-<td class="num">1,078</td>
-<td class="num">34</td>
-<td class="num">4</td>
-<td class="num">22</td>
-<td class="num">8</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2580,11 +2324,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市仁武分局仁美派出所</td>
-<td class="num">70</td>
-<td class="num">66</td>
-<td class="num">4</td>
 <td class="num">0</td>
-<td class="num">4</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2593,25 +2337,25 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市仁武分局仁武派出所</td>
-<td class="num">11,264</td>
-<td class="num">11,023</td>
-<td class="num">241</td>
-<td class="num">17</td>
-<td class="num">135</td>
-<td class="num">78</td>
-<td class="num">2</td>
-<td class="num">9</td>
+<td class="num">23</td>
+<td class="num">22</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市仁武分局交通分隊</td>
-<td class="num">1,510</td>
-<td class="num">1,490</td>
-<td class="num">20</td>
-<td class="num">2</td>
-<td class="num">9</td>
-<td class="num">9</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2619,12 +2363,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市仁武分局九曲派出所</td>
-<td class="num">851</td>
-<td class="num">820</td>
-<td class="num">31</td>
-<td class="num">2</td>
-<td class="num">18</td>
-<td class="num">11</td>
+<td class="num">3</td>
+<td class="num">3</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2632,40 +2376,40 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市三民第二分局鼎金派出所</td>
-<td class="num">849</td>
-<td class="num">844</td>
-<td class="num">5</td>
-<td class="num">0</td>
+<td class="num">2,358</td>
+<td class="num">2,303</td>
+<td class="num">55</td>
 <td class="num">3</td>
-<td class="num">2</td>
+<td class="num">28</td>
+<td class="num">20</td>
 <td class="num">0</td>
-<td class="num">0</td>
+<td class="num">4</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市三民第二分局鼎山派出所</td>
-<td class="num">859</td>
-<td class="num">842</td>
-<td class="num">17</td>
+<td class="num">1,417</td>
+<td class="num">1,391</td>
+<td class="num">26</td>
 <td class="num">2</td>
-<td class="num">7</td>
-<td class="num">6</td>
+<td class="num">8</td>
+<td class="num">11</td>
 <td class="num">0</td>
+<td class="num">3</td>
 <td class="num">2</td>
-<td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市三民第二分局陽明派出所</td>
-<td class="num">1,056</td>
-<td class="num">1,043</td>
-<td class="num">13</td>
-<td class="num">0</td>
+<td class="num">3,470</td>
+<td class="num">3,397</td>
+<td class="num">73</td>
+<td class="num">6</td>
+<td class="num">33</td>
+<td class="num">30</td>
+<td class="num">1</td>
 <td class="num">3</td>
-<td class="num">8</td>
-<td class="num">0</td>
-<td class="num">2</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
@@ -2684,38 +2428,38 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市三民第二分局覺民路派出所</td>
-<td class="num">1,268</td>
-<td class="num">1,247</td>
-<td class="num">21</td>
-<td class="num">0</td>
-<td class="num">10</td>
+<td class="num">751</td>
+<td class="num">734</td>
+<td class="num">17</td>
+<td class="num">1</td>
+<td class="num">4</td>
 <td class="num">11</td>
 <td class="num">0</td>
-<td class="num">0</td>
+<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市三民第二分局民族路派出所</td>
+<td class="num">1,286</td>
+<td class="num">1,253</td>
+<td class="num">33</td>
 <td class="num">2</td>
-<td class="num">2</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">22</td>
+<td class="num">7</td>
+<td class="num">1</td>
+<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市三民第二分局交通分隊</td>
-<td class="num">529</td>
-<td class="num">521</td>
-<td class="num">8</td>
 <td class="num">0</td>
-<td class="num">5</td>
-<td class="num">3</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2723,14 +2467,14 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市三民第一分局長明派出所</td>
-<td class="num">11</td>
+<td class="num">570</td>
+<td class="num">561</td>
 <td class="num">9</td>
-<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">7</td>
 <td class="num">1</td>
+<td class="num">0</td>
 <td class="num">1</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
@@ -2749,21 +2493,21 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市三民第一分局哈爾濱街派出所</td>
-<td class="num">59</td>
-<td class="num">56</td>
-<td class="num">3</td>
+<td class="num">544</td>
+<td class="num">528</td>
+<td class="num">16</td>
 <td class="num">0</td>
-<td class="num">3</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">6</td>
+<td class="num">7</td>
+<td class="num">1</td>
+<td class="num">2</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市三民第一分局十全路派出所</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">8</td>
+<td class="num">8</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -2788,12 +2532,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市三民第一分局三民派出所</td>
-<td class="num">79</td>
-<td class="num">75</td>
+<td class="num">2,154</td>
+<td class="num">2,105</td>
+<td class="num">49</td>
 <td class="num">4</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">3</td>
+<td class="num">23</td>
+<td class="num">21</td>
 <td class="num">0</td>
 <td class="num">1</td>
 <td class="num">0</td>
@@ -2801,22 +2545,22 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="subtotal-row">
 <td>小計</td>
-<td class="num">227,718</td>
-<td class="num">223,425</td>
-<td class="num">4,293</td>
-<td class="num">294</td>
-<td class="num">2,070</td>
-<td class="num">1,711</td>
-<td class="num">16</td>
-<td class="num">199</td>
+<td class="num">56,535</td>
+<td class="num">55,316</td>
+<td class="num">1,219</td>
+<td class="num">119</td>
+<td class="num">629</td>
+<td class="num">413</td>
+<td class="num">9</td>
+<td class="num">46</td>
 <td class="num">3</td>
 <td class="num">0</td>
 </tr>
-</tbody></table></div>
+</table></div>
         </section><section id="tab_115_02_" class="tab-panel">
             <div class="section-head"><h2>115年02月</h2><p>僅保留欄位與下方資料列。</p></div>
             <div class="table-wrap"><table class="raw-table">
-<tbody><tr class="header-row">
+<tr class="header-row">
 <th>單位</th>
 <th>總數(正常車及警示車)</th>
 <th>正常車</th>
@@ -5234,11 +4978,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
-</tbody></table></div>
+</table></div>
         </section><section id="tab_115_03_" class="tab-panel">
             <div class="section-head"><h2>115年03月</h2><p>僅保留欄位與下方資料列。</p></div>
             <div class="table-wrap"><table class="raw-table">
-<tbody><tr class="header-row">
+<tr class="header-row">
 <th>單位</th>
 <th>總數(正常車及警示車)</th>
 <th>正常車</th>
@@ -7617,11 +7361,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
-</tbody></table></div>
+</table></div>
         </section><section id="tab_115_04_" class="tab-panel">
             <div class="section-head"><h2>115年04月</h2><p>僅保留欄位與下方資料列。</p></div>
             <div class="table-wrap"><table class="raw-table">
-<tbody><tr class="header-row">
+<tr class="header-row">
 <th>單位</th>
 <th>總數(正常車及警示車)</th>
 <th>正常車</th>
@@ -10052,11 +9796,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <td class="num">1</td>
 <td class="num">0</td>
 </tr>
-</tbody></table></div>
+</table></div>
         </section><section id="tab_115_05_" class="tab-panel">
             <div class="section-head"><h2>115年05月</h2><p>僅保留欄位與下方資料列。</p></div>
             <div class="table-wrap"><table class="raw-table">
-<tbody><tr class="header-row">
+<tr class="header-row">
 <th>單位</th>
 <th>總數(正常車及警示車)</th>
 <th>正常車</th>
@@ -12448,11 +12192,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
-</tbody></table></div>
+</table></div>
         </section><section id="tab_115_06_" class="tab-panel">
             <div class="section-head"><h2>115年06月</h2><p>僅保留欄位與下方資料列。</p></div>
             <div class="table-wrap"><table class="raw-table">
-<tbody><tr class="header-row">
+<tbody>
+<tr class="header-row">
 <th>單位</th>
 <th>總數(正常車及警示車)</th>
 <th>正常車</th>
@@ -12467,11 +12212,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鼓山分局龍華派出所</td>
-<td class="num">379</td>
-<td class="num">374</td>
-<td class="num">5</td>
+<td class="num">455</td>
+<td class="num">448</td>
+<td class="num">7</td>
 <td class="num">0</td>
-<td class="num">1</td>
+<td class="num">3</td>
 <td class="num">4</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -12493,8 +12238,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鼓山分局旗津分駐所</td>
-<td class="num">84</td>
-<td class="num">82</td>
+<td class="num">85</td>
+<td class="num">83</td>
 <td class="num">2</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -12584,24 +12329,24 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鹽埕分局建國四路派出所</td>
-<td class="num">6,387</td>
-<td class="num">6,282</td>
-<td class="num">105</td>
-<td class="num">8</td>
-<td class="num">42</td>
+<td class="num">7,741</td>
+<td class="num">7,612</td>
+<td class="num">129</td>
+<td class="num">10</td>
 <td class="num">49</td>
+<td class="num">60</td>
 <td class="num">1</td>
-<td class="num">5</td>
+<td class="num">9</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市鹽埕分局交通分隊</td>
-<td class="num">379</td>
-<td class="num">373</td>
-<td class="num">6</td>
+<td class="num">390</td>
+<td class="num">383</td>
+<td class="num">7</td>
 <td class="num">1</td>
-<td class="num">4</td>
+<td class="num">5</td>
 <td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -12662,12 +12407,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鳳山分局新甲派出所</td>
-<td class="num">998</td>
-<td class="num">973</td>
-<td class="num">25</td>
-<td class="num">1</td>
-<td class="num">11</td>
-<td class="num">13</td>
+<td class="num">1,723</td>
+<td class="num">1,685</td>
+<td class="num">38</td>
+<td class="num">3</td>
+<td class="num">15</td>
+<td class="num">20</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -12688,11 +12433,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市鳳山分局成功派出所</td>
-<td class="num">1,648</td>
-<td class="num">1,617</td>
-<td class="num">31</td>
-<td class="num">7</td>
-<td class="num">13</td>
+<td class="num">1,688</td>
+<td class="num">1,655</td>
+<td class="num">33</td>
+<td class="num">8</td>
+<td class="num">14</td>
 <td class="num">11</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -12792,12 +12537,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市警局婦幼隊</td>
-<td class="num">855</td>
-<td class="num">837</td>
-<td class="num">18</td>
+<td class="num">1,007</td>
+<td class="num">984</td>
+<td class="num">23</td>
 <td class="num">3</td>
-<td class="num">6</td>
-<td class="num">9</td>
+<td class="num">10</td>
+<td class="num">10</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -12805,25 +12550,25 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市警局保大黎明中隊</td>
-<td class="num">13,039</td>
-<td class="num">12,817</td>
-<td class="num">222</td>
+<td class="num">13,488</td>
+<td class="num">13,261</td>
+<td class="num">227</td>
 <td class="num">11</td>
-<td class="num">108</td>
-<td class="num">89</td>
+<td class="num">111</td>
+<td class="num">90</td>
 <td class="num">1</td>
-<td class="num">13</td>
+<td class="num">14</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市警局保大雷霆中隊</td>
-<td class="num">3,558</td>
-<td class="num">3,490</td>
-<td class="num">68</td>
-<td class="num">2</td>
-<td class="num">36</td>
-<td class="num">28</td>
+<td class="num">4,075</td>
+<td class="num">4,000</td>
+<td class="num">75</td>
+<td class="num">4</td>
+<td class="num">39</td>
+<td class="num">30</td>
 <td class="num">1</td>
 <td class="num">1</td>
 <td class="num">0</td>
@@ -12831,12 +12576,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市警局保大雄岡中隊</td>
-<td class="num">7,960</td>
-<td class="num">7,808</td>
-<td class="num">152</td>
+<td class="num">8,278</td>
+<td class="num">8,124</td>
+<td class="num">154</td>
 <td class="num">15</td>
-<td class="num">81</td>
-<td class="num">48</td>
+<td class="num">82</td>
+<td class="num">49</td>
 <td class="num">1</td>
 <td class="num">7</td>
 <td class="num">0</td>
@@ -12844,10 +12589,10 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市警局保大迅雷中隊</td>
-<td class="num">1,342</td>
-<td class="num">1,313</td>
-<td class="num">29</td>
-<td class="num">2</td>
+<td class="num">1,384</td>
+<td class="num">1,354</td>
+<td class="num">30</td>
+<td class="num">3</td>
 <td class="num">17</td>
 <td class="num">10</td>
 <td class="num">0</td>
@@ -12857,12 +12602,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市警局保大特勤中隊</td>
-<td class="num">1,894</td>
-<td class="num">1,862</td>
-<td class="num">32</td>
-<td class="num">3</td>
-<td class="num">11</td>
-<td class="num">16</td>
+<td class="num">2,128</td>
+<td class="num">2,088</td>
+<td class="num">40</td>
+<td class="num">5</td>
+<td class="num">14</td>
+<td class="num">19</td>
 <td class="num">0</td>
 <td class="num">2</td>
 <td class="num">0</td>
@@ -12870,21 +12615,21 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市警局交大機動分隊</td>
-<td class="num">3,946</td>
-<td class="num">3,881</td>
-<td class="num">65</td>
+<td class="num">4,220</td>
+<td class="num">4,149</td>
+<td class="num">71</td>
 <td class="num">6</td>
-<td class="num">27</td>
-<td class="num">27</td>
+<td class="num">30</td>
+<td class="num">29</td>
 <td class="num">2</td>
-<td class="num">3</td>
+<td class="num">4</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市警局交大橋頭分隊</td>
-<td class="num">81</td>
-<td class="num">79</td>
+<td class="num">82</td>
+<td class="num">80</td>
 <td class="num">2</td>
 <td class="num">0</td>
 <td class="num">1</td>
@@ -12896,12 +12641,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市警局交大憲政中隊</td>
-<td class="num">2,455</td>
-<td class="num">2,410</td>
-<td class="num">45</td>
+<td class="num">2,567</td>
+<td class="num">2,520</td>
+<td class="num">47</td>
 <td class="num">4</td>
-<td class="num">25</td>
-<td class="num">15</td>
+<td class="num">26</td>
+<td class="num">16</td>
 <td class="num">0</td>
 <td class="num">1</td>
 <td class="num">0</td>
@@ -12922,8 +12667,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市苓雅分局警備隊</td>
-<td class="num">1,593</td>
-<td class="num">1,570</td>
+<td class="num">1,618</td>
+<td class="num">1,595</td>
 <td class="num">23</td>
 <td class="num">2</td>
 <td class="num">8</td>
@@ -12948,25 +12693,25 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市苓雅分局福德二路派出所</td>
-<td class="num">3,506</td>
-<td class="num">3,457</td>
-<td class="num">49</td>
-<td class="num">3</td>
-<td class="num">19</td>
-<td class="num">23</td>
-<td class="num">0</td>
+<td class="num">4,045</td>
+<td class="num">3,979</td>
+<td class="num">66</td>
 <td class="num">4</td>
+<td class="num">32</td>
+<td class="num">24</td>
+<td class="num">0</td>
+<td class="num">6</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市苓雅分局民權路派出所</td>
-<td class="num">1,618</td>
-<td class="num">1,569</td>
-<td class="num">49</td>
+<td class="num">1,714</td>
+<td class="num">1,664</td>
+<td class="num">50</td>
 <td class="num">6</td>
 <td class="num">23</td>
-<td class="num">18</td>
+<td class="num">19</td>
 <td class="num">0</td>
 <td class="num">2</td>
 <td class="num">0</td>
@@ -12974,25 +12719,25 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市苓雅分局成功路派出所</td>
-<td class="num">3,358</td>
-<td class="num">3,271</td>
-<td class="num">87</td>
-<td class="num">5</td>
+<td class="num">4,524</td>
+<td class="num">4,407</td>
+<td class="num">117</td>
+<td class="num">7</td>
+<td class="num">61</td>
 <td class="num">44</td>
-<td class="num">34</td>
 <td class="num">2</td>
-<td class="num">2</td>
+<td class="num">3</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市苓雅分局凱旋路派出所</td>
-<td class="num">3,875</td>
-<td class="num">3,808</td>
-<td class="num">67</td>
+<td class="num">4,111</td>
+<td class="num">4,039</td>
+<td class="num">72</td>
 <td class="num">4</td>
-<td class="num">22</td>
-<td class="num">35</td>
+<td class="num">24</td>
+<td class="num">38</td>
 <td class="num">0</td>
 <td class="num">4</td>
 <td class="num">2</td>
@@ -13026,14 +12771,14 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市苓雅分局三多路派出所</td>
-<td class="num">3,008</td>
-<td class="num">2,962</td>
-<td class="num">46</td>
+<td class="num">3,441</td>
+<td class="num">3,384</td>
+<td class="num">57</td>
+<td class="num">13</td>
+<td class="num">29</td>
 <td class="num">12</td>
-<td class="num">21</td>
-<td class="num">11</td>
 <td class="num">0</td>
-<td class="num">2</td>
+<td class="num">3</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
@@ -13052,8 +12797,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市湖內分局路竹分駐所</td>
-<td class="num">278</td>
-<td class="num">276</td>
+<td class="num">293</td>
+<td class="num">291</td>
 <td class="num">2</td>
 <td class="num">0</td>
 <td class="num">2</td>
@@ -13130,8 +12875,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市湖內分局砂崙派出所</td>
-<td class="num">1</td>
-<td class="num">1</td>
+<td class="num">8</td>
+<td class="num">8</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13143,12 +12888,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市湖內分局田寮分駐所</td>
-<td class="num">80</td>
-<td class="num">79</td>
+<td class="num">174</td>
+<td class="num">169</td>
+<td class="num">5</td>
 <td class="num">1</td>
-<td class="num">0</td>
-<td class="num">0</td>
 <td class="num">1</td>
+<td class="num">3</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13169,8 +12914,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市湖內分局湖內派出所</td>
-<td class="num">1,102</td>
-<td class="num">1,077</td>
+<td class="num">1,157</td>
+<td class="num">1,132</td>
 <td class="num">25</td>
 <td class="num">0</td>
 <td class="num">17</td>
@@ -13221,11 +12966,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市湖內分局一甲派出所</td>
-<td class="num">366</td>
-<td class="num">364</td>
-<td class="num">2</td>
+<td class="num">471</td>
+<td class="num">468</td>
+<td class="num">3</td>
 <td class="num">0</td>
-<td class="num">1</td>
+<td class="num">2</td>
 <td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13247,8 +12992,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市楠梓分局翠屏派出所</td>
-<td class="num">236</td>
-<td class="num">228</td>
+<td class="num">249</td>
+<td class="num">241</td>
 <td class="num">8</td>
 <td class="num">0</td>
 <td class="num">3</td>
@@ -13273,12 +13018,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市楠梓分局後勁派出所</td>
-<td class="num">451</td>
-<td class="num">446</td>
+<td class="num">698</td>
+<td class="num">691</td>
+<td class="num">7</td>
+<td class="num">1</td>
+<td class="num">1</td>
 <td class="num">5</td>
-<td class="num">1</td>
-<td class="num">1</td>
-<td class="num">3</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13338,12 +13083,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局港埔派出所</td>
-<td class="num">193</td>
-<td class="num">189</td>
-<td class="num">4</td>
-<td class="num">2</td>
-<td class="num">1</td>
-<td class="num">1</td>
+<td class="num">500</td>
+<td class="num">485</td>
+<td class="num">15</td>
+<td class="num">3</td>
+<td class="num">5</td>
+<td class="num">7</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13351,10 +13096,10 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局林園派出所</td>
-<td class="num">1,749</td>
-<td class="num">1,715</td>
-<td class="num">34</td>
-<td class="num">2</td>
+<td class="num">1,837</td>
+<td class="num">1,802</td>
+<td class="num">35</td>
+<td class="num">3</td>
 <td class="num">18</td>
 <td class="num">14</td>
 <td class="num">0</td>
@@ -13364,8 +13109,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局昭明派出所</td>
-<td class="num">119</td>
-<td class="num">119</td>
+<td class="num">120</td>
+<td class="num">120</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13377,12 +13122,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局忠義派出所</td>
-<td class="num">6,137</td>
-<td class="num">6,133</td>
-<td class="num">4</td>
+<td class="num">6,229</td>
+<td class="num">6,224</td>
+<td class="num">5</td>
 <td class="num">2</td>
 <td class="num">2</td>
-<td class="num">0</td>
+<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13390,12 +13135,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局大發駐在所</td>
-<td class="num">541</td>
-<td class="num">532</td>
-<td class="num">9</td>
+<td class="num">690</td>
+<td class="num">679</td>
+<td class="num">11</td>
 <td class="num">0</td>
 <td class="num">2</td>
-<td class="num">7</td>
+<td class="num">9</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13403,12 +13148,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局大寮分駐所</td>
-<td class="num">36</td>
-<td class="num">36</td>
+<td class="num">493</td>
+<td class="num">486</td>
+<td class="num">7</td>
 <td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">5</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13416,11 +13161,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局偵查隊</td>
-<td class="num">682</td>
-<td class="num">666</td>
-<td class="num">16</td>
+<td class="num">725</td>
+<td class="num">707</td>
+<td class="num">18</td>
 <td class="num">5</td>
-<td class="num">4</td>
+<td class="num">6</td>
 <td class="num">7</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13442,8 +13187,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局中芸派出所</td>
-<td class="num">722</td>
-<td class="num">698</td>
+<td class="num">805</td>
+<td class="num">781</td>
 <td class="num">24</td>
 <td class="num">1</td>
 <td class="num">13</td>
@@ -13455,8 +13200,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市林園分局中庄派出所</td>
-<td class="num">47</td>
-<td class="num">47</td>
+<td class="num">55</td>
+<td class="num">55</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13481,12 +13226,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市旗山分局美濃分駐所</td>
-<td class="num">84</td>
-<td class="num">82</td>
+<td class="num">168</td>
+<td class="num">164</td>
+<td class="num">4</td>
+<td class="num">0</td>
 <td class="num">2</td>
-<td class="num">0</td>
 <td class="num">1</td>
-<td class="num">0</td>
 <td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13507,11 +13252,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市旗山分局杉林分駐所</td>
-<td class="num">21</td>
-<td class="num">21</td>
+<td class="num">24</td>
+<td class="num">23</td>
+<td class="num">1</td>
 <td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13598,12 +13343,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市旗山分局圓潭派出所</td>
-<td class="num">93</td>
-<td class="num">88</td>
-<td class="num">5</td>
+<td class="num">161</td>
+<td class="num">155</td>
+<td class="num">6</td>
 <td class="num">0</td>
 <td class="num">3</td>
-<td class="num">2</td>
+<td class="num">3</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13624,12 +13369,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市旗山分局內門分駐所</td>
-<td class="num">345</td>
-<td class="num">341</td>
-<td class="num">4</td>
+<td class="num">402</td>
+<td class="num">397</td>
+<td class="num">5</td>
 <td class="num">0</td>
 <td class="num">2</td>
-<td class="num">2</td>
+<td class="num">3</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13689,25 +13434,25 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市新興分局自強路派出所</td>
-<td class="num">4,737</td>
-<td class="num">4,650</td>
-<td class="num">87</td>
+<td class="num">5,009</td>
+<td class="num">4,915</td>
+<td class="num">94</td>
 <td class="num">8</td>
-<td class="num">37</td>
-<td class="num">41</td>
+<td class="num">40</td>
+<td class="num">44</td>
 <td class="num">0</td>
-<td class="num">1</td>
+<td class="num">2</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市新興分局秘書室</td>
+<td class="num">67</td>
+<td class="num">64</td>
+<td class="num">3</td>
+<td class="num">2</td>
+<td class="num">0</td>
 <td class="num">1</td>
-<td class="num">1</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13741,12 +13486,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市新興分局五福二路派出所</td>
-<td class="num">3,990</td>
-<td class="num">3,905</td>
-<td class="num">85</td>
+<td class="num">4,124</td>
+<td class="num">4,031</td>
+<td class="num">93</td>
 <td class="num">8</td>
-<td class="num">24</td>
-<td class="num">48</td>
+<td class="num">28</td>
+<td class="num">52</td>
 <td class="num">0</td>
 <td class="num">5</td>
 <td class="num">0</td>
@@ -13754,12 +13499,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市新興分局中正三路派出所</td>
-<td class="num">7,825</td>
-<td class="num">7,652</td>
-<td class="num">173</td>
+<td class="num">8,158</td>
+<td class="num">7,977</td>
+<td class="num">181</td>
 <td class="num">17</td>
-<td class="num">62</td>
-<td class="num">80</td>
+<td class="num">67</td>
+<td class="num">83</td>
 <td class="num">1</td>
 <td class="num">13</td>
 <td class="num">0</td>
@@ -13767,11 +13512,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市新興分局中山路派出所</td>
-<td class="num">7,073</td>
-<td class="num">6,865</td>
-<td class="num">208</td>
+<td class="num">7,151</td>
+<td class="num">6,941</td>
+<td class="num">210</td>
 <td class="num">15</td>
-<td class="num">92</td>
+<td class="num">94</td>
 <td class="num">90</td>
 <td class="num">0</td>
 <td class="num">11</td>
@@ -13780,12 +13525,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市左營分局警備隊</td>
-<td class="num">1,037</td>
-<td class="num">1,020</td>
-<td class="num">17</td>
+<td class="num">1,193</td>
+<td class="num">1,173</td>
+<td class="num">20</td>
 <td class="num">0</td>
-<td class="num">7</td>
-<td class="num">8</td>
+<td class="num">9</td>
+<td class="num">9</td>
 <td class="num">0</td>
 <td class="num">2</td>
 <td class="num">0</td>
@@ -13793,25 +13538,25 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市左營分局舊城派出所</td>
-<td class="num">3,491</td>
-<td class="num">3,424</td>
-<td class="num">67</td>
-<td class="num">4</td>
-<td class="num">27</td>
-<td class="num">30</td>
-<td class="num">0</td>
+<td class="num">7,848</td>
+<td class="num">7,717</td>
+<td class="num">131</td>
 <td class="num">6</td>
+<td class="num">56</td>
+<td class="num">60</td>
+<td class="num">0</td>
+<td class="num">9</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市左營分局新莊派出所</td>
-<td class="num">4,839</td>
-<td class="num">4,744</td>
-<td class="num">95</td>
+<td class="num">5,269</td>
+<td class="num">5,169</td>
+<td class="num">100</td>
 <td class="num">3</td>
-<td class="num">58</td>
-<td class="num">29</td>
+<td class="num">61</td>
+<td class="num">31</td>
 <td class="num">0</td>
 <td class="num">5</td>
 <td class="num">0</td>
@@ -13819,12 +13564,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市左營分局文自派出所</td>
-<td class="num">4,104</td>
-<td class="num">4,052</td>
-<td class="num">52</td>
+<td class="num">4,379</td>
+<td class="num">4,324</td>
+<td class="num">55</td>
 <td class="num">4</td>
-<td class="num">25</td>
-<td class="num">18</td>
+<td class="num">27</td>
+<td class="num">19</td>
 <td class="num">0</td>
 <td class="num">5</td>
 <td class="num">0</td>
@@ -13832,12 +13577,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市左營分局左營派出所</td>
-<td class="num">7,076</td>
-<td class="num">6,936</td>
-<td class="num">140</td>
+<td class="num">7,641</td>
+<td class="num">7,492</td>
+<td class="num">149</td>
 <td class="num">4</td>
-<td class="num">83</td>
-<td class="num">50</td>
+<td class="num">86</td>
+<td class="num">56</td>
 <td class="num">1</td>
 <td class="num">2</td>
 <td class="num">0</td>
@@ -13845,12 +13590,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市左營分局啟文派出所</td>
-<td class="num">2,392</td>
-<td class="num">2,331</td>
-<td class="num">61</td>
-<td class="num">4</td>
-<td class="num">35</td>
-<td class="num">16</td>
+<td class="num">3,236</td>
+<td class="num">3,159</td>
+<td class="num">77</td>
+<td class="num">5</td>
+<td class="num">46</td>
+<td class="num">20</td>
 <td class="num">0</td>
 <td class="num">6</td>
 <td class="num">0</td>
@@ -13858,25 +13603,25 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市左營分局博愛四路派出所</td>
-<td class="num">4,156</td>
-<td class="num">4,082</td>
-<td class="num">74</td>
-<td class="num">8</td>
-<td class="num">30</td>
-<td class="num">27</td>
+<td class="num">6,049</td>
+<td class="num">5,940</td>
+<td class="num">109</td>
+<td class="num">11</td>
+<td class="num">44</td>
+<td class="num">42</td>
 <td class="num">2</td>
-<td class="num">7</td>
+<td class="num">10</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市左營分局交通分隊</td>
-<td class="num">2,873</td>
-<td class="num">2,847</td>
-<td class="num">26</td>
+<td class="num">3,144</td>
+<td class="num">3,117</td>
+<td class="num">27</td>
 <td class="num">2</td>
 <td class="num">12</td>
-<td class="num">12</td>
+<td class="num">13</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13897,8 +13642,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局赤崁派出所</td>
-<td class="num">43</td>
-<td class="num">41</td>
+<td class="num">79</td>
+<td class="num">77</td>
 <td class="num">2</td>
 <td class="num">0</td>
 <td class="num">1</td>
@@ -13910,8 +13655,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局警備隊</td>
-<td class="num">3</td>
-<td class="num">3</td>
+<td class="num">10</td>
+<td class="num">10</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13923,8 +13668,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局舊港派出所</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">2</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13936,8 +13681,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局甲圍派出所</td>
-<td class="num">250</td>
-<td class="num">245</td>
+<td class="num">291</td>
+<td class="num">286</td>
 <td class="num">5</td>
 <td class="num">0</td>
 <td class="num">2</td>
@@ -13949,12 +13694,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局燕巢分駐所</td>
-<td class="num">393</td>
-<td class="num">391</td>
-<td class="num">2</td>
+<td class="num">744</td>
+<td class="num">737</td>
+<td class="num">7</td>
 <td class="num">0</td>
-<td class="num">1</td>
-<td class="num">1</td>
+<td class="num">4</td>
+<td class="num">3</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13962,8 +13707,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局深水派出所</td>
-<td class="num">480</td>
-<td class="num">471</td>
+<td class="num">512</td>
+<td class="num">503</td>
 <td class="num">9</td>
 <td class="num">0</td>
 <td class="num">5</td>
@@ -13975,8 +13720,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局永安分駐所</td>
-<td class="num">163</td>
-<td class="num">161</td>
+<td class="num">209</td>
+<td class="num">207</td>
 <td class="num">2</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -13988,8 +13733,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局橋頭分駐所</td>
-<td class="num">366</td>
-<td class="num">356</td>
+<td class="num">386</td>
+<td class="num">376</td>
 <td class="num">10</td>
 <td class="num">0</td>
 <td class="num">4</td>
@@ -14014,11 +13759,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局彌陀分駐所</td>
-<td class="num">403</td>
-<td class="num">396</td>
-<td class="num">7</td>
+<td class="num">419</td>
+<td class="num">411</td>
+<td class="num">8</td>
 <td class="num">0</td>
-<td class="num">5</td>
+<td class="num">6</td>
 <td class="num">1</td>
 <td class="num">0</td>
 <td class="num">1</td>
@@ -14040,11 +13785,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局嘉興派出所</td>
-<td class="num">33</td>
-<td class="num">31</td>
-<td class="num">2</td>
+<td class="num">109</td>
+<td class="num">106</td>
+<td class="num">3</td>
 <td class="num">0</td>
-<td class="num">2</td>
+<td class="num">3</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -14053,15 +13798,15 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市岡山分局前峰派出所</td>
-<td class="num">1,489</td>
-<td class="num">1,471</td>
-<td class="num">18</td>
+<td class="num">1,985</td>
+<td class="num">1,961</td>
+<td class="num">24</td>
 <td class="num">0</td>
-<td class="num">7</td>
-<td class="num">7</td>
+<td class="num">11</td>
+<td class="num">8</td>
 <td class="num">0</td>
 <td class="num">4</td>
-<td class="num">0</td>
+<td class="num">1</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
@@ -14092,8 +13837,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市小港分局高松派出所</td>
-<td class="num">2,296</td>
-<td class="num">2,253</td>
+<td class="num">2,302</td>
+<td class="num">2,259</td>
 <td class="num">43</td>
 <td class="num">3</td>
 <td class="num">21</td>
@@ -14105,12 +13850,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市小港分局警備隊</td>
-<td class="num">1,518</td>
-<td class="num">1,477</td>
-<td class="num">41</td>
+<td class="num">1,678</td>
+<td class="num">1,631</td>
+<td class="num">47</td>
 <td class="num">3</td>
-<td class="num">27</td>
-<td class="num">11</td>
+<td class="num">30</td>
+<td class="num">14</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -14118,8 +13863,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市小港分局漢民派出所</td>
-<td class="num">720</td>
-<td class="num">694</td>
+<td class="num">759</td>
+<td class="num">733</td>
 <td class="num">26</td>
 <td class="num">1</td>
 <td class="num">16</td>
@@ -14144,12 +13889,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市小港分局小港派出所</td>
-<td class="num">1,250</td>
-<td class="num">1,231</td>
-<td class="num">19</td>
-<td class="num">5</td>
-<td class="num">8</td>
+<td class="num">1,320</td>
+<td class="num">1,298</td>
+<td class="num">22</td>
 <td class="num">6</td>
+<td class="num">9</td>
+<td class="num">7</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -14157,8 +13902,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市小港分局大林派出所</td>
-<td class="num">191</td>
-<td class="num">184</td>
+<td class="num">202</td>
+<td class="num">195</td>
 <td class="num">7</td>
 <td class="num">0</td>
 <td class="num">6</td>
@@ -14170,8 +13915,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市小港分局交通分隊</td>
-<td class="num">2,114</td>
-<td class="num">2,083</td>
+<td class="num">2,124</td>
+<td class="num">2,093</td>
 <td class="num">31</td>
 <td class="num">1</td>
 <td class="num">21</td>
@@ -14183,11 +13928,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市前鎮分局警備隊</td>
-<td class="num">504</td>
-<td class="num">494</td>
-<td class="num">10</td>
-<td class="num">2</td>
-<td class="num">4</td>
+<td class="num">559</td>
+<td class="num">545</td>
+<td class="num">14</td>
+<td class="num">3</td>
+<td class="num">7</td>
 <td class="num">4</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -14196,23 +13941,23 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市前鎮分局草衙派出所</td>
-<td class="num">1,786</td>
-<td class="num">1,752</td>
-<td class="num">34</td>
+<td class="num">1,849</td>
+<td class="num">1,813</td>
+<td class="num">36</td>
 <td class="num">2</td>
 <td class="num">14</td>
 <td class="num">14</td>
 <td class="num">0</td>
-<td class="num">4</td>
+<td class="num">6</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市前鎮分局瑞隆派出所</td>
-<td class="num">5,731</td>
-<td class="num">5,584</td>
-<td class="num">147</td>
-<td class="num">6</td>
+<td class="num">5,862</td>
+<td class="num">5,714</td>
+<td class="num">148</td>
+<td class="num">7</td>
 <td class="num">81</td>
 <td class="num">57</td>
 <td class="num">0</td>
@@ -14222,11 +13967,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市前鎮分局復興路派出所</td>
-<td class="num">2,018</td>
-<td class="num">2,006</td>
-<td class="num">12</td>
-<td class="num">1</td>
-<td class="num">8</td>
+<td class="num">2,159</td>
+<td class="num">2,143</td>
+<td class="num">16</td>
+<td class="num">2</td>
+<td class="num">11</td>
 <td class="num">1</td>
 <td class="num">0</td>
 <td class="num">2</td>
@@ -14235,11 +13980,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市前鎮分局前鎮街派出所</td>
-<td class="num">5,158</td>
-<td class="num">5,080</td>
-<td class="num">78</td>
+<td class="num">5,165</td>
+<td class="num">5,086</td>
+<td class="num">79</td>
 <td class="num">3</td>
-<td class="num">37</td>
+<td class="num">38</td>
 <td class="num">33</td>
 <td class="num">0</td>
 <td class="num">5</td>
@@ -14248,11 +13993,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市前鎮分局交通分隊</td>
-<td class="num">4,746</td>
-<td class="num">4,682</td>
-<td class="num">64</td>
+<td class="num">4,830</td>
+<td class="num">4,764</td>
+<td class="num">66</td>
 <td class="num">1</td>
-<td class="num">33</td>
+<td class="num">35</td>
 <td class="num">30</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -14261,12 +14006,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市前鎮分局一心路派出所</td>
-<td class="num">1,200</td>
-<td class="num">1,168</td>
-<td class="num">32</td>
-<td class="num">3</td>
-<td class="num">18</td>
-<td class="num">11</td>
+<td class="num">1,507</td>
+<td class="num">1,468</td>
+<td class="num">39</td>
+<td class="num">5</td>
+<td class="num">21</td>
+<td class="num">13</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -14443,8 +14188,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市六龜分局荖濃派出所</td>
-<td class="num">45</td>
-<td class="num">44</td>
+<td class="num">84</td>
+<td class="num">83</td>
 <td class="num">1</td>
 <td class="num">0</td>
 <td class="num">1</td>
@@ -14456,8 +14201,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市六龜分局茂林分駐所</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">4</td>
+<td class="num">4</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -14469,8 +14214,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市六龜分局義寶派出所</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">2</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -14508,8 +14253,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市六龜分局桃源分駐所</td>
-<td class="num">10</td>
-<td class="num">10</td>
+<td class="num">39</td>
+<td class="num">39</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -14521,8 +14266,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市六龜分局新威派出所</td>
-<td class="num">58</td>
-<td class="num">53</td>
+<td class="num">64</td>
+<td class="num">59</td>
 <td class="num">5</td>
 <td class="num">0</td>
 <td class="num">4</td>
@@ -14547,11 +14292,11 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市六龜分局寶來派出所</td>
-<td class="num">58</td>
-<td class="num">57</td>
+<td class="num">154</td>
+<td class="num">150</td>
+<td class="num">4</td>
 <td class="num">1</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">2</td>
 <td class="num">1</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -14562,6 +14307,19 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 <td>高市六龜分局交通分隊</td>
 <td class="num">0</td>
 <td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr class="">
+<td>高市六龜分局萬山派出所</td>
+<td class="num">5</td>
+<td class="num">5</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -14612,12 +14370,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市仁武分局溪埔派出所</td>
-<td class="num">88</td>
-<td class="num">87</td>
-<td class="num">1</td>
+<td class="num">125</td>
+<td class="num">122</td>
+<td class="num">3</td>
 <td class="num">0</td>
 <td class="num">1</td>
-<td class="num">0</td>
+<td class="num">2</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -14638,21 +14396,21 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市仁武分局大社分駐所</td>
-<td class="num">5,544</td>
-<td class="num">5,421</td>
-<td class="num">123</td>
+<td class="num">5,996</td>
+<td class="num">5,859</td>
+<td class="num">137</td>
 <td class="num">4</td>
-<td class="num">59</td>
-<td class="num">54</td>
+<td class="num">67</td>
+<td class="num">58</td>
 <td class="num">0</td>
-<td class="num">6</td>
+<td class="num">8</td>
 <td class="num">0</td>
 <td class="num">0</td>
 </tr>
 <tr class="">
 <td>高市仁武分局大樹分駐所</td>
+<td class="num">1,112</td>
 <td class="num">1,078</td>
-<td class="num">1,044</td>
 <td class="num">34</td>
 <td class="num">4</td>
 <td class="num">22</td>
@@ -14690,12 +14448,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市仁武分局交通分隊</td>
-<td class="num">658</td>
-<td class="num">648</td>
-<td class="num">10</td>
-<td class="num">1</td>
-<td class="num">5</td>
-<td class="num">4</td>
+<td class="num">1,510</td>
+<td class="num">1,490</td>
+<td class="num">20</td>
+<td class="num">2</td>
+<td class="num">9</td>
+<td class="num">9</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -14703,8 +14461,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市仁武分局九曲派出所</td>
-<td class="num">844</td>
-<td class="num">813</td>
+<td class="num">851</td>
+<td class="num">820</td>
 <td class="num">31</td>
 <td class="num">2</td>
 <td class="num">18</td>
@@ -14729,8 +14487,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市三民第二分局鼎山派出所</td>
-<td class="num">853</td>
-<td class="num">836</td>
+<td class="num">859</td>
+<td class="num">842</td>
 <td class="num">17</td>
 <td class="num">2</td>
 <td class="num">7</td>
@@ -14781,8 +14539,8 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市三民第二分局民族路派出所</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">2</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -14794,12 +14552,12 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="">
 <td>高市三民第二分局交通分隊</td>
+<td class="num">529</td>
+<td class="num">521</td>
+<td class="num">8</td>
 <td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
-<td class="num">0</td>
+<td class="num">5</td>
+<td class="num">3</td>
 <td class="num">0</td>
 <td class="num">0</td>
 <td class="num">0</td>
@@ -14885,18 +14643,19 @@ thead th, .header-row th { position: sticky; top: 0; background: var(--primary);
 </tr>
 <tr class="subtotal-row">
 <td>小計</td>
-<td class="num">205,864</td>
-<td class="num">201,967</td>
-<td class="num">3,897</td>
-<td class="num">268</td>
-<td class="num">1,869</td>
-<td class="num">1,563</td>
+<td class="num">228,521</td>
+<td class="num">224,207</td>
+<td class="num">4,314</td>
+<td class="num">301</td>
+<td class="num">2,076</td>
+<td class="num">1,719</td>
 <td class="num">16</td>
-<td class="num">179</td>
-<td class="num">2</td>
+<td class="num">199</td>
+<td class="num">3</td>
 <td class="num">0</td>
 </tr>
-</tbody></table></div>
+</tbody>
+</table></div>
         </section>
 </div>
 <script>
@@ -14911,19 +14670,5 @@ buttons.forEach(btn => {
   });
 });
 </script>
-
-<audio class="audio-output" style="display: none;"></audio><div id="volume-booster-visusalizer">
-                    <div class="sound">
-                        <div class="sound-icon"></div>
-                        <div class="sound-wave sound-wave_one"></div>
-                        <div class="sound-wave sound-wave_two"></div>
-                        <div class="sound-wave sound-wave_three"></div>
-                    </div>
-                    <div class="segments-box">
-                        <div data-range="1-20" class="segment"><span></span></div>
-                        <div data-range="21-40" class="segment"><span></span></div>
-                        <div data-range="41-60" class="segment"><span></span></div>
-                        <div data-range="61-80" class="segment"><span></span></div>
-                        <div data-range="81-100" class="segment"><span></span></div>
-                    </div>
-                </div></body></html>
+</body>
+</html>
